@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
+/* eslint-disable */
+import React, { useEffect, useContext } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
   Avatar,
-  Box,
-  Button,
+  Box, // Button,
   Divider,
   Drawer,
   Hidden,
@@ -23,48 +23,67 @@ import {
   Users as UsersIcon
 } from 'react-feather';
 import NavItem from './NavItem';
+// import participant from '../../../views/home/HomeView/Participant';
+import { ParticipantContext } from '../../../ParticipantContext';
+
+const participant = {
+  id: 1,
+  name: 'Jocelynn Bucken',
+  outOfBattery: false,
+  placeAlert: true,
+  heartRate: false,
+  calendar: false,
+  location: [34.745, -86.63]
+};
+
+console.log(`participant: ${participant.name}`);
 
 const user = {
   avatar: '/static/images/avatars/avatar_6.png',
   jobTitle: 'Senior Developer',
-  name: 'Katarina Smith'
+  name: participant.name
 };
 
 const items = [
   {
+    href: '/app/home',
+    icon: BarChartIcon,
+    title: 'Home'
+  },
+  {
     href: '/app/dashboard',
     icon: BarChartIcon,
-    title: 'Dashboard'
+    title: 'Support the 5-Key Model'
   },
   {
     href: '/app/customers',
     icon: UsersIcon,
-    title: 'Customers'
+    title: 'Overview'
   },
   {
     href: '/app/products',
     icon: ShoppingBagIcon,
-    title: 'Products'
+    title: 'Schedule'
   },
   {
     href: '/app/account',
     icon: UserIcon,
-    title: 'Account'
+    title: 'Documents'
   },
   {
     href: '/app/settings',
     icon: SettingsIcon,
-    title: 'Settings'
+    title: 'App&Tasks or JOB'
   },
   {
     href: '/login',
     icon: LockIcon,
-    title: 'Login'
+    title: 'Analytics'
   },
   {
     href: '/register',
     icon: UserPlusIcon,
-    title: 'Register'
+    title: 'Setting'
   },
   {
     href: '/404',
@@ -89,9 +108,15 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
+export const ChangeParticipantName = (name) => {
+  user.name = name;
+  console.log(`ChangeParticipantName: ${user.name}`);
+};
+
 const NavBar = ({ onMobileClose, openMobile }) => {
   const classes = useStyles();
   const location = useLocation();
+  const participant = useContext(ParticipantContext);
 
   useEffect(() => {
     if (openMobile && onMobileClose) {
@@ -99,6 +124,11 @@ const NavBar = ({ onMobileClose, openMobile }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
+
+  // useEffect(() => {
+  //   SetParticipantName();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, user.name);
 
   const content = (
     <Box
@@ -123,14 +153,15 @@ const NavBar = ({ onMobileClose, openMobile }) => {
           color="textPrimary"
           variant="h5"
         >
-          {user.name}
+          {participant.name}
+          {/* {user.name} */}
         </Typography>
-        <Typography
+        {/* <Typography
           color="textSecondary"
           variant="body2"
         >
           {user.jobTitle}
-        </Typography>
+        </Typography> */}
       </Box>
       <Divider />
       <Box p={2}>
@@ -146,7 +177,7 @@ const NavBar = ({ onMobileClose, openMobile }) => {
         </List>
       </Box>
       <Box flexGrow={1} />
-      <Box
+      {/* <Box
         p={2}
         m={2}
         bgcolor="background.dark"
@@ -178,7 +209,7 @@ const NavBar = ({ onMobileClose, openMobile }) => {
             See PRO version
           </Button>
         </Box>
-      </Box>
+      </Box> */}
     </Box>
   );
 
@@ -211,12 +242,14 @@ const NavBar = ({ onMobileClose, openMobile }) => {
 
 NavBar.propTypes = {
   onMobileClose: PropTypes.func,
-  openMobile: PropTypes.bool
+  openMobile: PropTypes.bool,
+  // participantName: PropTypes.string
 };
 
 NavBar.defaultProps = {
   onMobileClose: () => {},
-  openMobile: false
+  openMobile: false,
+  // participantName: user.name
 };
 
 export default NavBar;

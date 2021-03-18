@@ -1,5 +1,5 @@
 {
-  "name": "react-material-dashboard",
+  "name": "ai-sms",
   "author": "DeviasIO",
   "licence": "MIT",
   "version": "1.0.0",
@@ -38,9 +38,11 @@
     "moment": "^2.27.0",
     "nprogress": "^0.2.0",
     "prop-types": "^15.7.2",
+    "leaflet": "^1.7.1",
     "react": "^16.13.1",
     "react-chartjs-2": "^2.10.0",
     "react-dom": "^16.13.1",
+    "react-leaflet": "^3.1.0",
     "react-feather": "^2.0.8",
     "react-helmet": "^6.1.0",
     "react-perfect-scrollbar": "^1.5.8",
@@ -59,6 +61,7 @@
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^7.20.3",
     "eslint-plugin-react-hooks": "^4.0.8",
+    "json-loader": "^0.5.7",
     "prettier": "^1.19.1"
   }
 }

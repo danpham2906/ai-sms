@@ -29,6 +29,8 @@
     "react/forbid-prop-types": "off",
     "react/jsx-filename-extension": "off",
     "react/jsx-props-no-spreading": "off",
-    "react/require-default-props": "off"
+    "react/require-default-props": "off",
+    // "react/jsx-indent": "off",
+    // "react/jsx-indent-props": "off"
   }
 }

@@ -13,6 +13,7 @@ import {
   Typography,
   makeStyles
 } from '@material-ui/core';
+import participant from '../../home/HomeView/Participant';
 
 const user = {
   avatar: '/static/images/avatars/avatar_6.png',
@@ -54,7 +55,8 @@ const Profile = ({ className, ...rest }) => {
             gutterBottom
             variant="h3"
           >
-            {user.name}
+            {participant.name}
+            {console.log(`participant: ${participant.name}`)}
           </Typography>
           <Typography
             color="textSecondary"

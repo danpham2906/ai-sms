@@ -4,8 +4,7 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import {
   AppBar,
-  Badge,
-  Box,
+  Badge, //   Box,
   Hidden,
   IconButton,
   Toolbar,
@@ -14,6 +13,7 @@ import {
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
 import InputIcon from '@material-ui/icons/Input';
+import Typography from '@material-ui/core/Typography';
 import Logo from 'src/components/Logo';
 
 const useStyles = makeStyles(() => ({
@@ -21,7 +21,10 @@ const useStyles = makeStyles(() => ({
   avatar: {
     width: 60,
     height: 60
-  }
+  },
+  title: {
+    flexGrow: 1,
+  },
 }));
 
 const TopBar = ({
@@ -42,7 +45,12 @@ const TopBar = ({
         <RouterLink to="/">
           <Logo />
         </RouterLink>
-        <Box flexGrow={1} />
+
+        <Typography component="h1" color="inherit" align="center" noWrap className={classes.title}>
+          Home & Participant Selection
+        </Typography>
+
+        {/* <Box flexGrow={1} /> */}
         <Hidden mdDown>
           <IconButton color="inherit">
             <Badge

@@ -36,13 +36,14 @@ const useStyles = makeStyles((theme) => ({
 const DashboardLayout = () => {
   const classes = useStyles();
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
+  // const [participantNameChange, setParticipantNameChange] = useState('');
 
   return (
     <div className={classes.root}>
       <TopBar onMobileNavOpen={() => setMobileNavOpen(true)} />
       <NavBar
         onMobileClose={() => setMobileNavOpen(false)}
-        openMobile={isMobileNavOpen}
+        openMobile={isMobileNavOpen} // participantName={participantNameChange}
       />
       <div className={classes.wrapper}>
         <div className={classes.contentContainer}>
