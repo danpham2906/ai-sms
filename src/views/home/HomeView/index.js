@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const colorOption1 = { color: 'blue' };
-const colorOption2 = { color: 'YellowGreen' };
+const colorOption2 = { color: 'red' };
 
 const position = [34.73, -86.60];
 const testPosition = [34.745, -86.63];
@@ -124,7 +124,7 @@ export default function HomeView() {
     participants.map((participant) => {
       // if (toggleCircleMarker[participant.id] && participant.placeAlert === true) {
         showCircleMarker.push(
-          <CircleMarker center={participant.location} pathOptions={toggleCircleMarker[participant.id] ? colorOption2 : colorOption1} radius={20} opacity={1}>
+          <CircleMarker center={participant.location} pathOptions={toggleCircleMarker[participant.id] ? colorOption2 : colorOption1} radius={10} opacity={1}>
             <Tooltip direction='top' opacity={1}>
                 {participant.name}
                 {/* &apos;s Exclusion Zone. */}
@@ -152,7 +152,7 @@ export default function HomeView() {
             // <ListItem key={value} button>
             <ListItem key={participant.id} button onClick={() => SelectParticipant(participant.id)} >
               {toggleCircleMarker[participant.id] ? 
-                <ListItemText id={labelId} disableTypography primary={<Typography style={{ color: 'YellowGreen', 'font-weight': 'bold' }}>{`${participant.name}`}</Typography>}/>
+                <ListItemText id={labelId} disableTypography primary={<Typography style={{ color: 'LightSeaGreen', 'font-weight': 'bold' }}>{`${participant.name}`}</Typography>}/>
                : 
                 <ListItemText id={labelId} primary={`${participant.name}`}/>
               }

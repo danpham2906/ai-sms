@@ -39,7 +39,7 @@ const participant = {
 console.log(`participant: ${participant.name}`);
 
 const user = {
-  avatar: '/static/images/avatars/avatar_6.png',
+  avatar: '/static/images/avatars/avatar01.png',
   jobTitle: 'Senior Developer',
   name: participant.name
 };
