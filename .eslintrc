@@ -4,7 +4,7 @@
     "es6": true,
     "browser": true
   },
-  "extends": ["airbnb-base", "eslint:recommended"],
+  "extends": ["airbnb/hooks", "airbnb-base", "eslint:recommended"],
   "settings": {
     "import/resolver": {
       "node": {
