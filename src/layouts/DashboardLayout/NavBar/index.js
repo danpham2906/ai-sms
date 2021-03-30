@@ -20,70 +20,74 @@ import {
   ShoppingBag as ShoppingBagIcon,
   User as UserIcon,
   UserPlus as UserPlusIcon,
-  Users as UsersIcon
+  Users as UsersIcon,
+  Home as HomeIcon
 } from 'react-feather';
 import NavItem from './NavItem';
-// import participant from '../../../views/home/HomeView/Participant';
-import { ParticipantContext } from '../../../ParticipantContext';
+import NavItemNoHref from './NavItemNoHref';
+import { ParticipantContext } from '../../../context/ParticipantContext';
 
-const participant = {
-  id: 1,
-  name: 'Jocelynn Bucken',
-  outOfBattery: false,
-  placeAlert: true,
-  heartRate: false,
-  calendar: false,
-  location: [34.745, -86.63]
-};
+// const participant = {
+//   id: 1,
+//   name: 'Jocelynn Bucken',
+//   outOfBattery: false,
+//   placeAlert: true,
+//   heartRate: false,
+//   calendar: false,
+//   location: [34.745, -86.63]
+// };
 
-console.log(`participant: ${participant.name}`);
+// console.log(`participant: ${participant.name}`);
 
 const user = {
   avatar: '/static/images/avatars/avatar01.png',
   jobTitle: 'Senior Developer',
-  name: participant.name
+  // name: participant.name
 };
 
 const items = [
   {
     href: '/app/home',
-    icon: BarChartIcon,
+    icon: HomeIcon,
     title: 'Home'
   },
   {
-    href: '/app/dashboard',
-    icon: BarChartIcon,
     title: 'Support the 5-Key Model'
+  },
+  {
+    href: '/app/overview',
+    icon: BarChartIcon,
+    title: 'Overview'
   },
   {
     href: '/app/customers',
     icon: UsersIcon,
-    title: 'Overview'
+    title: 'Schedule'
   },
   {
     href: '/app/products',
     icon: ShoppingBagIcon,
-    title: 'Schedule'
+    title: 'Documents'
   },
   {
     href: '/app/account',
     icon: UserIcon,
-    title: 'Documents'
+    title: 'App&Tasks or JOB'
   },
   {
     href: '/app/settings',
     icon: SettingsIcon,
-    title: 'App&Tasks or JOB'
+    title: 'Analytics'
   },
   {
     href: '/login',
     icon: LockIcon,
-    title: 'Analytics'
+    title: 'Setting'
   },
   {
     href: '/register',
     icon: UserPlusIcon,
-    title: 'Setting'
+    title: 'Register'
   },
   {
     href: '/404',
@@ -125,10 +129,46 @@ const NavBar = ({ onMobileClose, openMobile }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
 
-  // useEffect(() => {
-  //   SetParticipantName();
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, user.name);
+  function NavBarItems() {
+    const navBarItemList = [];
+
+    items.map((item) => {
+      var props = {};
+      props.key = item.title;
+      props.title = item.title;
+      
+
+      if (item.href != null) {
+        props.href = item.href;
+      }
+
+      if (item.icon != null) {
+        props.icon = item.icon;
+      }
+
+      if (item.href != null) {
+        navBarItemList.push(
+          <NavItem
+            {...props}
+          />
+        );
+      } else {
+        navBarItemList.push(
+          <NavItemNoHref
+            {...props}
+          />
+        );
+      }
+
+      
+    });
+
+    return (
+      <div>
+        {navBarItemList}
+      </div>
+    );
+  }
 
   const content = (
     <Box
@@ -165,16 +205,8 @@ const NavBar = ({ onMobileClose, openMobile }) => {
       </Box>
       <Divider />
       <Box p={2}>
-        <List>
-          {items.map((item) => (
-            <NavItem
-              href={item.href}
-              key={item.title}
-              title={item.title}
-              icon={item.icon}
-            />
-          ))}
-        </List>
+        <NavBarItems /> 
+        
       </Box>
       <Box flexGrow={1} />
       {/* <Box
@@ -243,13 +275,11 @@ const NavBar = ({ onMobileClose, openMobile }) => {
 NavBar.propTypes = {
   onMobileClose: PropTypes.func,
   openMobile: PropTypes.bool,
-  // participantName: PropTypes.string
 };
 
 NavBar.defaultProps = {
   onMobileClose: () => {},
   openMobile: false,
-  // participantName: user.name
 };
 
 export default NavBar;

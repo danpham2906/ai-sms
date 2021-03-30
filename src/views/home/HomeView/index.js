@@ -18,6 +18,7 @@ import {
   CircleMarker,
   Tooltip
 } from 'react-leaflet';
+import Page from 'src/components/Page';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
@@ -28,9 +29,9 @@ import AnnouncementIcon from '@material-ui/icons/Announcement';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import BatteryAlertIcon from '@material-ui/icons/BatteryAlert';
 import DateRangeIcon from '@material-ui/icons/DateRange';
-import data from './data';
+import data from '../../../data/data';
 // import { ChangeParticipantName } from 'src/layouts/DashboardLayout/NavBar';
-import { ParticipantContext } from '../../../ParticipantContext';
+import { ParticipantContext } from '../../../context/ParticipantContext';
 
 const useStyles = makeStyles((theme) => ({
   map: {
@@ -58,6 +59,9 @@ const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 360,
     backgroundColor: theme.palette.background.paper,
+  },
+  leafletTooltip: {
+    padding: '0px 4px 0px 4px !important',
   },
 }));
 
@@ -113,6 +117,9 @@ export default function HomeView() {
     participants.map((participant) => {
       if (participant.id == index) {
         participantContext.setName(participant.name);
+        participantContext.setStreet(participant.address.street);
+        participantContext.setCity(participant.address.city);
+        participantContext.setState(participant.address.state);
         // console.log(`toggleCircleMarker: ${participant.id}`);
       }
     });
@@ -125,7 +132,7 @@ export default function HomeView() {
       // if (toggleCircleMarker[participant.id] && participant.placeAlert === true) {
         showCircleMarker.push(
           <CircleMarker center={participant.location} pathOptions={toggleCircleMarker[participant.id] ? colorOption2 : colorOption1} radius={10} opacity={1}>
-            <Tooltip direction='top' opacity={1}>
+            <Tooltip direction='bottom' opacity={1} permanent className={classes.leafletTooltip} offset={[0, 7]}>
                 {participant.name}
                 {/* &apos;s Exclusion Zone. */}
             </Tooltip>
@@ -171,6 +178,10 @@ export default function HomeView() {
 
   return (
     <React.Fragment>
+        <Page
+          className={classes.root}
+          title="AI-SMS"
+        ></Page>
         <Container maxWidth='false'>
             <Grid container className={classes.participantContainer}>
                 {/* ParticipantList */}

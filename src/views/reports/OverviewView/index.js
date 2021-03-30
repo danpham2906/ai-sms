@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import {
   Container,
@@ -5,14 +6,12 @@ import {
   makeStyles
 } from '@material-ui/core';
 import Page from 'src/components/Page';
-import Budget from './Budget';
-import LatestOrders from './LatestOrders';
-import LatestProducts from './LatestProducts';
-import Sales from './Sales';
-import TasksProgress from './TasksProgress';
-import TotalCustomers from './TotalCustomers';
-import TotalProfit from './TotalProfit';
-import TrafficByDevice from './TrafficByDevice';
+import PersonalInformation from './PersonalInformation';
+import Schedule from './Schedule';
+import Messaging from './Messaging';
+import BraceletStatus from './BraceletStatus';
+import AppTask from './AppTask';
+import TimelineLog from './TimelineLog';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,13 +22,13 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Dashboard = () => {
+const Overview = () => {
   const classes = useStyles();
 
   return (
     <Page
       className={classes.root}
-      title="Dashboard"
+      title="Overview"
     >
       <Container maxWidth={false}>
         <Grid
@@ -38,12 +37,12 @@ const Dashboard = () => {
         >
           <Grid
             item
-            lg={3}
+            lg={4}
             sm={6}
-            xl={3}
+            xl={4}
             xs={12}
           >
-            <Budget />
+            <PersonalInformation />
           </Grid>
           <Grid
             item
@@ -52,7 +51,26 @@ const Dashboard = () => {
             xl={3}
             xs={12}
           >
-            <TotalCustomers />
+            <Schedule />
+          </Grid>
+          <Grid
+            item
+            lg={5}
+            sm={6}
+            xl={5}
+            xs={12}
+          >
+            <BraceletStatus />
+          </Grid>
+
+          <Grid
+            item
+            lg={4}
+            sm={6}
+            xl={4}
+            xs={12}
+          >
+            <Messaging />
           </Grid>
           <Grid
             item
@@ -61,18 +79,19 @@ const Dashboard = () => {
             xl={3}
             xs={12}
           >
-            <TasksProgress />
+            <AppTask />
           </Grid>
           <Grid
             item
-            lg={3}
+            lg={5}
             sm={6}
-            xl={3}
+            xl={5}
             xs={12}
           >
-            <TotalProfit />
+            <TimelineLog />
           </Grid>
-          <Grid
+          
+          {/* <Grid
             item
             lg={8}
             md={12}
@@ -89,8 +108,8 @@ const Dashboard = () => {
             xs={12}
           >
             <TrafficByDevice />
-          </Grid>
-          <Grid
+          </Grid> */}
+          {/* <Grid
             item
             lg={4}
             md={6}
@@ -107,11 +126,11 @@ const Dashboard = () => {
             xs={12}
           >
             <LatestOrders />
-          </Grid>
+          </Grid> */}
         </Grid>
       </Container>
     </Page>
   );
 };
 
-export default Dashboard;
+export default Overview;
