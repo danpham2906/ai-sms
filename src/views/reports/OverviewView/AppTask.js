@@ -4,17 +4,19 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { Line } from '@reactchartjs/react-chart.js';
 import {
-  Avatar,
-  Box,
   Card,
   CardContent,
   Grid,
   Typography,
-  colors,
-  makeStyles,
-  TextField,
-  Button
+  makeStyles
 } from '@material-ui/core';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import ListItemText from '@material-ui/core/ListItemText';
+import Checkbox from '@material-ui/core/Checkbox';
+import IconButton from '@material-ui/core/IconButton';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
     'min-height': '100%',
     height:'100%',
     'overflow-x': 'hidden',
+    'list-style-type': 'none !important',
   },
   flexSection: {
     'flex-grow': 1,
@@ -42,6 +45,20 @@ const useStyles = makeStyles((theme) => ({
 
 const AppTask = ({ className, ...rest }) => {
   const classes = useStyles();
+  const [checked, setChecked] = React.useState([0]);
+
+  const handleToggle = (value) => () => {
+    const currentIndex = checked.indexOf(value);
+    const newChecked = [...checked];
+
+    if (currentIndex === -1) {
+      newChecked.push(value);
+    } else {
+      newChecked.splice(currentIndex, 1);
+    }
+
+    setChecked(newChecked);
+  };
 
   const dataLine = {
     labels: ['1', '2', '3', '4', '5', '6'],
@@ -114,19 +131,29 @@ const AppTask = ({ className, ...rest }) => {
                 item
                 className={classes.flexColScroll}
             >
-                <Typography
-                    color="textSecondary"
-                    variant="body1"
-                >
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-                    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-                    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                </Typography>
+                {[0, 1, 2, 3].map((value) => {
+                  const labelId = `checkbox-list-label-${value}`;
+
+                  return (
+                    <ListItem key={value} role={undefined} dense button onClick={handleToggle(value)}>
+                      <ListItemIcon>
+                        <Checkbox
+                          edge="start"
+                          checked={checked.indexOf(value) !== -1}
+                          tabIndex={-1}
+                          disableRipple
+                          inputProps={{ 'aria-labelledby': labelId }}
+                        />
+                      </ListItemIcon>
+                      <ListItemText id={labelId} primary={`Line item ${value + 1}`} />
+                      {/* <ListItemSecondaryAction>
+                        <IconButton edge="end" aria-label="comments">
+                          <CommentIcon />
+                        </IconButton>
+                      </ListItemSecondaryAction> */}
+                    </ListItem>
+                  );
+                })}
             </Grid>
         </Grid>
         <Typography

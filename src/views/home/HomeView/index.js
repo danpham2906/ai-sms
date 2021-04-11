@@ -32,6 +32,14 @@ import DateRangeIcon from '@material-ui/icons/DateRange';
 import data from '../../../data/data';
 // import { ChangeParticipantName } from 'src/layouts/DashboardLayout/NavBar';
 import { ParticipantContext } from '../../../context/ParticipantContext';
+import {
+  MarkerIcon,
+  MarkerPlaceAlertIcon,
+  MarkerOutOfBatteryIcon,
+  MarkerHeartRateIcon,
+  MarkerCalendarIcon,
+  MarkerEmptyIcon
+} from './MarkerIcon';
 
 const useStyles = makeStyles((theme) => ({
   map: {
@@ -125,27 +133,85 @@ export default function HomeView() {
     });
   }
 
-  function ShowCircleMarker() {
-    const showCircleMarker = [];
+  function CircleMarkerGroup() {
+    const circleMarkerGroup = [];
 
     participants.map((participant) => {
-      // if (toggleCircleMarker[participant.id] && participant.placeAlert === true) {
-        showCircleMarker.push(
-          <CircleMarker center={participant.location} pathOptions={toggleCircleMarker[participant.id] ? colorOption2 : colorOption1} radius={10} opacity={1}>
+      if (participant.outOfBattery || participant.placeAlert || participant.heartRate || participant.calendar) {
+          circleMarkerGroup.push(
+            <div>
+              <Marker
+                position={participant.location}
+                icon={MarkerIcon}
+                riseOnHover
+                riseOffset={700}
+              >
+                <Tooltip direction='bottom' opacity={1} permanent className={classes.leafletTooltip} offset={[0, 7]}>
+                    {participant.name}
+                    {/* &apos;s Exclusion Zone. */}
+                </Tooltip>
+              </Marker>
+
+              {participant.outOfBattery ? (
+              <Marker
+                position={participant.location}
+                icon={MarkerOutOfBatteryIcon}
+              >
+              </Marker>)
+              : '' }
+
+              {participant.placeAlert ? (
+              <Marker
+                position={participant.location}
+                icon={MarkerPlaceAlertIcon}
+              >
+              </Marker>)
+              : '' }
+
+              {participant.heartRate ? (
+              <Marker
+                position={participant.location}
+                icon={MarkerHeartRateIcon}
+              >
+              </Marker>)
+              : '' }
+
+              {participant.calendar ? (
+              <Marker
+                position={participant.location}
+                icon={MarkerCalendarIcon}
+              >
+              </Marker>)
+              : '' }
+              
+            </div>
+          );
+      } else {
+        circleMarkerGroup.push(
+          <Marker
+            position={participant.location}
+            icon={MarkerEmptyIcon}
+          >
             <Tooltip direction='bottom' opacity={1} permanent className={classes.leafletTooltip} offset={[0, 7]}>
                 {participant.name}
                 {/* &apos;s Exclusion Zone. */}
             </Tooltip>
-          </CircleMarker>
+          </Marker>
+          // <CircleMarker center={participant.location} pathOptions={toggleCircleMarker[participant.id] ? colorOption2 : colorOption1} radius={10} opacity={1}>
+          //   <Tooltip direction='bottom' opacity={1} permanent className={classes.leafletTooltip} offset={[0, 7]}>
+          //       {participant.name}
+          //   </Tooltip>
+          // </CircleMarker>
         );
+      }
       // }
     });
 
-    // console.log(`showCircleMarker: ${showCircleMarker}`);
+    // console.log(`CircleMarkerGroup: ${CircleMarkerGroup}`);
 
     return (
       <div>
-        {showCircleMarker}
+        {circleMarkerGroup}
       </div>
     );
   }
@@ -163,12 +229,14 @@ export default function HomeView() {
                : 
                 <ListItemText id={labelId} primary={`${participant.name}`}/>
               }
-              <ListItemSecondaryAction>
-                  {participant.outOfBattery === true ? <BatteryAlertIcon /> : ''}
-                  {participant.placeAlert === true ? <AnnouncementIcon/> : ''}
-                  {participant.heartRate === true ? <FavoriteIcon/> : ''}
-                  {participant.calendar === true ? <DateRangeIcon/> : ''}
-              </ListItemSecondaryAction>
+              <div>
+                <ListItemSecondaryAction>
+                    {participant.outOfBattery === true ? (<BatteryAlertIcon style={{ color: 'DarkGray' }} />) : ''}
+                    {participant.placeAlert === true ? (<AnnouncementIcon style={{ color: 'DarkTurquoise' }}/>) : ''}
+                    {participant.heartRate === true ? (<FavoriteIcon style={{ color: 'LightCoral' }}/>) : ''}
+                    {participant.calendar === true ? (<DateRangeIcon style={{ color: 'DarkSlateBlue' }}/>) : ''}
+                </ListItemSecondaryAction>
+              </div>
             </ListItem>
           );
         })}
@@ -201,15 +269,9 @@ export default function HomeView() {
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         />
 
-                        {/* <Marker position={testPosition} className={classes.marker}>
-                            <Tooltip>
-                                John Doe is here.
-                            </Tooltip>
-                        </Marker> */}
-
                         <ZoomControl position="topright" />
 
-                        <ShowCircleMarker /> 
+                        <CircleMarkerGroup /> 
 
                     </MapContainer>
                 </Grid>
