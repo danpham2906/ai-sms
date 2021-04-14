@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+/* eslint-disable */
+import React, { useState, useContext } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import {
+  Avatar,
   AppBar,
-  Badge, //   Box,
+  Badge,
+  Box,
   Hidden,
   IconButton,
   Toolbar,
@@ -14,7 +17,12 @@ import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
 import InputIcon from '@material-ui/icons/Input';
 import Typography from '@material-ui/core/Typography';
-import Logo from 'src/components/Logo';
+import { TitleContext } from '../../context/TitleContext';
+
+const officer = {
+  avatar: '/static/images/avatars/avatar02.png',
+  name: 'John Roe'
+};
 
 const useStyles = makeStyles(() => ({
   root: {},
@@ -22,9 +30,22 @@ const useStyles = makeStyles(() => ({
     width: 60,
     height: 60
   },
-  title: {
-    flexGrow: 1,
+  appName: {
+    color: 'white',
+    'font-size': '1.25rem'
   },
+  title: {
+    flexGrow: 8,
+    'font-size': '1.1rem'
+  },
+  avatar: {
+    cursor: 'pointer',
+    width: 32,
+    height: 32
+  },
+  name: {
+    padding: '0px 10px 0px 10px'
+  }
 }));
 
 const TopBar = ({
@@ -34,6 +55,7 @@ const TopBar = ({
 }) => {
   const classes = useStyles();
   const [notifications] = useState([]);
+  const titleContext = useContext(TitleContext);
 
   return (
     <AppBar
@@ -42,16 +64,38 @@ const TopBar = ({
       {...rest}
     >
       <Toolbar>
-        <RouterLink to="/">
-          <Logo />
+        <RouterLink
+          to="/"
+          onClick={() => { titleContext.setName("Home & Participant Selection"); }}
+        >
+          {/* <Logo /> */}
+          <Typography component="h1" align="center" noWrap className={classes.appName}>
+            AI-SMS
+          </Typography>
         </RouterLink>
 
         <Typography component="h1" color="inherit" align="center" noWrap className={classes.title}>
-          Home & Participant Selection
+          {titleContext.name}
         </Typography>
 
-        {/* <Box flexGrow={1} /> */}
-        <Hidden mdDown>
+        <Box flexDirection="row">
+          <Avatar
+            className={classes.avatar}
+            component={RouterLink}
+            src={officer.avatar}
+            to="/app/account"
+          />
+        </Box>
+        <Box flexDirection="row">
+          <Typography
+            className={classes.name}
+            color="inherit"
+            variant="h5"
+          >
+            {officer.name}
+          </Typography>
+        </Box>
+        {/* <Hidden mdDown>
           <IconButton color="inherit">
             <Badge
               badgeContent={notifications.length}
@@ -72,7 +116,7 @@ const TopBar = ({
           >
             <MenuIcon />
           </IconButton>
-        </Hidden>
+        </Hidden> */}
       </Toolbar>
     </AppBar>
   );

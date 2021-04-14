@@ -15,29 +15,18 @@ import {
 import {
   AlertCircle as AlertCircleIcon,
   BarChart as BarChartIcon,
+  Layout as LayoutIcon,
   Lock as LockIcon,
   Settings as SettingsIcon,
-  ShoppingBag as ShoppingBagIcon,
+  Briefcase as BriefcaseIcon,
   User as UserIcon,
-  UserPlus as UserPlusIcon,
-  Users as UsersIcon,
+  Calendar as CalendarIcon,
+  FileText as FileTextIcon,
   Home as HomeIcon
 } from 'react-feather';
 import NavItem from './NavItem';
 import NavItemNoHref from './NavItemNoHref';
 import { ParticipantContext } from '../../../context/ParticipantContext';
-
-// const participant = {
-//   id: 1,
-//   name: 'Jocelynn Bucken',
-//   outOfBattery: false,
-//   placeAlert: true,
-//   heartRate: false,
-//   calendar: false,
-//   location: [34.745, -86.63]
-// };
-
-// console.log(`participant: ${participant.name}`);
 
 const user = {
   avatar: '/static/images/avatars/avatar01.png',
@@ -56,44 +45,44 @@ const items = [
   },
   {
     href: '/app/overview',
-    icon: BarChartIcon,
+    icon: LayoutIcon,
     title: 'Overview'
   },
   {
-    href: '/app/customers',
-    icon: UsersIcon,
+    href: '/app/schedule',
+    icon: CalendarIcon,
     title: 'Schedule'
   },
   {
-    href: '/app/products',
-    icon: ShoppingBagIcon,
+    href: '/app/documents',
+    icon: FileTextIcon,
     title: 'Documents'
   },
   {
-    href: '/app/account',
-    icon: UserIcon,
+    href: '/app/apptask',
+    icon: BriefcaseIcon,
     title: 'App&Tasks or JOB'
   },
   {
-    href: '/app/settings',
-    icon: SettingsIcon,
+    href: '/app/analytics',
+    icon: BarChartIcon,
     title: 'Analytics'
   },
-  {
-    href: '/login',
-    icon: LockIcon,
-    title: 'Setting'
-  },
-  {
-    href: '/register',
-    icon: UserPlusIcon,
-    title: 'Register'
-  },
-  {
-    href: '/404',
-    icon: AlertCircleIcon,
-    title: 'Error'
-  }
+  // {
+  //   href: '/login',
+  //   icon: LockIcon,
+  //   title: 'Setting'
+  // },
+  // {
+  //   href: '/register',
+  //   icon: UserPlusIcon,
+  //   title: 'Register'
+  // },
+  // {
+  //   href: '/404',
+  //   icon: AlertCircleIcon,
+  //   title: 'Error'
+  // }
 ];
 
 const useStyles = makeStyles(() => ({
@@ -112,10 +101,10 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-export const ChangeParticipantName = (name) => {
-  user.name = name;
-  console.log(`ChangeParticipantName: ${user.name}`);
-};
+// export const ChangeParticipantName = (name) => {
+//   user.name = name;
+//   console.log(`ChangeParticipantName: ${user.name}`);
+// };
 
 const NavBar = ({ onMobileClose, openMobile }) => {
   const classes = useStyles();
@@ -186,7 +175,7 @@ const NavBar = ({ onMobileClose, openMobile }) => {
           className={classes.avatar}
           component={RouterLink}
           src={user.avatar}
-          to="/app/account"
+          to="/app/apptask"
         />
         <Typography
           className={classes.name}

@@ -10,14 +10,7 @@ import {
   Typography,
   makeStyles
 } from '@material-ui/core';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import ListItemText from '@material-ui/core/ListItemText';
-import Checkbox from '@material-ui/core/Checkbox';
-import IconButton from '@material-ui/core/IconButton';
-import BarChart from './BarChart';
+import HorizontalBarChart from './HorizontalBarChart';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,11 +33,11 @@ const useStyles = makeStyles((theme) => ({
     padding: '0px 3px 20px 5px',
   },
   chartContainer: {
-    padding: '0px 10px 20px 10px',
+    padding: '0px 20px 20px 0px',
   }
 }));
 
-const AppTask = ({ className, ...rest }) => {
+const DurationChart = ({ className, ...rest }) => {
   const classes = useStyles();
   const [checked, setChecked] = React.useState([0]);
 
@@ -122,7 +115,7 @@ const AppTask = ({ className, ...rest }) => {
                 gutterBottom
                 variant="h6"
                 >
-                APP &amp; TASK
+                  VISITED LOCATIONS BY DURATION
                 </Typography>
             </Grid>
         </Grid>
@@ -132,65 +125,15 @@ const AppTask = ({ className, ...rest }) => {
           spacing={3}
           className={classes.chartContainer}
         >
-            <Grid item>
-                <Typography
-                    color="textSecondary"
-                    gutterBottom
-                    align="center"
-                    variant="h5"
-                    >
-                    Score
-                </Typography>
-                <Grid item>
-                  <BarChart data={data} />
-                  {/* <Line data={dataLine} options={optionsLine} height="150px"/> */}
-                </Grid>
-            </Grid>
+            <HorizontalBarChart data={data} color="Turquoise"/>
         </Grid>
-        <Grid container className={classes.flexSection}>
-            <Grid
-                item
-                className={classes.flexColScroll}
-            >
-                {[0, 1, 2, 3].map((value) => {
-                  const labelId = `checkbox-list-label-${value}`;
-
-                  return (
-                    <ListItem key={value} role={undefined} dense button onClick={handleToggle(value)}>
-                      <ListItemIcon>
-                        <Checkbox
-                          edge="start"
-                          checked={checked.indexOf(value) !== -1}
-                          tabIndex={-1}
-                          disableRipple
-                          inputProps={{ 'aria-labelledby': labelId }}
-                        />
-                      </ListItemIcon>
-                      <ListItemText id={labelId} primary={`Line item ${value + 1}`} />
-                      {/* <ListItemSecondaryAction>
-                        <IconButton edge="end" aria-label="comments">
-                          <CommentIcon />
-                        </IconButton>
-                      </ListItemSecondaryAction> */}
-                    </ListItem>
-                  );
-                })}
-            </Grid>
-        </Grid>
-        <Typography
-            color="textSecondary"
-            variant="body2"
-            align="right"
-        >
-            Assign Tasks &gt;
-        </Typography>
       </CardContent>
     </Card>
   );
 };
 
-AppTask.propTypes = {
+DurationChart.propTypes = {
   className: PropTypes.string
 };
 
-export default AppTask;
+export default DurationChart;

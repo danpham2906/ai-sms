@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable */
+import React, { useContext } from 'react';
 import { NavLink as RouterLink } from 'react-router-dom';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
@@ -7,6 +8,7 @@ import {
   ListItem,
   makeStyles
 } from '@material-ui/core';
+import { TitleContext } from '../../../context/TitleContext';
 
 const useStyles = makeStyles((theme) => ({
   item: {
@@ -48,6 +50,7 @@ const NavItem = ({
   ...rest
 }) => {
   const classes = useStyles();
+  const titleContext = useContext(TitleContext);
 
   return (
     <ListItem
@@ -60,6 +63,12 @@ const NavItem = ({
         className={classes.button}
         component={RouterLink}
         to={href}
+        onClick={() => {
+          if (title == "Home")
+            titleContext.setName("Home & Participant Selection");
+          else
+            titleContext.setName(title);
+        }}
       >
         {Icon && (
           <Icon

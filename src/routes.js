@@ -2,8 +2,8 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 import DashboardLayout from 'src/layouts/DashboardLayout';
 import MainLayout from 'src/layouts/MainLayout';
-import AccountView from 'src/views/account/AccountView';
-import CustomerListView from 'src/views/customer/CustomerListView';
+import AnalyticsView from 'src/views/analytics/AnalyticsView';
+import ScheduleView from 'src/views/schedule/ScheduleView';
 import OverviewView from 'src/views/reports/OverviewView';
 import HomeView from 'src/views/home/HomeView';
 import LoginView from 'src/views/auth/LoginView';
@@ -17,12 +17,12 @@ const routes = [
     path: 'app',
     element: <DashboardLayout />,
     children: [
-      { path: 'account', element: <AccountView /> },
-      { path: 'customers', element: <CustomerListView /> },
-      { path: 'overview', element: <OverviewView /> },
       { path: 'home', element: <HomeView /> },
-      { path: 'products', element: <ProductListView /> },
-      { path: 'settings', element: <SettingsView /> },
+      { path: 'overview', element: <OverviewView /> },
+      { path: 'schedule', element: <ScheduleView /> },
+      { path: 'documents', element: <ProductListView /> },
+      { path: 'apptask', element: <SettingsView /> },
+      { path: 'analytics', element: <AnalyticsView /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
   },

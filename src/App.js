@@ -7,16 +7,19 @@ import 'src/mixins/chartjs';
 import theme from 'src/theme';
 import routes from 'src/routes';
 import { ParticipantProvider } from './context/ParticipantContext';
+import { TitleProvider } from './context/TitleContext';
 
 const App = () => {
   const routing = useRoutes(routes);
 
   return (
     <ThemeProvider theme={theme}>
-      <ParticipantProvider>
-        <GlobalStyles />
-        {routing}
-      </ParticipantProvider>
+      <TitleProvider>
+        <ParticipantProvider>
+          <GlobalStyles />
+          {routing}
+        </ParticipantProvider>
+      </TitleProvider>
     </ThemeProvider>
   );
 };

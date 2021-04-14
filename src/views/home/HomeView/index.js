@@ -137,14 +137,14 @@ export default function HomeView() {
     const circleMarkerGroup = [];
 
     participants.map((participant) => {
-      if (participant.outOfBattery || participant.placeAlert || participant.heartRate || participant.calendar) {
+      // if (participant.outOfBattery || participant.placeAlert || participant.heartRate || participant.calendar) {
           circleMarkerGroup.push(
             <div>
               <Marker
                 position={participant.location}
                 icon={MarkerIcon}
-                riseOnHover
-                riseOffset={700}
+                // riseOnHover
+                // riseOffset={700}
               >
                 <Tooltip direction='bottom' opacity={1} permanent className={classes.leafletTooltip} offset={[0, 7]}>
                     {participant.name}
@@ -186,24 +186,24 @@ export default function HomeView() {
               
             </div>
           );
-      } else {
-        circleMarkerGroup.push(
-          <Marker
-            position={participant.location}
-            icon={MarkerEmptyIcon}
-          >
-            <Tooltip direction='bottom' opacity={1} permanent className={classes.leafletTooltip} offset={[0, 7]}>
-                {participant.name}
-                {/* &apos;s Exclusion Zone. */}
-            </Tooltip>
-          </Marker>
-          // <CircleMarker center={participant.location} pathOptions={toggleCircleMarker[participant.id] ? colorOption2 : colorOption1} radius={10} opacity={1}>
-          //   <Tooltip direction='bottom' opacity={1} permanent className={classes.leafletTooltip} offset={[0, 7]}>
-          //       {participant.name}
-          //   </Tooltip>
-          // </CircleMarker>
-        );
-      }
+      // } else {
+      //   circleMarkerGroup.push(
+      //     <Marker
+      //       position={participant.location}
+      //       icon={MarkerEmptyIcon}
+      //     >
+      //       <Tooltip direction='bottom' opacity={1} permanent className={classes.leafletTooltip} offset={[0, 7]}>
+      //           {participant.name}
+      //           {/* &apos;s Exclusion Zone. */}
+      //       </Tooltip>
+      //     </Marker>
+      //     // <CircleMarker center={participant.location} pathOptions={toggleCircleMarker[participant.id] ? colorOption2 : colorOption1} radius={10} opacity={1}>
+      //     //   <Tooltip direction='bottom' opacity={1} permanent className={classes.leafletTooltip} offset={[0, 7]}>
+      //     //       {participant.name}
+      //     //   </Tooltip>
+      //     // </CircleMarker>
+      //   );
+      // }
       // }
     });
 
