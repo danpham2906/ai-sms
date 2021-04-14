@@ -23,7 +23,10 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
-import { Typography } from '@material-ui/core';
+import {
+  Typography,
+  Card
+} from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import AnnouncementIcon from '@material-ui/icons/Announcement';
 import FavoriteIcon from '@material-ui/icons/Favorite';
@@ -45,16 +48,20 @@ const useStyles = makeStyles((theme) => ({
   map: {
     width: '100vw',
     height: '100vh',
-    position: 'absolute',
+    // position: 'absolute',
     overflow: 'unset',
   },
   container: {
     position: 'relative',
   },
+  cardContainer: {
+    height: '100%',
+  },
   participantContainer: {
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
     position: 'absolute',
+    width: 'calc(100% - 300px)',
   },
   participantList: {
     height: 240,
@@ -140,7 +147,12 @@ export default function HomeView() {
       // if (participant.outOfBattery || participant.placeAlert || participant.heartRate || participant.calendar) {
           circleMarkerGroup.push(
             <div>
-              <Marker
+              <CircleMarker center={participant.location} pathOptions={toggleCircleMarker[participant.id] ? colorOption2 : colorOption1} radius={10} opacity={1}>
+                <Tooltip direction='bottom' opacity={1} permanent className={classes.leafletTooltip} offset={[0, 7]}>
+                  {participant.name}
+                </Tooltip>
+              </CircleMarker>
+              {/* <Marker
                 position={participant.location}
                 icon={MarkerIcon}
                 // riseOnHover
@@ -148,7 +160,6 @@ export default function HomeView() {
               >
                 <Tooltip direction='bottom' opacity={1} permanent className={classes.leafletTooltip} offset={[0, 7]}>
                     {participant.name}
-                    {/* &apos;s Exclusion Zone. */}
                 </Tooltip>
               </Marker>
 
@@ -182,7 +193,7 @@ export default function HomeView() {
                 icon={MarkerCalendarIcon}
               >
               </Marker>)
-              : '' }
+              : '' } */}
               
             </div>
           );
@@ -259,24 +270,26 @@ export default function HomeView() {
             </Grid>
         </Container>
 
-        <Container maxWidth='true' className={classes.container}>
-            <Grid container>
-                {/* Maps */}
-                <Grid container item>
-                    <MapContainer spacing={3} center={position} zoom={14} zoomControl={false} scrollWheelZoom={false} className={classes.map} whenCreated={setMap}>
-                        <TileLayer
-                            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                        />
+        <Card className={classes.cardContainer}>
+          <Container maxWidth='true' className={classes.container}>
+              {/* <Grid container> */}
+                  {/* Maps */}
+                  {/* <Grid container item> */}
+                      <MapContainer spacing={3} center={position} zoom={14} zoomControl={false} scrollWheelZoom={false} className={classes.map} whenCreated={setMap}>
+                          <TileLayer
+                              attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                          />
 
-                        <ZoomControl position="topright" />
+                          <ZoomControl position="topright" />
 
-                        <CircleMarkerGroup /> 
+                          <CircleMarkerGroup /> 
 
-                    </MapContainer>
-                </Grid>
-            </Grid>
-        </Container>
+                      </MapContainer>
+                  {/* </Grid> */}
+              {/* </Grid> */}
+          </Container>
+        </Card>
     </React.Fragment>
   );
 }
