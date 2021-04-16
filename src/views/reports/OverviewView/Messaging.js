@@ -15,6 +15,7 @@ import {
   Button
 } from '@material-ui/core';
 // import { ParticipantContext } from '../../../context/ParticipantContext';
+import { MuiChat, ChatController } from 'chat-ui-react';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -49,13 +50,30 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     'flex-direction': 'column',
     'min-height': 0,
-    height: 320,
+    // height: 320,
+    height: 350,
     padding: '10px 3px 20px 5px',
   }
 }));
 
 const Messaging = ({ className, ...rest }) => {
   const classes = useStyles();
+  const [chatCtl] = React.useState(new ChatController());
+
+  React.useMemo(async () => {
+    await chatCtl.addMessage({
+      type: 'text',
+      content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`,
+      self: false,
+    });
+    chatCtl.setActionRequest({ type: 'text', always: true }, (res) =>
+      chatCtl.addMessage({
+        type: 'text',
+        content: `Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`,
+        self: false,
+      }),
+    );
+  }, [chatCtl]);
 
   return (
     <Card
@@ -72,7 +90,7 @@ const Messaging = ({ className, ...rest }) => {
         </Typography>
         <Grid container className={classes.flexSection}>
             
-            <Grid
+            {/* <Grid
                 item
                 className={classes.flexColScroll}
             >
@@ -89,9 +107,11 @@ const Messaging = ({ className, ...rest }) => {
                     Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
                     Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                 </Typography>
-            </Grid>
+                
+            </Grid> */}
+            <MuiChat  chatController={chatCtl} />
         </Grid>
-        <Grid
+        {/* <Grid
           container
           spacing={2}
         >
@@ -103,7 +123,7 @@ const Messaging = ({ className, ...rest }) => {
                 SEND
             </Button>
           </Grid>
-        </Grid>
+        </Grid> */}
       </CardContent>
     </Card>
   );

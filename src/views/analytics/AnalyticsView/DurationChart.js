@@ -115,7 +115,7 @@ const DurationChart = ({ className, ...rest }) => {
                 gutterBottom
                 variant="h6"
                 >
-                  VISITED LOCATIONS BY DURATION
+                  VISITED LOCATIONS BY <br></br>DURATION
                 </Typography>
             </Grid>
         </Grid>

@@ -23,6 +23,8 @@ import {
 } from 'react-leaflet';
 import { ParticipantContext } from '../../../context/ParticipantContext';
 // import data from '../../../data/data';
+import VisitedMarker from './VisitedMarker';
+import data from '../../../data/VisitedPlaces.json';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -82,6 +84,8 @@ const Map = ({ className, ...rest }) => {
         />
 
         <ZoomControl position="topright" />
+
+        <VisitedMarker visitedPlaces={data.visitedPlaces} />
 
       </MapContainer>
     </Card>

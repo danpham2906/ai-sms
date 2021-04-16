@@ -37,7 +37,7 @@
         "paroleeEmail": "prattlang@medcom.com",
         "paroleePhone": "+1 (805) 593-3150",
         "type": "Zoom",
-        "status": "Pending",
+        "status": "Declined",
         "comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
         "createdAt": "12/13/2020",
         "updatedAt": "12/15/2020"

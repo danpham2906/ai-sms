@@ -16,9 +16,12 @@ import {
   TablePagination,
   TableRow,
   Typography,
-  makeStyles
+  makeStyles,
+  Menu,
+  MenuItem
 } from '@material-ui/core';
 import getInitials from 'src/utils/getInitials';
+import StatusButton from './StatusButton';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -100,9 +103,9 @@ const Results = ({ className, entries, ...rest }) => {
                 <TableCell>
                   Time
                 </TableCell>
-                <TableCell>
+                {/* <TableCell>
                   Parolee Photo
-                </TableCell>
+                </TableCell> */}
                 <TableCell>
                   Parolee
                 </TableCell>
@@ -160,14 +163,14 @@ const Results = ({ className, entries, ...rest }) => {
                   <TableCell width="10%">
                     {entry.time}
                   </TableCell>
-                  <TableCell width="10%">
+                  {/* <TableCell width="10%">
                     <Avatar
                       className={classes.avatar}
                       src={entry.paroleePhoto}
                     >
                       {getInitials(entry.parolee)}
                     </Avatar>
-                  </TableCell>
+                  </TableCell> */}
                   <TableCell width="10%">
                     {entry.parolee}
                   </TableCell>
@@ -175,14 +178,14 @@ const Results = ({ className, entries, ...rest }) => {
                     {entry.paroleeEmail}
                     {/* {moment(entry.createdAt).format('DD/MM/YYYY')} */}
                   </TableCell>
-                  <TableCell width="7%">
+                  <TableCell width="15%">
                     {entry.paroleePhone}
                   </TableCell>
-                  <TableCell width="5%">
+                  <TableCell width="7%">
                     {entry.type}
                   </TableCell>
                   <TableCell width="5%">
-                    {entry.status}
+                    <StatusButton status={entry.status}/>
                   </TableCell>
                   <TableCell width="30%">
                     {entry.comment}
