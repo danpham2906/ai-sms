@@ -203,7 +203,7 @@ class ScheduleView extends React.Component {
       >
         <Scheduler
           data={this.state.schedulerEntries}
-          // height={800}
+          height={800}
         >
           <ViewState
               currentDate={this.state.currentDateInfo}
