@@ -43,11 +43,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function StatusButton({ status }) {
+export default function StatusButton(props) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const anchorRef = React.useRef(null);
-  const [statusText, setStatusText] = useState(status);
+  // console.log(props);
+  const [statusText, setStatusText] = useState(props.status);
+
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
@@ -68,15 +70,20 @@ export default function StatusButton({ status }) {
     for (var i in obj) {
         console.log(i + " - " + obj[i]);
     }
-}
+  }
 
   const handleClose = (event) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
-    // printObj(event.currentTarget);
-    setStatusText(event.currentTarget.textContent);
+    console.log(event.currentTarget.textContent);
+    if (event.currentTarget.textContent != null) {
+      setStatusText(event.currentTarget.textContent);
+    }
     setOpen(false);
+
+    // props.status = event.currentTarget.textContent;
+    props.onChange(event.currentTarget.textContent);
   };
 
   function handleListKeyDown(event) {

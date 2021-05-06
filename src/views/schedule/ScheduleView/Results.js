@@ -30,42 +30,43 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Results = ({ className, entries, ...rest }) => {
+const Results = ({ className, entries, onScheduleChange, ...rest }) => {
   const classes = useStyles();
-  const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
+  const [selectedEntryIds, setSelectedEntryIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
+  const [scheduleEntries, setScheduleEntries] = useState(entries);
 
   const handleSelectAll = (event) => {
-    let newSelectedCustomerIds;
+    let newSelectedEntryIds;
 
     if (event.target.checked) {
-      newSelectedCustomerIds = entries.map((entry) => entry.id);
+      newSelectedEntryIds = scheduleEntries.map((entry) => entry.id);
     } else {
-      newSelectedCustomerIds = [];
+      newSelectedEntryIds = [];
     }
 
-    setSelectedCustomerIds(newSelectedCustomerIds);
+    setSelectedEntryIds(newSelectedEntryIds);
   };
 
   const handleSelectOne = (event, id) => {
-    const selectedIndex = selectedCustomerIds.indexOf(id);
-    let newSelectedCustomerIds = [];
+    const selectedIndex = selectedEntryIds.indexOf(id);
+    let newSelectedEntryIds = [];
 
     if (selectedIndex === -1) {
-      newSelectedCustomerIds = newSelectedCustomerIds.concat(selectedCustomerIds, id);
+      newSelectedEntryIds = newSelectedEntryIds.concat(selectedEntryIds, id);
     } else if (selectedIndex === 0) {
-      newSelectedCustomerIds = newSelectedCustomerIds.concat(selectedCustomerIds.slice(1));
-    } else if (selectedIndex === selectedCustomerIds.length - 1) {
-      newSelectedCustomerIds = newSelectedCustomerIds.concat(selectedCustomerIds.slice(0, -1));
+      newSelectedEntryIds = newSelectedEntryIds.concat(selectedEntryIds.slice(1));
+    } else if (selectedIndex === selectedEntryIds.length - 1) {
+      newSelectedEntryIds = newSelectedEntryIds.concat(selectedEntryIds.slice(0, -1));
     } else if (selectedIndex > 0) {
-      newSelectedCustomerIds = newSelectedCustomerIds.concat(
-        selectedCustomerIds.slice(0, selectedIndex),
-        selectedCustomerIds.slice(selectedIndex + 1)
+      newSelectedEntryIds = newSelectedEntryIds.concat(
+        selectedEntryIds.slice(0, selectedIndex),
+        selectedEntryIds.slice(selectedIndex + 1)
       );
     }
 
-    setSelectedCustomerIds(newSelectedCustomerIds);
+    setSelectedEntryIds(newSelectedEntryIds);
   };
 
   const handleLimitChange = (event) => {
@@ -75,6 +76,24 @@ const Results = ({ className, entries, ...rest }) => {
   const handlePageChange = (event, newPage) => {
     setPage(newPage);
   };
+
+  function printObj(obj) {
+    for (var i in obj) {
+        console.log(i + " - " + obj[i]);
+    }
+  }
+
+  function handleStatusChange(newStatus, id) {
+    // props.onChange(event.target.value);
+    // console.log("Child buttonClick");
+    // console.log(id);
+    // console.log(newStatus);
+    // console.log(scheduleEntries.find(item => item.id === id).status);
+    scheduleEntries.find(item => item.id === id).status = newStatus;
+    // console.log(scheduleEntries.find(item => item.id === id).status);
+    onScheduleChange();
+    // console.log(props.entries);
+  }
 
   return (
     <Card
@@ -88,11 +107,11 @@ const Results = ({ className, entries, ...rest }) => {
               <TableRow>
                 <TableCell padding="checkbox">
                   <Checkbox
-                    checked={selectedCustomerIds.length === entries.length}
+                    checked={selectedEntryIds.length === scheduleEntries.length}
                     color="primary"
                     indeterminate={
-                      selectedCustomerIds.length > 0
-                      && selectedCustomerIds.length < entries.length
+                      selectedEntryIds.length > 0
+                      && selectedEntryIds.length < scheduleEntries.length
                     }
                     onChange={handleSelectAll}
                   />
@@ -133,15 +152,15 @@ const Results = ({ className, entries, ...rest }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {entries.slice(0, limit).map((entry) => (
+              {scheduleEntries.slice(0, limit).map((entry) => (
                 <TableRow
                   hover
                   key={entry.id}
-                  selected={selectedCustomerIds.indexOf(entry.id) !== -1}
+                  selected={selectedEntryIds.indexOf(entry.id) !== -1}
                 >
                   <TableCell padding="checkbox" width="5%">
                     <Checkbox
-                      checked={selectedCustomerIds.indexOf(entry.id) !== -1}
+                      checked={selectedEntryIds.indexOf(entry.id) !== -1}
                       onChange={(event) => handleSelectOne(event, entry.id)}
                       value="true"
                     />
@@ -152,12 +171,6 @@ const Results = ({ className, entries, ...rest }) => {
                       display="flex"
                     >
                       {entry.requestedBy}
-                      {/* <Typography
-                        color="textPrimary"
-                        variant="body1"
-                      >
-                        {entry.parolee}
-                      </Typography> */}
                     </Box>
                   </TableCell>
                   <TableCell width="10%">
@@ -176,7 +189,6 @@ const Results = ({ className, entries, ...rest }) => {
                   </TableCell>
                   <TableCell width="13%">
                     {entry.paroleeEmail}
-                    {/* {moment(entry.createdAt).format('DD/MM/YYYY')} */}
                   </TableCell>
                   <TableCell width="15%">
                     {entry.paroleePhone}
@@ -185,7 +197,10 @@ const Results = ({ className, entries, ...rest }) => {
                     {entry.type}
                   </TableCell>
                   <TableCell width="5%">
-                    <StatusButton status={entry.status}/>
+                    <StatusButton
+                      status={entry.status}
+                      onChange={(event) => handleStatusChange(event, entry.id)}
+                    />
                   </TableCell>
                   <TableCell width="30%">
                     {entry.comment}
@@ -204,7 +219,7 @@ const Results = ({ className, entries, ...rest }) => {
       </PerfectScrollbar>
       <TablePagination
         component="div"
-        count={entries.length}
+        count={scheduleEntries.length}
         onChangePage={handlePageChange}
         onChangeRowsPerPage={handleLimitChange}
         page={page}
@@ -217,7 +232,7 @@ const Results = ({ className, entries, ...rest }) => {
 
 Results.propTypes = {
   className: PropTypes.string,
-  entries: PropTypes.array.isRequired
+  scheduleEntries: PropTypes.array.isRequired
 };
 
 export default Results;
