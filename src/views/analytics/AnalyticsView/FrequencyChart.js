@@ -96,7 +96,7 @@ const FrequencyChart = ({ className, ...rest }) => {
     // console.log(randomDateStr);
     // console.log(randomValue);
     data.push({
-      name: location[i].slice(0,10) + "...",
+      name: location[i].slice(0,10) + (location[i].length <= 10 ? "" : "..."),
       value: randomValue
     });
   }
