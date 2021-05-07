@@ -34,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
   chartContainer: {
     padding: '0px 20px 20px 0px',
+    height: 410,
   }
 }));
 
@@ -79,24 +80,46 @@ const DurationChart = ({ className, ...rest }) => {
     },
   }
 
-  const data = [
-    {year: 2002, efficiency: 29, sales: 8042000},
-    {year: 2003, efficiency: 29.5, sales: 7556000},
-    {year: 2004, efficiency: 29.5, sales: 7483000},
-    {year: 2005, efficiency: 30.3, sales: 7660000},
-    {year: 2006, efficiency: 30.1, sales: 7762000},
-    {year: 2007, efficiency: 31.2, sales: 7562000},
-    {year: 2008, efficiency: 31.5, sales: 6769000},
-    {year: 2009, efficiency: 32.9, sales: 5402000},
-    {year: 2010, efficiency: 33.9, sales: 5636000},
-    {year: 2011, efficiency: 33.1, sales: 6093000},
-    {year: 2012, efficiency: 35.3, sales: 7245000},
-    {year: 2013, efficiency: 36.4, sales: 7586000},
-    {year: 2014, efficiency: 36.5, sales: 7708000},
-    {year: 2015, efficiency: 37.2, sales: 7517000},
-    {year: 2016, efficiency: 37.7, sales: 6873000},
-    {year: 2017, efficiency: 39.4, sales: 6081000},
-  ]
+  const data = [];
+  const location = [
+    "University Pickers", "Walmart Supercenter", "Target", "Pants Store",
+    "At Home", "Neighborhooad Store", "Harrison Brothers Hardware",
+    "University Furniture Gallery", "Dillard's", "Citi Trends",
+    "Southern Growler", "Digineli Industries Inc",
+    "Nektar Therapeutics Alabama", "Boeing (JetPlex)", "Arcarithm, Inc",
+    "Schrimsher Company", "Pharicode", "Innerspace Brewing Company",
+    "Northside Coffee", "Hot Spot Bar & Grill", "Drake's Huntsville",
+    "Jefferson Street Pub",
+  ];
+  for (let i = 0; i < location.length; i++) {
+      var randomValue = Math.round(Math.random() * i * 12 + 1);
+      // console.log(randomDateStr);
+      // console.log(randomValue);
+      data.push({
+        name: location[i].slice(0,10) + "...",
+        value: randomValue
+      });
+  }
+  // console.log(data);
+
+  // const data = [
+  //   {year: 2002, efficiency: 29, sales: 8042000},
+  //   {year: 2003, efficiency: 29.5, sales: 7556000},
+  //   {year: 2004, efficiency: 29.5, sales: 7483000},
+  //   {year: 2005, efficiency: 30.3, sales: 7660000},
+  //   {year: 2006, efficiency: 30.1, sales: 7762000},
+  //   {year: 2007, efficiency: 31.2, sales: 7562000},
+  //   {year: 2008, efficiency: 31.5, sales: 6769000},
+  //   {year: 2009, efficiency: 32.9, sales: 5402000},
+  //   {year: 2010, efficiency: 33.9, sales: 5636000},
+  //   {year: 2011, efficiency: 33.1, sales: 6093000},
+  //   {year: 2012, efficiency: 35.3, sales: 7245000},
+  //   {year: 2013, efficiency: 36.4, sales: 7586000},
+  //   {year: 2014, efficiency: 36.5, sales: 7708000},
+  //   {year: 2015, efficiency: 37.2, sales: 7517000},
+  //   {year: 2016, efficiency: 37.7, sales: 6873000},
+  //   {year: 2017, efficiency: 39.4, sales: 6081000},
+  // ]
 
   return (
     <Card
@@ -125,7 +148,12 @@ const DurationChart = ({ className, ...rest }) => {
           spacing={3}
           className={classes.chartContainer}
         >
-            <HorizontalBarChart data={data} color="Turquoise"/>
+            <HorizontalBarChart
+              data={data}
+              width={220}
+              height={400}
+              color="Turquoise"
+            />
         </Grid>
       </CardContent>
     </Card>

@@ -3,66 +3,67 @@ import { useD3 } from './useD3';
 import React from 'react';
 import * as d3 from 'd3';
 
-function HorizontalBarChart({ data, color }) {
+function HorizontalBarChart({ data, width, height, color }) {
   const ref = useD3(
     (svg) => {
-      const height = 400;
-      const width = 250;
-      const margin = { top: 20, right: 30, bottom: 30, left: 40 };
+    //   const height = 400;
+    //   const width = 250;
+      const margin = {top: 30, right: 0, bottom: 10, left: 80};
+      const barHeight = 25;
 
-      const x = d3
-        .scaleBand()
-        .domain(data.map((d) => d.year))
-        .rangeRound([margin.left, width - margin.right])
+      const x = d3.scaleLinear()
+        .domain([0, d3.max(data, d => d.value)])
+        .range([margin.left, width - margin.right]);
+
+      const y = d3.scaleBand()
+        .domain(d3.range(data.length))
+        .rangeRound([margin.top, height - margin.bottom])
         .padding(0.1);
 
-      const y1 = d3
-        .scaleLinear()
-        .domain([0, d3.max(data, (d) => d.sales/1000)])
-        .rangeRound([height - margin.bottom, margin.top]);
+      const format = x.tickFormat(20, data.format);
 
-      const xAxis = (g) =>
-        g.attr("transform", `translate(0,${height - margin.bottom})`).call(
-          d3
-            .axisBottom(x)
-            .tickValues(
-              d3
-                .ticks(...d3.extent(x.domain()), width / 40)
-                .filter((v) => x(v) !== undefined)
-            )
-            .tickSizeOuter(0)
-        );
+      const xAxis = g => g
+        .attr("transform", `translate(0,${margin.top})`)
+        .call(d3.axisTop(x).ticks(width / 80, data.format))
+        .call(g => g.select(".domain").remove());
 
-      const y1Axis = (g) =>
-        g
-          .attr("transform", `translate(${margin.left},0)`)
-          .style("color", "steelblue")
-          .call(d3.axisLeft(y1).ticks(null, "s"))
-          .call((g) => g.select(".domain").remove())
-          .call((g) =>
-            g
-              .append("text")
-              .attr("x", -margin.left)
-              .attr("y", 10)
-              .attr("fill", "currentColor")
-              .attr("text-anchor", "start")
-              .text(data.y1)
-          );
+      const yAxis = g => g
+        .attr("transform", `translate(${margin.left},0)`)
+        .call(d3.axisLeft(y).tickFormat(i => data[i].name).tickSizeOuter(0));
 
-      svg.select(".x-axis").call(xAxis);
-      svg.select(".y-axis").call(y1Axis);
-
-      svg
-        .select(".plot-area")
-        .attr("fill", color)
-        .selectAll(".bar")
+      svg.append("g")
+          .attr("fill", color)
+        .selectAll("rect")
         .data(data)
         .join("rect")
-        .attr("class", "bar")
-        .attr("x", (d) => x(d.year))
-        .attr("width", x.bandwidth())
-        .attr("y", (d) => y1(d.sales/1000))
-        .attr("height", (d) => y1(0) - y1(d.sales/1000));
+          .attr("x", x(0))
+          .attr("y", (d, i) => y(i))
+          .attr("width", d => x(d.value) - x(0))
+          .attr("height", y.bandwidth());
+      
+      svg.append("g")
+          .attr("fill", "white")
+          .attr("text-anchor", "end")
+          .attr("font-family", "sans-serif")
+          .attr("font-size", 12)
+        .selectAll("text")
+        .data(data)
+        .join("text")
+          .attr("x", d => x(d.value))
+          .attr("y", (d, i) => y(i) + y.bandwidth() / 2)
+          .attr("dy", "0.35em")
+          .attr("dx", -4)
+          .text(d => format(d.value))
+        .call(text => text.filter(d => x(d.value) - x(0) < 20) // short bars
+          .attr("dx", +4)
+          .attr("fill", "black")
+          .attr("text-anchor", "start"));
+
+      svg.append("g")
+          .call(xAxis);
+
+      svg.append("g")
+          .call(yAxis);
     },
     [data.length]
   );
@@ -71,15 +72,12 @@ function HorizontalBarChart({ data, color }) {
     <svg
       ref={ref}
       style={{
-        height: 400,
+        // height: 400,
         width: "100%",
-        marginRight: "0px",
-        marginLeft: "0px",
+        // marginRight: "0px",
+        // marginLeft: "0px",
       }}
     >
-      <g className="plot-area" />
-      <g className="x-axis" />
-      <g className="y-axis" />
     </svg>
   );
 }

@@ -33,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
   chartContainer: {
     padding: '0px 20px 20px 0px',
+    height: 200,
   },
   lineChart: {
     padding: '0px 20px 20px 0px',
@@ -57,11 +58,18 @@ const BraceletBatteryLifeHistory = ({ className, ...rest }) => {
   };
 
   const data = [];
-  for (let i = 0; i < 20; i++) {
-      const value = Math.floor(Math.random() * i + 3);
+  var randomDate = new Date('2020-01-29');
+  for (let i = 0; i < 100; i++) {
+      var randomValue = Math.random() * i;
+      randomDate.setDate(randomDate.getDate() + Math.round(Math.random()) + 1);
+      var randomDateStr = randomDate.getUTCFullYear() + "-";
+      randomDateStr = randomDateStr + (randomDate.getUTCMonth()+1) + "-";
+      randomDateStr = randomDateStr + randomDate.getUTCDate();
+      // console.log(randomDateStr);
+      // console.log(randomValue);
       data.push({
-        label: i,
-        value,
+        date: randomDateStr,
+        value: randomValue
       });
   }
 
@@ -91,7 +99,7 @@ const BraceletBatteryLifeHistory = ({ className, ...rest }) => {
           spacing={3}
           className={classes.chartContainer}
         >
-            <LineChart data={data} width={1500} height={120} className={classes.lineChart} color="Turquoise"/>
+            <LineChart data={data} width={1600} height={170} className={classes.lineChart} color="Turquoise"/>
         </Grid>
       </CardContent>
     </Card>

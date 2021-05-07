@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React, { useState } from 'react';
 import clsx from 'clsx';
-import PropTypes from 'prop-types';
+import PropTypes, { string } from 'prop-types';
 import moment from 'moment';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Results = ({ className, entries, onScheduleChange, ...rest }) => {
+const Results = ({ className, entries, onScheduleChange, onScheduleHover, ...rest }) => {
   const classes = useStyles();
   const [selectedEntryIds, setSelectedEntryIds] = useState([]);
   const [limit, setLimit] = useState(10);
@@ -95,6 +95,11 @@ const Results = ({ className, entries, onScheduleChange, ...rest }) => {
     // console.log(props.entries);
   }
 
+  function hoverHandler(event, id) {
+    console.log("Hover in Table Row " + id.toString());
+    onScheduleHover(id);
+  }
+
   return (
     <Card
       className={clsx(classes.root, className)}
@@ -157,6 +162,7 @@ const Results = ({ className, entries, onScheduleChange, ...rest }) => {
                   hover
                   key={entry.id}
                   selected={selectedEntryIds.indexOf(entry.id) !== -1}
+                  onMouseEnter={(event) => hoverHandler(event, entry.id)}
                 >
                   <TableCell padding="checkbox" width="5%">
                     <Checkbox

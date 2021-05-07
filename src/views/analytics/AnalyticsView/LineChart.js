@@ -3,75 +3,73 @@ import { useD3 } from './useD3';
 import React from 'react';
 import * as d3 from 'd3';
 
-function BarChart({ data, width, height, color }) {
+function LineChart({ data, width, height, color }) {
+  // const svg = d3.create("svg")
+  //     .attr("viewBox", [0, 0, width, height]);
+
+  const parser = d3.timeParse("%Y-%m-%d");
+  for (var i in data) {
+    data[i].date = parser(data[i].date);
+    // console.log(data[i].date)
+  }
+
   const ref = useD3(
     (svg) => {
-      const margin = {top: 20, right: 30, bottom: 30, left: 40};
-      const yMinValue = d3.min(data, d => d.value);
-      const yMaxValue = d3.max(data, d => d.value);
-      const xMinValue = d3.min(data, d => d.label);
-      const xMaxValue = d3.max(data, d => d.label);
+      const margin = {top: 20, right: 30, bottom: 30, left: 50};
+      // const height = 500;
 
-      svg
-        .select('#container')
-        .append('svg')
-        .attr('width', width + margin.left + margin.right)
-        .attr('height', height + margin.top + margin.bottom)
-        .append('g')
-        .attr('transform', `translate(${margin.left},${margin.top})`);
-      // const tooltip = d3
-      //   .select('#container')
-      //   .append('div')
-      //   .attr('class', 'tooltip');
+      // svg.select('#container')
+      //     .append('svg')
+      //     .attr('width', width + margin.left + margin.right)
+      //     .attr('height', height + margin.top + margin.bottom)
+      //     .append('g')
+      //     .attr('transform', `translate(${margin.left},${margin.top})`);
 
-      const xScale = d3
-        .scaleLinear()
-        .domain([xMinValue, xMaxValue])
-        .range([0, width]);
-      const yScale = d3
-        .scaleLinear()
-        .range([height, 0])
-        .domain([0, yMaxValue]);
-      const line = d3
-        .line()
-        .x(d => xScale(d.label))
-        .y(d => yScale(d.value))    
-        .curve(d3.curveMonotoneX);
+      const line = d3.line()
+        .defined(d => !isNaN(d.value))
+        .x(d => x(d.date))
+        .y(d => y(d.value));
 
-        svg
-          .append('g')
-          .attr('class', 'grid')
-          .attr('transform', `translate(0,${height})`)
-          .call(
-          d3.axisBottom(xScale)
-              .tickSize(-height)
-              .tickFormat(''),
-          );
-        svg
-          .append('g')
-          .attr('class', 'grid')
-          .call(
-              d3.axisLeft(yScale)
-              .tickSize(-width)
-              .tickFormat(''),
-          );
-        svg
-          .append('g')
-          .attr('class', 'x-axis')
-          .attr('transform', `translate(0,${height})`)
-          .call(d3.axisBottom().scale(xScale).tickSize(15));
-        svg
-          .append('g')
-          .attr('class', 'y-axis')
-          .call(d3.axisLeft(yScale));
-        svg
-          .append('path')
+      const x = d3.scaleUtc()
+        .domain(d3.extent(data, d => d.date))
+        .range([margin.left, width - margin.right]);
+      // console.log(d3.extent(data, d => d.date));
+
+      const y = d3.scaleLinear()
+        .domain([0, d3.max(data, d => d.value)]).nice()
+        .range([height - margin.bottom, margin.top]);
+
+      const xAxis = g => g
+        // .attr('class', 'x-axis')
+        .attr("transform", `translate(0,${height - margin.bottom})`)
+        .call(d3.axisBottom(x).ticks(width / 50).tickSizeOuter(0));
+
+      const yAxis = g => g
+        // .attr('class', 'y-axis')
+        .attr("transform", `translate(${margin.left},0)`)
+        .call(d3.axisLeft(y))
+        .call(g => g.select(".domain").remove())
+        .call(g => g.select(".tick:last-of-type text").clone()
+            .attr("x", 3)
+            .attr("text-anchor", "start")
+            .attr("font-weight", "bold")
+            .text(data.y));
+
+      svg.append("g")
+          .call(xAxis);
+
+      svg.append("g")
+          .call(yAxis);
+
+      svg.append("path")
           .datum(data)
-          .attr('fill', 'none')
-          .attr('stroke', color)
-          .attr('stroke-width', 4)
+          .attr("fill", "none")
+          .attr("stroke", color)
+          .attr("stroke-width", 1.5)
+          .attr("stroke-linejoin", "round")
+          .attr("stroke-linecap", "round")
           .attr('class', 'line') 
-          .attr('d', line);
+          .attr("d", line);
     },
     [data.length]
   );
@@ -80,17 +78,17 @@ function BarChart({ data, width, height, color }) {
     <svg
       ref={ref}
       style={{
-        height: 150,
+        // height: 150,
         width: "100%",
         marginRight: "0px",
         marginLeft: "0px",
       }}
     >
-      <g className="plot-area" />
+      {/* <g className="plot-area" />
       <g className="x-axis" />
-      <g className="y-axis" />
+      <g className="y-axis" /> */}
     </svg>
   );
 }
 
-export default BarChart;
+export default LineChart;

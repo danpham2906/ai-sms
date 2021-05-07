@@ -72,40 +72,40 @@ const styles = theme => ({
   },
 });
 
-const CellBase = React.memo(
-  ({
-    classes,
-    startDate,
-    formatDate,
-    otherMonth
-    // #FOLD_BLOCK
-  }) => {
-    const iconId = Math.abs(Math.floor(Math.sin(startDate.getDate()) * 10) % 3);
-    const isFirstMonthDay = startDate.getDate() === 1;
-    const formatOptions = isFirstMonthDay
-      ? { day: "numeric", month: "long" }
-      : { day: "numeric" };
-    return (
-      <TableCell
-        tabIndex={0}
-        className={classNames({
-          [classes.cell]: true,
-          [classes.rainBack]: iconId === 0,
-          [classes.sunBack]: iconId === 1,
-          [classes.cloudBack]: iconId === 2,
-          [classes.opacity]: otherMonth
-        })}
-      >
-        <div className={classes.content}>
-          <WeatherIcon classes={classes} id={iconId} />
-        </div>
-        <div className={classes.text}>
-          {formatDate(startDate, formatOptions)}
-        </div>
-      </TableCell>
-    );
-  }
-);
+// const CellBase = React.memo(
+//   ({
+//     classes,
+//     startDate,
+//     formatDate,
+//     otherMonth
+//     // #FOLD_BLOCK
+//   }) => {
+//     const iconId = Math.abs(Math.floor(Math.sin(startDate.getDate()) * 10) % 3);
+//     const isFirstMonthDay = startDate.getDate() === 1;
+//     const formatOptions = isFirstMonthDay
+//       ? { day: "numeric", month: "long" }
+//       : { day: "numeric" };
+//     return (
+//       <TableCell
+//         tabIndex={0}
+//         className={classNames({
+//           [classes.cell]: true,
+//           [classes.rainBack]: iconId === 0,
+//           [classes.sunBack]: iconId === 1,
+//           [classes.cloudBack]: iconId === 2,
+//           [classes.opacity]: otherMonth
+//         })}
+//       >
+//         <div className={classes.content}>
+//           <WeatherIcon classes={classes} id={iconId} />
+//         </div>
+//         <div className={classes.text}>
+//           {formatDate(startDate, formatOptions)}
+//         </div>
+//       </TableCell>
+//     );
+//   }
+// );
 
 const AppointmentContent = withStyles(styles, { name: 'AppointmentContent' })(({
   classes, data, formatDate, ...restProps
@@ -118,13 +118,14 @@ const AppointmentContent = withStyles(styles, { name: 'AppointmentContent' })(({
       <div className={classes.text}>
         {'Requested by: ' + data.requestedBy}
       </div>
-      <div className={classes.statusText}>
-        {'Status: ' + data.status}
-      </div>
       <div className={classes.textContainer}>
         <div className={classes.time}>
-          {formatDate(data.startDate, { hour: 'numeric', minute: 'numeric' }) + ' - ' + formatDate(data.endDate, { hour: 'numeric', minute: 'numeric' })}
+          {'Time: ' + formatDate(data.startDate, { hour: 'numeric', minute: 'numeric' })}
+          {/* {formatDate(data.startDate, { hour: 'numeric', minute: 'numeric' }) + ' - ' + formatDate(data.endDate, { hour: 'numeric', minute: 'numeric' })} */}
         </div>
+      </div>
+      <div className={classes.statusText}>
+        {'Status: ' + data.status}
       </div>
     </div>
   </Appointments.AppointmentContent>
@@ -140,12 +141,14 @@ class ScheduleView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {entries: data.entries, currentDateInfo: initialCurrentDate};
+    this.scheduler = React.createRef();
 
     this.convertSchedule();
 
     this.currentDateChange = this.currentDateChange.bind(this);
     this.convertSchedule = this.convertSchedule.bind(this);
     this.handleScheduleChange = this.handleScheduleChange.bind(this);
+    this.hoverScheduleHandler = this.hoverScheduleHandler.bind(this);
   }
 
   convertSchedule() {
@@ -181,6 +184,10 @@ class ScheduleView extends React.Component {
     this.state.schedulerEntries = schedulerContainer;
   }
 
+  componentDidMount() {
+    console.log(this.scheduler.current);
+  }
+
   currentDateChange (currentDate) {
     this.setState({currentDateInfo: currentDate});
   };
@@ -191,6 +198,12 @@ class ScheduleView extends React.Component {
     this.convertSchedule();
     // console.log(this.state.schedulerEntries);
     this.setState({schedulerEntries: this.state.schedulerEntries});
+  }
+
+  hoverScheduleHandler(id) {
+    console.log("Hover in Scheduler!! Id = " + id.toString());
+    console.log(this.scheduler.current.props.children);
+    // this.childIsHover = isHover;
   }
 
   render() {
@@ -204,6 +217,7 @@ class ScheduleView extends React.Component {
         <Scheduler
           data={this.state.schedulerEntries}
           height={800}
+          // overlay={this.childIsHover}
         >
           <ViewState
               currentDate={this.state.currentDateInfo}
@@ -218,6 +232,7 @@ class ScheduleView extends React.Component {
           <TodayButton/>
           <Appointments 
             appointmentContentComponent={AppointmentContent}
+            ref={this.scheduler}
           />
           <Resources data={resources} />
         </Scheduler>
@@ -227,6 +242,7 @@ class ScheduleView extends React.Component {
             <Results
               entries={this.state.entries}
               onScheduleChange={this.handleScheduleChange}
+              onScheduleHover={this.hoverScheduleHandler}
             />
           </Box>
         </Container>
