@@ -15,6 +15,8 @@ import {
     useTheme
 } from '@material-ui/core';
 import BatteryAlertIcon from '@material-ui/icons/BatteryAlert';
+// import BarChart from './BarChart';
+import LineChart from '../../../charts/LineChart';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,10 +35,26 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(1)
   },
   donutChartContainer: {
-    padding: '0px 10px 10px 10px',
+    padding: '0px 0px 0px 10px',
+    // flex: 1,
+    // flexDirection: 'row',
+    alignItems: 'center'
+  },
+  donutChartText: {
+    padding: '10px 0px 20px 0px',
   },
   lineChartContainer: {
-    padding: '50px 10px 20px 0px',
+    padding: '30px 10px 0px 0px',
+    // flex: 1,
+    // align: 'center',
+    margin: 'auto',
+    // height: '300px',
+  },
+  lineChart: {
+    // padding: '0px 10px 10px 0px',
+    height: '200px',
+    // marginLeft: 'auto',
+    // marginRight: 'auto',
   }
 }));
 
@@ -63,13 +81,13 @@ const BraceletStatus = ({ className, ...rest }) => {
 
   const options = {
     animation: false,
-    cutoutPercentage: 80,
-    layout: { padding: '20px 0px 20px 0px' },
+    cutoutPercentage: 70,
+    layout: { padding: '10px 0px 10px 0px' },
     legend: {
       display: false
     },
     maintainAspectRatio: false,
-    responsive: true,
+    responsive: false,
     tooltips: {
       backgroundColor: theme.palette.background.default,
       bodyFontColor: theme.palette.text.secondary,
@@ -83,29 +101,45 @@ const BraceletStatus = ({ className, ...rest }) => {
     }
   };
 
-  const dataLine = {
-    labels: ['1', '2', '3', '4', '5', '6'],
-    datasets: [
-      {
-        label: '',
-        data: [7, 4, 3, 5, 2, 3],
-        fill: false,
-        backgroundColor: 'rgb(255, 99, 132)',
-        borderColor: 'rgba(255, 99, 132, 0.2)',
-      },
-    ],
-  }
+  // const dataLine = {
+  //   labels: ['1', '2', '3', '4', '5', '6'],
+  //   datasets: [
+  //     {
+  //       label: '',
+  //       data: [7, 4, 3, 5, 2, 3],
+  //       fill: false,
+  //       backgroundColor: 'rgb(255, 99, 132)',
+  //       borderColor: 'rgba(255, 99, 132, 0.2)',
+  //     },
+  //   ],
+  // }
   
-  const optionsLine = {
-    scales: {
-      yAxes: [
-        {
-          ticks: {
-            beginAtZero: true,
-          },
-        },
-      ],
-    },
+  // const optionsLine = {
+  //   scales: {
+  //     yAxes: [
+  //       {
+  //         ticks: {
+  //           beginAtZero: true,
+  //         },
+  //       },
+  //     ],
+  //   },
+  // }
+
+  const dataLine = [];
+  var randomDate = new Date('2020-01-29');
+  for (let i = 0; i < 20; i++) {
+      var randomValue = Math.random() * i * 10;
+      randomDate.setDate(randomDate.getDate() + Math.round(Math.random()) + 1);
+      var randomDateStr = randomDate.getUTCFullYear() + "-";
+      randomDateStr = randomDateStr + (randomDate.getUTCMonth()+1) + "-";
+      randomDateStr = randomDateStr + randomDate.getUTCDate();
+      // console.log(randomDateStr);
+      // console.log(randomValue);
+      dataLine.push({
+        date: randomDateStr,
+        value: randomValue
+      });
   }
 
   return (
@@ -143,22 +177,32 @@ const BraceletStatus = ({ className, ...rest }) => {
           <Grid item>
             <Typography
                 color="textSecondary"
-                gutterBottom
+                // gutterBottom
                 align="center"
                 variant="h5"
-                >
+                className={classes.donutChartText}
+            >
                 Bracelet Battery
             </Typography>
             <Doughnut
                 data={data}
                 options={options}
-                width='250px'
+                width={230}
+                height={180}
             />
         </Grid>
         <div className={classes.lineChartContainer}>
-            <Grid item>
-                <Line data={dataLine} options={optionsLine}/>
-            </Grid>
+            {/* <Grid item> */}
+                {/* <Line data={dataLine} options={optionsLine}/> */}
+                <LineChart
+                  data={dataLine}
+                  width={320}
+                  height={250}
+                  className={classes.lineChart}
+                  color="LightCoral"
+                  tickLength={75}
+                />
+            {/* </Grid> */}
         </div>
         </Grid>
       </CardContent>

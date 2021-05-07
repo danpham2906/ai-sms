@@ -10,7 +10,7 @@ import PersonalInformation from './PersonalInformation';
 import Schedule from './Schedule';
 import Messaging from './Messaging';
 import BraceletStatus from './BraceletStatus';
-import AppTask from './AppTask';
+import SentencingInformation from './SentencingInformation';
 import TimelineLog from './TimelineLog';
 
 const useStyles = makeStyles((theme) => ({
@@ -51,7 +51,7 @@ const Overview = () => {
             xl={3}
             xs={12}
           >
-            <Schedule />
+            <SentencingInformation />
           </Grid>
           <Grid
             item
@@ -79,7 +79,7 @@ const Overview = () => {
             xl={3}
             xs={12}
           >
-            <AppTask />
+            <Schedule />
           </Grid>
           <Grid
             item

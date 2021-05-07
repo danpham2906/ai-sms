@@ -83,7 +83,7 @@ const TopBar = ({
             className={classes.avatar}
             component={RouterLink}
             src={officer.avatar}
-            to="/app/account"
+            to="/app/apptask"
           />
         </Box>
         <Box flexDirection="row">

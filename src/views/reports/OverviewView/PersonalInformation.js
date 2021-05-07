@@ -23,13 +23,13 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: colors.grey,
     height: 70,
     width: 70,
-    margin: '20% 35%',
+    margin: '12% 35%',
   },
   avatarContainer: {
     padding: '20px 20px 20px 20px',
   },
   participantName: {
-    padding: '27px 20px 0px 20px',
+    padding: '18px 20px 15px 20px',
   },
   flexColScroll: {
     'flex-grow': 1,
@@ -44,8 +44,13 @@ const useStyles = makeStyles((theme) => ({
     'flex-direction': 'column',
     'min-height': 0,
     height: 200,
-    padding: '20px 3px 5px 5px',
-  }
+    // padding: '5px 3px 15px 5px',
+    padding: '5px 3px 15px 15px',
+  },
+  column: {
+    float: 'left',
+    width: '50%'
+  },
 }));
 
 const PersonalInformation = ({ className, ...rest }) => {
@@ -81,20 +86,31 @@ const PersonalInformation = ({ className, ...rest }) => {
         <Grid container className={classes.flexSection}>
             <Grid
                 item
-                className={classes.flexColScroll}
+                // className={classes.flexColScroll}
             >
                 <Typography
                     color="textSecondary"
                     variant="body1"
                 >
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-                    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-                    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                  <div className={classes.row}>
+                    <div className={classes.column}>
+                      <b>Physical Profile</b><br/>
+                      Date of Birth: 02/05/1986<br/>
+                      Weight: 230 lbs.<br/>
+                      Hair: Brown<br/>
+                      Sex: Male<br/>
+                      Height: 6 ft. 03 in.<br/>
+                      Race: Black<br/>
+                      Eyes: Brown
+                    </div>
+                    <div className={classes.column}>
+                      <b>Parole Info</b><br/>
+                      Admission Date: 04/27/2020<br/>
+                      Parole Date: 01/10/2021<br/>
+                      Last Paroled Date:<br/>
+                      Discharge Date: 01/10/2022
+                    </div>
+                  </div>
                 </Typography>
             </Grid>
         </Grid>

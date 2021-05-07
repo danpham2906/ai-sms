@@ -38,7 +38,7 @@ const items = [
   {
     href: '/app/home',
     icon: HomeIcon,
-    title: 'Home'
+    title: 'Overview'
   },
   {
     title: 'Support the 5-Key Model'
@@ -46,7 +46,7 @@ const items = [
   {
     href: '/app/overview',
     icon: LayoutIcon,
-    title: 'Overview'
+    title: 'Participant Status'
   },
   {
     href: '/app/schedule',
@@ -61,7 +61,7 @@ const items = [
   {
     href: '/app/apptask',
     icon: BriefcaseIcon,
-    title: 'App&Tasks or JOB'
+    title: 'GOAL App'
   },
   {
     href: '/app/analytics',

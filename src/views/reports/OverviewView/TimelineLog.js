@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     'flex-direction': 'column',
     'min-height': 0,
-    height: 370,
+    height: 350,
     padding: '20px 10px 20px 10px',
   },
   secondaryTail: {
