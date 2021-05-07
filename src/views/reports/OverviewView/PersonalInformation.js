@@ -100,7 +100,6 @@ const PersonalInformation = ({ className, ...rest }) => {
                       Hair: Brown<br/>
                       Sex: Male<br/>
                       Height: 6 ft. 03 in.<br/>
-                      Race: Black<br/>
                       Eyes: Brown
                     </div>
                     <div className={classes.column}>
