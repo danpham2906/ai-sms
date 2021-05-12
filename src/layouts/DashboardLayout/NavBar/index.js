@@ -44,7 +44,7 @@ const items = [
     title: 'Support the 5-Key Model'
   },
   {
-    href: '/app/overview',
+    href: '/app/participantstatus',
     icon: LayoutIcon,
     title: 'Participant Status'
   },
@@ -53,13 +53,13 @@ const items = [
     icon: CalendarIcon,
     title: 'Schedule'
   },
+  // {
+  //   href: '/app/documents',
+  //   icon: FileTextIcon,
+  //   title: 'Documents'
+  // },
   {
-    href: '/app/documents',
-    icon: FileTextIcon,
-    title: 'Documents'
-  },
-  {
-    href: '/app/apptask',
+    href: '/app/goalapp',
     icon: BriefcaseIcon,
     title: 'GOAL App'
   },
@@ -95,7 +95,7 @@ const useStyles = makeStyles(() => ({
     height: 'calc(100% - 64px)'
   },
   avatar: {
-    cursor: 'pointer',
+    // cursor: 'pointer',
     width: 64,
     height: 64
   }
@@ -173,9 +173,9 @@ const NavBar = ({ onMobileClose, openMobile }) => {
       >
         <Avatar
           className={classes.avatar}
-          component={RouterLink}
+          // component={RouterLink}
           src={user.avatar}
-          to="/app/apptask"
+          // to="/app/documents"
         />
         <Typography
           className={classes.name}

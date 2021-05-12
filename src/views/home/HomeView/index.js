@@ -32,6 +32,8 @@ import AnnouncementIcon from '@material-ui/icons/Announcement';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import BatteryAlertIcon from '@material-ui/icons/BatteryAlert';
 import DateRangeIcon from '@material-ui/icons/DateRange';
+import ParticipantList from './ParticipantList';
+import CircleMarkerGroup from './CircleMarkerGroup';
 import data from '../../../data/data';
 // import { ChangeParticipantName } from 'src/layouts/DashboardLayout/NavBar';
 import { ParticipantContext } from '../../../context/ParticipantContext';
@@ -80,11 +82,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const colorOption1 = { color: 'blue' };
-const colorOption2 = { color: 'red' };
-
 const position = [34.73, -86.60];
-const testPosition = [34.745, -86.63];
 
 // console.log("participants: " + data.participants.map((participant) => JSON.stringify(participant)))
 
@@ -102,8 +100,8 @@ if (valueCircleMarker.length < 1) {
 export default function HomeView() {
   const classes = useStyles();
 
-  const [map, setMap] = useState(null);
-  const [circleMarker, setCircleMarker] = useState(null);
+  // const [map, setMap] = useState(null);
+  // const [circleMarker, setCircleMarker] = useState(null);
   const [toggleCircleMarker, setToggleCircleMarker] = useState([]);
   const [toggleCMState, setToggleCMState] = useState(true);
 
@@ -114,6 +112,7 @@ export default function HomeView() {
   }, []);
 
   function SelectParticipant(index) {
+    // console.log("Select Participant | index.js | index = " + index);
     for (let i = 1; i < participants.length + 1; i++) {
       valueCircleMarker[i] = false;
     }
@@ -140,121 +139,6 @@ export default function HomeView() {
     });
   }
 
-  function CircleMarkerGroup() {
-    const circleMarkerGroup = [];
-
-    participants.map((participant) => {
-      // if (participant.outOfBattery || participant.placeAlert || participant.heartRate || participant.calendar) {
-          circleMarkerGroup.push(
-            <div>
-              <CircleMarker center={participant.location} pathOptions={toggleCircleMarker[participant.id] ? colorOption2 : colorOption1} radius={10} opacity={1}>
-                <Tooltip direction='bottom' opacity={1} permanent className={classes.leafletTooltip} offset={[0, 7]}>
-                  {participant.name}
-                </Tooltip>
-              </CircleMarker>
-              {/* <Marker
-                position={participant.location}
-                icon={MarkerIcon}
-                // riseOnHover
-                // riseOffset={700}
-              >
-                <Tooltip direction='bottom' opacity={1} permanent className={classes.leafletTooltip} offset={[0, 7]}>
-                    {participant.name}
-                </Tooltip>
-              </Marker>
-
-              {participant.outOfBattery ? (
-              <Marker
-                position={participant.location}
-                icon={MarkerOutOfBatteryIcon}
-              >
-              </Marker>)
-              : '' }
-
-              {participant.placeAlert ? (
-              <Marker
-                position={participant.location}
-                icon={MarkerPlaceAlertIcon}
-              >
-              </Marker>)
-              : '' }
-
-              {participant.heartRate ? (
-              <Marker
-                position={participant.location}
-                icon={MarkerHeartRateIcon}
-              >
-              </Marker>)
-              : '' }
-
-              {participant.calendar ? (
-              <Marker
-                position={participant.location}
-                icon={MarkerCalendarIcon}
-              >
-              </Marker>)
-              : '' } */}
-              
-            </div>
-          );
-      // } else {
-      //   circleMarkerGroup.push(
-      //     <Marker
-      //       position={participant.location}
-      //       icon={MarkerEmptyIcon}
-      //     >
-      //       <Tooltip direction='bottom' opacity={1} permanent className={classes.leafletTooltip} offset={[0, 7]}>
-      //           {participant.name}
-      //           {/* &apos;s Exclusion Zone. */}
-      //       </Tooltip>
-      //     </Marker>
-      //     // <CircleMarker center={participant.location} pathOptions={toggleCircleMarker[participant.id] ? colorOption2 : colorOption1} radius={10} opacity={1}>
-      //     //   <Tooltip direction='bottom' opacity={1} permanent className={classes.leafletTooltip} offset={[0, 7]}>
-      //     //       {participant.name}
-      //     //   </Tooltip>
-      //     // </CircleMarker>
-      //   );
-      // }
-      // }
-    });
-
-    // console.log(`CircleMarkerGroup: ${CircleMarkerGroup}`);
-
-    return (
-      <div>
-        {circleMarkerGroup}
-      </div>
-    );
-  }
-
-  function ParticipantList() {
-    return (
-      <List dense className={classes.root}>
-        {participants.map((participant) => {
-          const labelId = `checkbox-list-secondary-label-${participant.id}`;
-          return (
-            // <ListItem key={value} button>
-            <ListItem key={participant.id} button onClick={() => SelectParticipant(participant.id)} >
-              {toggleCircleMarker[participant.id] ? 
-                <ListItemText id={labelId} disableTypography primary={<Typography style={{ color: 'LightSeaGreen', 'font-weight': 'bold' }}>{`${participant.name}`}</Typography>}/>
-               : 
-                <ListItemText id={labelId} primary={`${participant.name}`}/>
-              }
-              <div>
-                <ListItemSecondaryAction>
-                    {participant.outOfBattery === true ? (<BatteryAlertIcon style={{ color: 'DarkGray' }} />) : ''}
-                    {participant.placeAlert === true ? (<AnnouncementIcon style={{ color: 'DarkTurquoise' }}/>) : ''}
-                    {participant.heartRate === true ? (<FavoriteIcon style={{ color: 'LightCoral' }}/>) : ''}
-                    {participant.calendar === true ? (<DateRangeIcon style={{ color: 'DarkSlateBlue' }}/>) : ''}
-                </ListItemSecondaryAction>
-              </div>
-            </ListItem>
-          );
-        })}
-      </List>
-    );
-  }
-
   return (
     <React.Fragment>
         <Page
@@ -265,7 +149,11 @@ export default function HomeView() {
             <Grid container className={classes.participantContainer}>
                 {/* ParticipantList */}
                 <Grid item xs={12} className={classes.participantList}>
-                    <ParticipantList />
+                    <ParticipantList
+                      participantData={participants}
+                      toggleCircleMarkerData={toggleCircleMarker}
+                      selectParticipant={SelectParticipant}
+                    />
                 </Grid>
             </Grid>
         </Container>
@@ -275,7 +163,8 @@ export default function HomeView() {
               {/* <Grid container> */}
                   {/* Maps */}
                   {/* <Grid container item> */}
-                      <MapContainer spacing={3} center={position} zoom={14} zoomControl={false} scrollWheelZoom={false} className={classes.map} whenCreated={setMap}>
+                      {/* <MapContainer spacing={3} center={position} zoom={14} zoomControl={false} scrollWheelZoom={false} className={classes.map} whenCreated={setMap}> */}
+                      <MapContainer spacing={3} center={position} zoom={14} zoomControl={false} scrollWheelZoom={false} className={classes.map}>
                           <TileLayer
                               attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -283,7 +172,10 @@ export default function HomeView() {
 
                           <ZoomControl position="topright" />
 
-                          <CircleMarkerGroup /> 
+                          <CircleMarkerGroup
+                            participantData={participants}
+                            toggleCircleMarkerData={toggleCircleMarker}
+                          /> 
 
                       </MapContainer>
                   {/* </Grid> */}

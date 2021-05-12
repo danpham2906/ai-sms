@@ -7,9 +7,13 @@ export const TitleProvider = ({children}) => {
   let currentTitle = window.location.href.split('/');
   currentTitle = currentTitle[currentTitle.length-1];
   if (currentTitle == "home") {
-    currentTitle = "Home & Participant Selection";
+    currentTitle = "Overview";
   } else if (currentTitle == "apptask") {
     currentTitle = "App&Tasks or JOB";
+  } else if (currentTitle == "participantstatus") {
+    currentTitle = "Participant Status";
+  } else if (currentTitle == "goalapp") {
+    currentTitle = "GOAL App";
   } else {
     currentTitle = currentTitle.charAt(0).toUpperCase() + currentTitle.slice(1);
   }

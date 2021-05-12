@@ -21,12 +21,12 @@ const routes = [
     element: <DashboardLayout />,
     children: [
       { path: 'home', element: <HomeView /> },
-      { path: 'overview', element: <OverviewView /> },
+      { path: 'participantstatus', element: <OverviewView /> },
       { path: 'schedule', element: <ScheduleView /> },
       // { path: 'documents', element: <ProductListView /> },
       { path: 'documents', element: <DocumentsView /> },
       // { path: 'apptask', element: <SettingsView /> },
-      { path: 'apptask', element: <AppTasksView /> },
+      { path: 'goalapp', element: <AppTasksView /> },
       { path: 'analytics', element: <AnalyticsView /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]

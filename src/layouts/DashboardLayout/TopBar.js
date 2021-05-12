@@ -39,7 +39,7 @@ const useStyles = makeStyles(() => ({
     'font-size': '1.1rem'
   },
   avatar: {
-    cursor: 'pointer',
+    // cursor: 'pointer',
     width: 32,
     height: 32
   },
@@ -66,7 +66,7 @@ const TopBar = ({
       <Toolbar>
         <RouterLink
           to="/"
-          onClick={() => { titleContext.setName("Home & Participant Selection"); }}
+          onClick={() => { titleContext.setName("Overview"); }}
         >
           {/* <Logo /> */}
           <Typography component="h1" align="center" noWrap className={classes.appName}>
@@ -81,9 +81,9 @@ const TopBar = ({
         <Box flexDirection="row">
           <Avatar
             className={classes.avatar}
-            component={RouterLink}
+            // component={RouterLink}
             src={officer.avatar}
-            to="/app/apptask"
+            // to="/app/documents"
           />
         </Box>
         <Box flexDirection="row">
