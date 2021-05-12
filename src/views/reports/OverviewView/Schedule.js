@@ -12,8 +12,9 @@ import {
     colors,
     makeStyles
 } from '@material-ui/core';
-import DayPicker from 'react-day-picker';
-import 'react-day-picker/lib/style.css';
+import CalendarView from './CalendarView';
+// import DayPicker from 'react-day-picker';
+// import 'react-day-picker/lib/style.css';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,13 +33,16 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(1)
   },
   dayPicker: {
-    padding: '5px 10px 10px 50px',
-    fontFamily: 'Roboto',
+    padding: '5px 0px 5px 0px',
+    // fontFamily: 'Roboto',
+    'justify-content': 'center',
+    'align-items': 'center',
   }
 }));
 
 const Schedule = ({ className, ...rest }) => {
   const classes = useStyles();
+  const [value, onChange] = useState(new Date());
 
   return (
     <Card
@@ -66,15 +70,26 @@ const Schedule = ({ className, ...rest }) => {
           spacing={3}
           className={classes.dayPicker}
         >
-          <DayPicker />
+          <div className="calendar-view">
+            <CalendarView />
+          </div>
         </Grid>
-        <Typography
-          color="textSecondary"
-          variant="body2"
-          align="right"
+        <Box 
+          // display="flex"
+          // flexWrap="wrap"
+          alignContent="flex-end"
+          p={1}
+          m={1}
         >
-          Schedule Details &amp; Edit &gt;
-        </Typography>
+          <Typography
+            color="textSecondary"
+            variant="body2"
+            align="right"
+          >
+            Schedule Details &amp; Edit &gt;
+          </Typography>
+        </Box>
+        
       </CardContent>
     </Card>
   );
