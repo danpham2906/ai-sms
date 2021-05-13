@@ -22,37 +22,44 @@ function BarChart({ data }) {
         .rangeRound([height - margin.bottom, margin.top]);
 
       const xAxis = (g) =>
-        g.attr("transform", `translate(0,${height - margin.bottom})`).call(
-          d3
-            .axisBottom(x)
-            .tickValues(
-              d3
-                .ticks(...d3.extent(x.domain()), width / 40)
-                .filter((v) => x(v) !== undefined)
-            )
-            .tickSizeOuter(0)
-        );
+        g.attr("transform", `translate(0,${height - margin.bottom})`)
+          .call(d3.axisBottom(x)
+                  .tickValues(d3.ticks(...d3.extent(x.domain()), width / 40)
+                                .filter((v) => x(v) !== undefined)
+                  )
+                  .tickSizeOuter(0)
+          )
+          .call(g => g.select(".domain").remove())
+          .call(g => g.append("text")
+              .attr("x", width - margin.right)
+              .attr("y", -4)
+              .attr("fill", "#000")
+              .attr("font-weight", "bold")
+              .attr("text-anchor", "end")
+              .text(data.x));
 
       const y1Axis = (g) =>
-        g
-          .attr("transform", `translate(${margin.left},0)`)
+        g.attr("transform", `translate(${margin.left},0)`)
           .style("color", "steelblue")
           .call(d3.axisLeft(y1).ticks(null, "s"))
           .call((g) => g.select(".domain").remove())
-          .call((g) =>
-            g
-              .append("text")
+          .call((g) => g.append("text")
               .attr("x", -margin.left)
               .attr("y", 10)
               .attr("fill", "currentColor")
               .attr("text-anchor", "start")
               .text(data.y1)
-          );
+          )
+          .call(g => g.select(".tick:last-of-type text").clone()
+              .attr("x", 4)
+              .attr("text-anchor", "start")
+              .attr("font-weight", "bold")
+              .text(data.y));
 
       svg.select(".x-axis").call(xAxis);
       svg.select(".y-axis").call(y1Axis);
 
-      svg
+      const bar = svg
         .select(".plot-area")
         .attr("fill", "SkyBlue")
         .selectAll(".bar")
@@ -63,6 +70,46 @@ function BarChart({ data }) {
         .attr("width", x.bandwidth())
         .attr("y", (d) => y1(d.sales/1000))
         .attr("height", (d) => y1(0) - y1(d.sales/1000));
+
+      const brushEnd = (event) => {
+        let value = [];
+
+        if (!event.selection) {
+          // const [x1, x2] = [0, 0];
+          // console.log("x1 x2: null");
+          bar.style("fill", "SkyBlue");
+          // return;
+        } else {
+          // console.log("event selection: " + JSON.stringify(event.selection));
+          const [x1, x2] = event.selection;
+          // console.log("x1 x2: " + x1 + " " + x2);
+          value = bar
+            .style("fill", "gray")
+            .filter(d => x1 <= (x(d.year)+x.bandwidth()) && x(d.year) < x2)
+            .style("fill", "SkyBlue")
+            .data();
+
+          data.map((d) => {
+            if (x1 <= x(d.year) && x(d.year) < x2) {
+              // console.log("value: " + d.year + " | x: " + x(d.year));
+            }
+          });
+        }
+
+        // svg.property("value", value);
+        // const range = [xAxis.invert(x1), xAxis.invert(x2)];
+    
+        // updateRange(range);
+      };
+
+      const brush = d3.brushX()
+        .extent([
+          [margin.left, margin.top],
+          [width - margin.right, height - margin.bottom]
+        ])  
+        .on("end", brushEnd);
+
+      svg.call(brush);
     },
     [data.length]
   );

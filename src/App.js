@@ -1,3 +1,4 @@
+/* eslint-disable */
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import React from 'react';
 import { useRoutes } from 'react-router-dom';
