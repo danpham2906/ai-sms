@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { useContext, useState } from 'react';
+import React, { forwardRef, useImperativeHandle, useState } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import {
@@ -65,19 +65,46 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Map = ({ className, ...rest }) => {
+const Map = forwardRef (({ className, ...rest }, ref) => {
   const classes = useStyles();
-  const [map, setMap] = useState(null);
-  const participant = useContext(ParticipantContext);
+  const [dataUsed, setDataUsed] = useState(data.visitedPlaces);
+  // const [map, setMap] = useState(null);
 
   const position = [34.73, -86.60];
+
+  useImperativeHandle(ref, () => ({
+
+    switchRange(isSwitched) {
+      if (!isSwitched) {
+        setDataUsed(data.visitedPlaces);
+      } else {
+        const tmpData = [];
+        for (let i = 0; i < data.visitedPlaces.length; i++) {
+            let randomValue = Math.round(Math.random() * i * 100 + 1) % 2;
+            if (!randomValue) {
+              tmpData.push(data.visitedPlaces[i]);
+            }
+        }
+        setDataUsed(tmpData);
+      }
+    }
+
+  }));
 
   return (
     <Card
       className={clsx(classes.root, className)}
       {...rest}
     >
-      <MapContainer spacing={3} center={position} zoom={14} zoomControl={false} scrollWheelZoom={false} className={classes.map} whenCreated={setMap}>
+      <MapContainer
+        spacing={3}
+        center={position}
+        zoom={14}
+        zoomControl={false}
+        scrollWheelZoom={false}
+        className={classes.map}
+        // whenCreated={setMap}
+      >
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -85,12 +112,12 @@ const Map = ({ className, ...rest }) => {
 
         <ZoomControl position="topright" />
 
-        <VisitedMarker visitedPlaces={data.visitedPlaces} />
+        <VisitedMarker visitedPlaces={dataUsed} />
 
       </MapContainer>
     </Card>
   );
-};
+});
 
 Map.propTypes = {
   className: PropTypes.string
