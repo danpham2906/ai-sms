@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React from 'react';
+import { useState, useRef } from 'react';
 import {
   Container,
   Grid,
@@ -27,6 +27,28 @@ const useStyles = makeStyles((theme) => ({
 
 const AppTaskView = () => {
   const classes = useStyles();
+  const [range, setRange] = useState([]);
+  const durationRef = useRef();
+  const frequencyRef = useRef();
+
+  const updateRange = (newRange) => {
+    // console.log("updateRange @ index.js | Range: " + newRange);
+    setRange(newRange);
+    // console.log("updateRange @ index.js | setRange: " + range);
+    // console.log("durationRef: " + JSON.stringify(durationRef));
+    
+    // console.log("newRange: " + newRange);
+    if (!newRange) {
+      durationRef.current.switchRange(false);
+      frequencyRef.current.switchRange(false);
+    } else if (!newRange.length) {
+      durationRef.current.switchRange(false);
+      frequencyRef.current.switchRange(false);
+    } else {
+      durationRef.current.switchRange(true);
+      frequencyRef.current.switchRange(true);
+    }
+  };
 
   return (
     <Page
@@ -56,7 +78,7 @@ const AppTaskView = () => {
             xl={2}
             xs={12}
           >
-            <DurationChart />
+            <DurationChart ref={durationRef} />
           </Grid>
           <Grid
             item
@@ -65,7 +87,7 @@ const AppTaskView = () => {
             xl={2}
             xs={12}
           >
-            <FrequencyChart />
+            <FrequencyChart ref={frequencyRef} />
           </Grid>
 
           <Grid
@@ -75,7 +97,9 @@ const AppTaskView = () => {
             xl={12}
             xs={12}
           >
-            <MileageDuration />
+            <MileageDuration
+              updateRange={updateRange}
+            />
           </Grid>
           <Grid
             item
@@ -84,7 +108,9 @@ const AppTaskView = () => {
             xl={12}
             xs={12}
           >
-            <HeartRateVariability />
+            <HeartRateVariability
+              range={range}
+            />
           </Grid>
           <Grid
             item
@@ -93,7 +119,9 @@ const AppTaskView = () => {
             xl={12}
             xs={12}
           >
-            <BraceletBatteryLifeHistory />
+            <BraceletBatteryLifeHistory
+              range={range}
+            />
           </Grid>
         </Grid>
       </Container>

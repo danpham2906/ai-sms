@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import {
@@ -10,6 +10,7 @@ import {
   makeStyles
 } from '@material-ui/core';
 import LineChart from './LineChart';
+import seedrandom from 'seedrandom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,9 +41,10 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const BraceletBatteryLifeHistory = ({ className, ...rest }) => {
+const BraceletBatteryLifeHistory = ({ className, range, ...rest }) => {
   const classes = useStyles();
   const [checked, setChecked] = React.useState([0]);
+  const [newRange, setNewRange] = useState(range);
 
   const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value);
@@ -57,11 +59,19 @@ const BraceletBatteryLifeHistory = ({ className, ...rest }) => {
     setChecked(newChecked);
   };
 
+  useEffect(() => {
+    setNewRange(range);
+  }, null);
+
   const data = [];
-  var randomDate = new Date('2020-01-29');
+  let randomDate = new Date('2020-01-29');
+  let nextRandomDate = new Date('2020-01-30');
   for (let i = 0; i < 100; i++) {
-      var randomValue = Math.random() * i;
-      randomDate.setDate(randomDate.getDate() + Math.round(Math.random()) + 1);
+      let rng = seedrandom(nextRandomDate.toLocaleString());
+      // console.log("BraceletBatteryLifeHistory: " + rng());
+      var randomValue = rng() * i;
+      randomDate.setDate(randomDate.getDate() + Math.round(rng()) + 1);
+      nextRandomDate.setDate(nextRandomDate.getDate() + Math.round(rng()) + 1);
       var randomDateStr = randomDate.getUTCFullYear() + "-";
       randomDateStr = randomDateStr + (randomDate.getUTCMonth()+1) + "-";
       randomDateStr = randomDateStr + randomDate.getUTCDate();
@@ -99,7 +109,13 @@ const BraceletBatteryLifeHistory = ({ className, ...rest }) => {
           spacing={3}
           className={classes.chartContainer}
         >
-            <LineChart data={data} width={1600} height={170} className={classes.lineChart} color="Turquoise"/>
+            <LineChart
+              data={data}
+              range={newRange}
+              width={1600}
+              height={170}
+              className={classes.lineChart}
+              color="Turquoise"/>
         </Grid>
       </CardContent>
     </Card>

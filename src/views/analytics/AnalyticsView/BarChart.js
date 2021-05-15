@@ -3,7 +3,7 @@ import { useD3 } from './useD3';
 import React from 'react';
 import * as d3 from 'd3';
 
-function BarChart({ data }) {
+function BarChart({ data, updateRange }) {
   const ref = useD3(
     (svg) => {
       const height = 150;
@@ -77,6 +77,7 @@ function BarChart({ data }) {
         if (!event.selection) {
           // const [x1, x2] = [0, 0];
           // console.log("x1 x2: null");
+          updateRange([]);
           bar.style("fill", "SkyBlue");
           // return;
         } else {
@@ -89,10 +90,21 @@ function BarChart({ data }) {
             .style("fill", "SkyBlue")
             .data();
 
+          // console.log("x1: " + x1);
+          // console.log("x2: " + x2);
+          let xMin = x(x.domain()[0]);
+          let xMax = x(x.domain()[data.length-1]);
+          // console.log("xMin: " + xMin);
+          // console.log("xMax: " + xMax);
+          let xLength = xMax - xMin;
+          let scalex1 = (x1 - xMin) / xLength * 100;
+          let scalex2 = (x2 - xMin) / xLength * 100;
+          updateRange([scalex1, scalex2]);
+
           data.map((d) => {
-            if (x1 <= x(d.year) && x(d.year) < x2) {
+            // if (x1 <= x(d.year) && x(d.year) < x2) {
               // console.log("value: " + d.year + " | x: " + x(d.year));
-            }
+            // }
           });
         }
 

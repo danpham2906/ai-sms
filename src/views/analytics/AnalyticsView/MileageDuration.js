@@ -37,21 +37,12 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const MileageDuration = ({ className, ...rest }) => {
+const MileageDuration = ({ className, updateRange, ...rest }) => {
   const classes = useStyles();
-  const [checked, setChecked] = React.useState([0]);
 
-  const handleToggle = (value) => () => {
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-
-    setChecked(newChecked);
+  const onUpdateRange = (newRange) => {
+    // console.log("onUpdateRange @ MileageDuration.js | Range: " + newRange);
+    updateRange(newRange);
   };
 
   const data = [
@@ -113,7 +104,10 @@ const MileageDuration = ({ className, ...rest }) => {
           spacing={3}
           className={classes.chartContainer}
         >
-            <BarChart data={data} />
+            <BarChart
+              data={data}
+              updateRange={onUpdateRange}
+            />
         </Grid>
       </CardContent>
     </Card>

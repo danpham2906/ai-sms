@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import {
@@ -10,6 +10,7 @@ import {
   makeStyles
 } from '@material-ui/core';
 import LineChart from './LineChart';
+import seedrandom from 'seedrandom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,28 +41,24 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const HeartRateVariability = ({ className, ...rest }) => {
+const HeartRateVariability = ({ className, range, ...rest }) => {
   const classes = useStyles();
-  const [checked, setChecked] = React.useState([0]);
+  const [newRange, setNewRange] = useState(range);
+  // console.log("HeartRateVariability | range = " + JSON.stringify(range));
 
-  const handleToggle = (value) => () => {
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-
-    setChecked(newChecked);
-  };
+  useEffect(() => {
+    // console.log("useEffect | range: " + range);
+    setNewRange(range);
+    // console.log("useEffect | newRange: " + newRange);
+  }, null);
 
   const data = [];
-  var randomDate = new Date('2020-01-29');
+  let randomDate = new Date('2020-01-29');
   for (let i = 0; i < 100; i++) {
-      var randomValue = Math.random() * i * 10;
-      randomDate.setDate(randomDate.getDate() + Math.round(Math.random()) + 1);
+      let rng = seedrandom(randomDate.toLocaleString());
+      // console.log("HeartRateVariability: " + rng());
+      var randomValue = rng() * i * 10;
+      randomDate.setDate(randomDate.getDate() + Math.round(rng()) + 1);
       var randomDateStr = randomDate.getUTCFullYear() + "-";
       randomDateStr = randomDateStr + (randomDate.getUTCMonth()+1) + "-";
       randomDateStr = randomDateStr + randomDate.getUTCDate();
@@ -188,7 +185,14 @@ const HeartRateVariability = ({ className, ...rest }) => {
           spacing={3}
           className={classes.chartContainer}
         >
-            <LineChart data={data} width={1600} height={170} className={classes.lineChart} color="LightCoral"/>
+            <LineChart
+              data={data}
+              range={newRange}
+              width={1600}
+              height={170}
+              className={classes.lineChart}
+              color="LightCoral"
+            />
         </Grid>
       </CardContent>
     </Card>

@@ -1,8 +1,7 @@
 /* eslint-disable */
-import React, { useContext } from 'react';
+import React, { forwardRef, useImperativeHandle, useRef } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import { Line } from '@reactchartjs/react-chart.js';
 import {
   Card,
   CardContent,
@@ -11,6 +10,7 @@ import {
   makeStyles
 } from '@material-ui/core';
 import HorizontalBarChart from './HorizontalBarChart';
+import seedrandom from 'seedrandom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,49 +38,20 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const DurationChart = ({ className, ...rest }) => {
+const DurationChart = forwardRef (({ className, ...rest }, ref) => {
   const classes = useStyles();
-  const [checked, setChecked] = React.useState([0]);
+  const horizontalBarRef = useRef();
 
-  const handleToggle = (value) => () => {
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
+  useImperativeHandle(ref, () => ({
 
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
+    switchRange(isSwitched) {
+      horizontalBarRef.current.switchRange(isSwitched);
     }
 
-    setChecked(newChecked);
-  };
-
-  const dataLine = {
-    labels: ['1', '2', '3', '4', '5', '6'],
-    datasets: [
-      {
-        label: '',
-        data: [7, 4, 3, 5, 2, 3],
-        fill: 'start',
-        backgroundColor: 'rgb(51, 204, 255, 0.3)',
-        borderColor: 'rgba(51, 204, 255, 0.7)',
-      },
-    ],
-  }
-  
-  const optionsLine = {
-    scales: {
-      yAxes: [
-        {
-          ticks: {
-            beginAtZero: true,
-          },
-        },
-      ],
-    },
-  }
+  }));
 
   const data = [];
+  const subData = [];
   const location = [
     "University Pickers", "Walmart Supercenter", "Target", "Pants Store",
     "At Home", "Neighborhooad Store", "Harrison Brothers Hardware",
@@ -92,12 +63,16 @@ const DurationChart = ({ className, ...rest }) => {
     "Jefferson Street Pub",
   ];
   for (let i = 0; i < location.length; i++) {
-      var randomValue = Math.round(Math.random() * i * 12 + 1);
-      // console.log(randomDateStr);
-      // console.log(randomValue);
+      let rng = seedrandom(location[i]);
+      let randomValue = Math.round(rng() * i * 12 + 1);
+      let subRandomValue = Math.round(Math.random() * i + 1) % randomValue;
       data.push({
-        name: location[i].slice(0,10) + (location[i].length <= 10 ? "" : "..."),
+        name: location[i].slice(0,7) + (location[i].length <= 10 ? location[i].slice(7,10) : "..."),
         value: randomValue
+      });
+      subData.push({
+        name: location[i].slice(0,7) + (location[i].length <= 10 ? location[i].slice(7,10) : "..."),
+        value: subRandomValue
       });
   }
   // console.log(data);
@@ -149,7 +124,9 @@ const DurationChart = ({ className, ...rest }) => {
           className={classes.chartContainer}
         >
             <HorizontalBarChart
+              ref={horizontalBarRef}
               data={data}
+              subData={subData}
               width={220}
               height={400}
               color="Turquoise"
@@ -158,7 +135,7 @@ const DurationChart = ({ className, ...rest }) => {
       </CardContent>
     </Card>
   );
-};
+});
 
 DurationChart.propTypes = {
   className: PropTypes.string
