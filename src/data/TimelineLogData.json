@@ -1,0 +1,41 @@
+{
+    "logs" : [
+      {
+        "id": 1,
+        "title": "Note Added",
+        "time": "5/6/2021, 8:03:26 PM",
+        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+      },
+      {
+        "id": 2,
+        "title": "Code",
+        "time": "5/7/2021, 6:35:49 AM",
+        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+      },
+      {
+        "id": 3,
+        "title": "Sleep",
+        "time": "5/5/2021, 12:16:22 PM",
+        "content": "Because you need rest."
+      },
+      {
+        "id": 4,
+        "title": "Repeat",
+        "time": "5/4/2021, 5:16:22 PM",
+        "content": "Because this is the life you love!"
+      },
+      {
+        "id": 5,
+        "title": "Eat",
+        "time": "5/8/2021, 6:16:22 PM",
+        "content": "Because you need strength."
+      },
+      {
+        "id": 6,
+        "title": "Code",
+        "time": "5/3/2021, 11:35:30 AM",
+        "content": "Because it's awesome!"
+      }
+    ]
+  }
+  

@@ -13,7 +13,7 @@ import {
   Typography,
   makeStyles
 } from '@material-ui/core';
-import participant from '../../home/HomeView/Participant';
+import participant from '../../home/Overview/Participant';
 
 const user = {
   avatar: '/static/images/avatars/avatar_6.png',

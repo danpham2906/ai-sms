@@ -34,7 +34,7 @@ function LineChart({ data, width, height, color, tickLength }) {
         .domain(d3.extent(data, d => d.date))
         .range([margin.left, width - margin.right]);
       // console.log(d3.extent(data, d => d.date));
-      console.log(width);
+      // console.log(width);
 
       const y = d3.scaleLinear()
         .domain([0, d3.max(data, d => d.value)]).nice()

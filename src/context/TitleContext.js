@@ -6,7 +6,7 @@ export const TitleContext = createContext();
 export const TitleProvider = ({children}) => {
   let currentTitle = window.location.href.split('/');
   currentTitle = currentTitle[currentTitle.length-1];
-  if (currentTitle == "home") {
+  if (currentTitle == "overview") {
     currentTitle = "Overview";
   } else if (currentTitle == "apptask") {
     currentTitle = "App&Tasks or JOB";

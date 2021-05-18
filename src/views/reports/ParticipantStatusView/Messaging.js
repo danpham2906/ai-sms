@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
     'min-height': 0,
     // height: 320,
     height: 350,
-    padding: '10px 3px 20px 5px',
+    padding: '10px 3px 0px 5px',
   }
 }));
 

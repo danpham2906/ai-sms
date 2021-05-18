@@ -5,8 +5,8 @@ import DashboardLayout from 'src/layouts/DashboardLayout';
 import MainLayout from 'src/layouts/MainLayout';
 import AnalyticsView from 'src/views/analytics/AnalyticsView';
 import ScheduleView from 'src/views/schedule/ScheduleView';
-import OverviewView from 'src/views/reports/OverviewView';
-import HomeView from 'src/views/home/HomeView';
+import ParticipantStatusView from 'src/views/reports/ParticipantStatusView';
+import Overview from 'src/views/home/Overview';
 import LoginView from 'src/views/auth/LoginView';
 import NotFoundView from 'src/views/errors/NotFoundView';
 import ProductListView from 'src/views/product/ProductListView';
@@ -20,8 +20,8 @@ const routes = [
     path: 'app',
     element: <DashboardLayout />,
     children: [
-      { path: 'home', element: <HomeView /> },
-      { path: 'participantstatus', element: <OverviewView /> },
+      { path: 'overview', element: <Overview /> },
+      { path: 'participantstatus', element: <ParticipantStatusView /> },
       { path: 'schedule', element: <ScheduleView /> },
       // { path: 'documents', element: <ProductListView /> },
       { path: 'documents', element: <DocumentsView /> },
@@ -38,7 +38,7 @@ const routes = [
       { path: 'login', element: <LoginView /> },
       { path: 'register', element: <RegisterView /> },
       { path: '404', element: <NotFoundView /> },
-      { path: '/', element: <Navigate to="/app/home" /> },
+      { path: '/', element: <Navigate to="/app/overview" /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
   }

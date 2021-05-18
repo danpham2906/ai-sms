@@ -101,31 +101,6 @@ const BraceletStatus = ({ className, ...rest }) => {
     }
   };
 
-  // const dataLine = {
-  //   labels: ['1', '2', '3', '4', '5', '6'],
-  //   datasets: [
-  //     {
-  //       label: '',
-  //       data: [7, 4, 3, 5, 2, 3],
-  //       fill: false,
-  //       backgroundColor: 'rgb(255, 99, 132)',
-  //       borderColor: 'rgba(255, 99, 132, 0.2)',
-  //     },
-  //   ],
-  // }
-  
-  // const optionsLine = {
-  //   scales: {
-  //     yAxes: [
-  //       {
-  //         ticks: {
-  //           beginAtZero: true,
-  //         },
-  //       },
-  //     ],
-  //   },
-  // }
-
   const dataLine = [];
   var randomDate = new Date('2020-01-29');
   for (let i = 0; i < 20; i++) {

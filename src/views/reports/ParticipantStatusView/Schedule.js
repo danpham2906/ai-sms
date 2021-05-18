@@ -70,16 +70,16 @@ const Schedule = ({ className, ...rest }) => {
           spacing={3}
           className={classes.dayPicker}
         >
-          <div className="calendar-view">
-            <CalendarView />
-          </div>
+          <CalendarView />
         </Grid>
         <Box 
           // display="flex"
           // flexWrap="wrap"
           alignContent="flex-end"
-          p={1}
-          m={1}
+          paddingLeft={1}
+          paddingRight={1}
+          paddingTop={1}
+          // m={1}
         >
           <Typography
             color="textSecondary"
