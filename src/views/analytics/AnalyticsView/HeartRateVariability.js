@@ -11,6 +11,7 @@ import {
 } from '@material-ui/core';
 import LineChart from './LineChart';
 import seedrandom from 'seedrandom';
+import data from '../../../data/heartdata.csv';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,23 +53,23 @@ const HeartRateVariability = ({ className, range, ...rest }) => {
     // console.log("useEffect | newRange: " + newRange);
   }, null);
 
-  const data = [];
-  let randomDate = new Date('2020-01-29');
-  for (let i = 0; i < 100; i++) {
-      let rng = seedrandom(randomDate.toLocaleString());
-      // console.log("HeartRateVariability: " + rng());
-      var randomValue = rng() * i * 10;
-      randomDate.setDate(randomDate.getDate() + Math.round(rng()) + 1);
-      var randomDateStr = randomDate.getUTCFullYear() + "-";
-      randomDateStr = randomDateStr + (randomDate.getUTCMonth()+1) + "-";
-      randomDateStr = randomDateStr + randomDate.getUTCDate();
-      // console.log(randomDateStr);
-      // console.log(randomValue);
-      data.push({
-        date: randomDateStr,
-        value: randomValue
-      });
-  }
+  // const data = [];
+  // let randomDate = new Date('2020-01-29');
+  // for (let i = 0; i < 100; i++) {
+  //     let rng = seedrandom(randomDate.toLocaleString());
+  //     // console.log("HeartRateVariability: " + rng());
+  //     var randomValue = rng() * i * 10;
+  //     randomDate.setDate(randomDate.getDate() + Math.round(rng()) + 1);
+  //     var randomDateStr = randomDate.getUTCFullYear() + "-";
+  //     randomDateStr = randomDateStr + (randomDate.getUTCMonth()+1) + "-";
+  //     randomDateStr = randomDateStr + randomDate.getUTCDate();
+  //     // console.log(randomDateStr);
+  //     // console.log(randomValue);
+  //     data.push({
+  //       date: randomDateStr,
+  //       value: randomValue
+  //     });
+  // }
 
   // const data = [
   //   {date: '2007-04-23', value: 56.78},
@@ -186,7 +187,7 @@ const HeartRateVariability = ({ className, range, ...rest }) => {
           className={classes.chartContainer}
         >
             <LineChart
-              data={data}
+              dataCSV={data}
               range={newRange}
               width={1600}
               height={170}

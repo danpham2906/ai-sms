@@ -34,7 +34,7 @@ import BatteryAlertIcon from '@material-ui/icons/BatteryAlert';
 import DateRangeIcon from '@material-ui/icons/DateRange';
 import ParticipantList from './ParticipantList';
 import CircleMarkerGroup from './CircleMarkerGroup';
-import data from '../../../data/data';
+import data from '../../../data/ParticipantData';
 // import { ChangeParticipantName } from 'src/layouts/DashboardLayout/NavBar';
 import { ParticipantContext } from '../../../context/ParticipantContext';
 import {

@@ -9,7 +9,7 @@ import {
   Typography,
   makeStyles
 } from '@material-ui/core';
-import LineChart from './LineChart';
+import LineChart from './LineChartDemo';
 import seedrandom from 'seedrandom';
 
 const useStyles = makeStyles((theme) => ({

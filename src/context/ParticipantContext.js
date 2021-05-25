@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React, { createContext, useState } from "react";
-import data from '../data/data';
+import data from '../data/ParticipantData';
 
 export const ParticipantContext = createContext();
 

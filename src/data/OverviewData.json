@@ -1,0 +1,73 @@
+{
+    "participants" : [
+      {
+        "id": 1,
+        "name": "Jocelynn Bucken",
+        "outOfBattery": false,
+        "placeAlert": true,
+        "heartRate": false,
+        "calendar": false,
+        "location": [34.745, -86.63],
+        "address": {
+          "state": "Alabama",
+          "city": "Huntsville",
+          "street": "3223  Maple Lane"
+        },
+        "exclusiveZones" : [
+          {
+            "center": [34.745, -86.63],
+            "radius": 500
+          },
+          {
+            "center": [34.738, -86.635],
+            "radius": 300
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "name": "Glenn Cake",
+        "outOfBattery": false,
+        "placeAlert": false,
+        "heartRate": false,
+        "calendar": false,
+        "location": [34.738, -86.635],
+        "address": {
+          "state": "Alabama",
+          "city": "Huntsville",
+          "street": "6807 Criner Rd SE"
+        },
+        "exclusiveZones" : [
+          {
+            "center": [34.749, -86.635],
+            "radius": 400
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "name": "Marcia Carillo",
+        "outOfBattery": false,
+        "placeAlert": false,
+        "heartRate": true,
+        "calendar": false,
+        "location": [34.749, -86.635],
+        "address": {
+          "state": "Alabama",
+          "city": "Huntsville",
+          "street": "6603 Willow Springs Blvd NW"
+        },
+        "exclusiveZones" : [
+          {
+            "center": [34.73, -86.60],
+            "radius": 400
+          },
+          {
+            "center": [34.73, -86.605],
+            "radius": 200
+          }
+        ]
+      }
+    ]
+  }
+  
