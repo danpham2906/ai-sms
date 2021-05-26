@@ -7,7 +7,7 @@ function LineChart({ data, range, width, height, color }) {
   // const svg = d3.create("svg")
   //     .attr("viewBox", [0, 0, width, height]);
 
-  const margin = {top: 20, right: 30, bottom: 30, left: 50};
+  const margin = { top: 20, right: 30, bottom: 30, left: 50 };
   // const height = 500;
 
   const parser = d3.timeParse("%Y-%m-%d");
@@ -32,10 +32,10 @@ function LineChart({ data, range, width, height, color }) {
     .call(d3.axisLeft(y))
     .call(g => g.select(".domain").remove())
     .call(g => g.select(".tick:last-of-type text").clone()
-        .attr("x", 3)
-        .attr("text-anchor", "start")
-        .attr("font-weight", "bold")
-        .text(data.y));
+      .attr("x", 3)
+      .attr("text-anchor", "start")
+      .attr("font-weight", "bold")
+      .text(data.y));
 
   var lineChart = d3.line()
     .defined(d => !isNaN(d.value))
@@ -47,24 +47,33 @@ function LineChart({ data, range, width, height, color }) {
       let lineChartID = "lineChart" + color;
 
       svg.append("g")
-          .attr("id", lineChartID + "Xaxis")
-          .call(xAxis);
+        .attr("id", lineChartID + "Xaxis")
+        .call(xAxis);
 
       svg.append("g")
-          .attr("id", lineChartID + "Yaxis")
-          .call(yAxis);
+        .attr("id", lineChartID + "Yaxis")
+        .call(yAxis);
+
+      var clip = svg.append("defs").append("svg:clipPath")
+        .attr("id", "clip")
+        .append("svg:rect")
+        .attr("width", width - margin.left - margin.right)
+        .attr("height", height - margin.top - margin.bottom)
+        .attr("x", margin.left)
+        .attr("y", margin.top);
 
       svg
-          .append("path")
-          .datum(data)
-          .attr("fill", "none")
-          .attr("stroke", color)
-          .attr("stroke-width", 1.5)
-          .attr("stroke-linejoin", "round")
-          .attr("stroke-linecap", "round")
-          .attr("id", lineChartID + "path")
-          .attr("d", lineChart);
-      },
+        .append("path")
+        .attr("clip-path", "url(#clip)")
+        .datum(data)
+        .attr("fill", "none")
+        .attr("stroke", color)
+        .attr("stroke-width", 1.5)
+        .attr("stroke-linejoin", "round")
+        .attr("stroke-linecap", "round")
+        .attr("id", lineChartID + "path")
+        .attr("d", lineChart);
+    },
     [data.length]
   );
 
@@ -72,9 +81,9 @@ function LineChart({ data, range, width, height, color }) {
     // console.log("LineChart.js | range = " + JSON.stringify(range));
 
     const lineChart = d3.line()
-        .defined(d => !isNaN(d.value))
-        .x(d => x(d.date))
-        .y(d => y(d.value));
+      .defined(d => !isNaN(d.value))
+      .x(d => x(d.date))
+      .y(d => y(d.value));
 
     x.domain(d3.extent(data, d => d.date));
 
@@ -94,14 +103,14 @@ function LineChart({ data, range, width, height, color }) {
       data.map((d) => {
         if (x1 <= ((x(d.date) - xMin) / xLength * 100) && ((x(d.date) - xMin) / xLength * 100) < x2) {
           var dateStr = d.date.getUTCFullYear() + "-";
-          dateStr = dateStr + (d.date.getUTCMonth()+1) + "-";
+          dateStr = dateStr + (d.date.getUTCMonth() + 1) + "-";
           dateStr = dateStr + d.date.getUTCDate();
           dateStr = parser(dateStr);
           dataFilter.push({
             date: dateStr,
             value: d.value
           });
-          
+
         }
       });
       dataUsed = dataFilter;
@@ -123,14 +132,14 @@ function LineChart({ data, range, width, height, color }) {
     // svg.selectAll("path").remove();
 
     d3.select("#" + lineChartID + "Xaxis")
-        .transition()
-        .duration(1000)
-        .call(d3.axisBottom().scale(x));
+      .transition()
+      .duration(1000)
+      .call(d3.axisBottom().scale(x));
 
     d3.select("#" + lineChartID + "Yaxis")
-        .transition()
-        .duration(1000)
-        .call(d3.axisLeft().scale(y));
+      .transition()
+      .duration(1000)
+      .call(d3.axisLeft().scale(y));
 
     // var newData = svg.selectAll("path")
     //                   .data(dataUsed);
@@ -148,16 +157,16 @@ function LineChart({ data, range, width, height, color }) {
     //   .attr("stroke-linecap", "round");
 
     d3.select("#" + lineChartID + "path")
-        .datum(dataUsed)
-        .transition()
-        .duration(1000)
-        .attr("fill", "none")
-        .attr("stroke", color)
-        .attr("stroke-width", 1.5)
-        .attr("stroke-linejoin", "round")
-        .attr("stroke-linecap", "round")
-        .attr('class', 'line') 
-        .attr("d", lineChart);
+      .datum(data)
+      .transition()
+      .duration(1000)
+      .attr("fill", "none")
+      .attr("stroke", color)
+      .attr("stroke-width", 1.5)
+      .attr("stroke-linejoin", "round")
+      .attr("stroke-linecap", "round")
+      .attr('class', 'line')
+      .attr("d", lineChart);
   });
 
   return (

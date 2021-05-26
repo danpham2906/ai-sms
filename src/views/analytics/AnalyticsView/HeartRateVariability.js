@@ -34,8 +34,8 @@ const useStyles = makeStyles((theme) => ({
     padding: '0px 3px 20px 5px',
   },
   chartContainer: {
-    padding: '0px 20px 20px 0px',
-    height: 200,
+    padding: '10px 20px 20px 0px',
+    height: '270px',
   },
   lineChart: {
     padding: '0px 20px 20px 0px',
@@ -190,7 +190,7 @@ const HeartRateVariability = ({ className, range, ...rest }) => {
               dataCSV={data}
               range={newRange}
               width={1600}
-              height={170}
+              height={250}
               className={classes.lineChart}
               color="LightCoral"
             />

@@ -5,12 +5,16 @@ import * as d3 from 'd3';
 
 function LineChart({ dataCSV, range, width, height, color }) {
   const [data, setData] = useState([]);
+  const margin = { top: 20, right: 30, bottom: 30, left: 50 };
+
+  var x, y, xAxis, yAxis, lineChart;
   useEffect(() => {
     d3.csv(dataCSV).then((d) => {
       var parser = d3.timeParse("%m/%d/%Y %H:%M:%S");
       for (var i in d) {
         d[i].human_readable = parser(d[i].human_readable);
-        // if (i < 10) console.log(data[i]);
+        d[i].bpm = Math.round(d[i].bpm);
+        // if (d[i].bpm > 100) console.log(d[i].bpm);
       }
       setData(d);
     });
@@ -21,7 +25,6 @@ function LineChart({ dataCSV, range, width, height, color }) {
   // const svg = d3.create("svg")
   //     .attr("viewBox", [0, 0, width, height]);
 
-  const margin = { top: 20, right: 30, bottom: 30, left: 50 };
   // const height = 500;
 
   var x = d3.scaleUtc()
@@ -63,8 +66,17 @@ function LineChart({ dataCSV, range, width, height, color }) {
         .attr("id", lineChartID + "Yaxis")
         .call(yAxis);
 
+      var clip = svg.append("defs").append("svg:clipPath")
+        .attr("id", "clip")
+        .append("svg:rect")
+        .attr("width", width - margin.left - margin.right)
+        .attr("height", height - margin.top - margin.bottom)
+        .attr("x", margin.left)
+        .attr("y", margin.top);
+
       svg
         .append("path")
+        .attr("clip-path", "url(#clip)")
         .datum(data)
         .attr("fill", "none")
         .attr("stroke", color)
@@ -73,6 +85,8 @@ function LineChart({ dataCSV, range, width, height, color }) {
         .attr("stroke-linecap", "round")
         .attr("id", lineChartID + "path")
         .attr("d", lineChart);
+
+
     },
     dataCSV
   );
@@ -85,9 +99,9 @@ function LineChart({ dataCSV, range, width, height, color }) {
       .x(d => x(d.human_readable))
       .y(d => y(d.bpm));
 
-    x.domain(d3.extent(data, d => d.human_readable));
+    // x.domain(d3.extent(data, d => d.human_readable));
 
-    y.domain([0, d3.max(data, d => d.bpm)]).nice();
+    // y.domain([0, d3.max(data, d => d.bpm)]).nice();
 
     let dataUsed;
     if (!range) {
@@ -132,7 +146,7 @@ function LineChart({ dataCSV, range, width, height, color }) {
       lineChartID = "lineChartTurquoise";
     }
 
-    let svg = d3.select("#"+lineChartID);
+    let svg = d3.select("#" + lineChartID);
     svg.selectAll("g").remove();
     // svg.selectAll("path").remove();
 
@@ -144,25 +158,11 @@ function LineChart({ dataCSV, range, width, height, color }) {
     d3.select("#" + lineChartID + "Yaxis")
       .transition()
       .duration(1000)
-      .call(d3.axisLeft().scale(y));
-
-    // var newData = svg.selectAll("path")
-    //                   .data(dataUsed);
-
-    // newData.enter()
-    //   // .attr("class","lineTest")
-    //   .merge(newData)
-    //   .transition()
-    //   .duration(3000)
-    //   .attr("d", lineChart)
-    //   .attr("fill", "none")
-    //   .attr("stroke", color)
-    //   .attr("stroke-width", 1.5)
-    //   .attr("stroke-linejoin", "round")
-    //   .attr("stroke-linecap", "round");
+      // .call(d3.axisLeft().scale(y))
+      .call(d3.axisLeft(y));
 
     d3.select("#" + lineChartID + "path")
-      .datum(dataUsed)
+      .datum(data)
       .transition()
       .duration(1000)
       .attr("fill", "none")
