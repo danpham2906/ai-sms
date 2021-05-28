@@ -1,6 +1,8 @@
 /* eslint-disable */
 import React, {
   useState,
+  useContext,
+  useEffect
 } from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -17,6 +19,7 @@ import AnnouncementIcon from '@material-ui/icons/Announcement';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import BatteryAlertIcon from '@material-ui/icons/BatteryAlert';
 import DateRangeIcon from '@material-ui/icons/DateRange';
+import { ParticipantContext } from '../../../context/ParticipantContext';
 
 const useStyles = makeStyles((theme) => ({
   map: {
@@ -62,9 +65,19 @@ const ParticipantList = ({ className, participantData, toggleCircleMarkerData, s
   const participants = participantData;
   const [toggleCircleMarker, setToggleCircleMarker] = useState(toggleCircleMarkerData);
   const [toggleCMState, setToggleCMState] = useState(true);
+  const participantContext = useContext(ParticipantContext);
 
-  function handleParticipantSelection(id) {
-    // console.log("handleParticipantSelection | ParticipantList.js | index = " + id);
+  useEffect(() => {
+    handleParticipantSelection(participantContext.name);
+  }, participantContext);
+
+  function handleParticipantSelection (participantName) {
+    var id;
+    participants.map((participant) => {
+      if (participant.name == participantName) {
+        id = participant.id;
+      }
+    });
 
     for (let i = 1; i < participants.length + 1; i++) {
       valueCircleMarker[i] = false;
@@ -81,7 +94,7 @@ const ParticipantList = ({ className, participantData, toggleCircleMarkerData, s
       setToggleCircleMarker(valueCircleMarker1);
     }
 
-    selectParticipant(id);
+    selectParticipant(participantName);
   }
 
   return (
@@ -90,7 +103,7 @@ const ParticipantList = ({ className, participantData, toggleCircleMarkerData, s
         const labelId = `checkbox-list-secondary-label-${participant.id}`;
         return (
           // <ListItem key={value} button>
-          <ListItem key={participant.id} button onClick={() => handleParticipantSelection(participant.id)} >
+          <ListItem key={participant.id} button onClick={() => handleParticipantSelection(participant.name)} >
             {toggleCircleMarker[participant.id] ? 
               <ListItemText id={labelId} disableTypography primary={<Typography style={{ color: 'LightSeaGreen', 'font-weight': 'bold' }}>{`${participant.name}`}</Typography>}/>
               : 

@@ -12,7 +12,17 @@
         "state": "Alabama",
         "city": "Huntsville",
         "street": "3223  Maple Lane"
-      }
+      },
+      "exclusiveZones" : [
+        {
+          "center": [34.745, -86.63],
+          "radius": 1500
+        },
+        {
+          "center": [34.738, -86.635],
+          "radius": 1300
+        }
+      ]
     },
     {
       "id": 2,
@@ -26,7 +36,13 @@
         "state": "Alabama",
         "city": "Huntsville",
         "street": "6807 Criner Rd SE"
-      }
+      },
+      "exclusiveZones" : [
+        {
+          "center": [34.749, -86.635],
+          "radius": 1400
+        }
+      ]
     },
     {
       "id": 3,
@@ -40,7 +56,17 @@
         "state": "Alabama",
         "city": "Huntsville",
         "street": "6603 Willow Springs Blvd NW"
-      }
+      },
+      "exclusiveZones" : [
+        {
+          "center": [34.73, -86.60],
+          "radius": 1400
+        },
+        {
+          "center": [34.73, -86.605],
+          "radius": 1200
+        }
+      ]
     },
     {
       "id": 4,
@@ -54,7 +80,17 @@
         "state": "Alabama",
         "city": "Huntsville",
         "street": "8009 Randall Rd SW"
-      }
+      },
+      "exclusiveZones" : [
+        {
+          "center": [34.748, -86.60],
+          "radius": 1150
+        },
+        {
+          "center": [34.73, -86.635],
+          "radius": 1350
+        }
+      ]
     },
     {
       "id": 5,
@@ -68,7 +104,21 @@
         "state": "Alabama",
         "city": "Huntsville",
         "street": "712 Mountain Gap Rd SE"
-      }
+      },
+      "exclusiveZones" : [
+        {
+          "center": [34.748, -86.60],
+          "radius": 1256
+        },
+        {
+          "center": [34.73, -86.635],
+          "radius": 1160
+        },
+        {
+          "center": [34.741, -86.632],
+          "radius": 1350
+        }
+      ]
     },
     {
       "id": 6,
@@ -82,7 +132,13 @@
         "state": "Alabama",
         "city": "Huntsville",
         "street": "1689  Ritter Street"
-      }
+      },
+      "exclusiveZones" : [
+        {
+          "center": [34.751, -86.642],
+          "radius": 1600
+        }
+      ]
     },
     {
       "id": 7,
@@ -96,7 +152,8 @@
         "state": "Alabama",
         "city": "Huntsville",
         "street": "371 College Park Cir NW"
-      }
+      },
+      "exclusiveZones" : []
     },
     {
       "id": 8,
@@ -110,7 +167,8 @@
         "state": "Alabama",
         "city": "Huntsville",
         "street": "3907 Harwood Ave SW"
-      }
+      },
+      "exclusiveZones" : []
     },
     {
       "id": 9,
@@ -124,7 +182,8 @@
         "state": "Alabama",
         "city": "Huntsville",
         "street": "712 Mountain Gap Rd SE"
-      }
+      },
+      "exclusiveZones" : []
     },
     {
       "id": 10,
@@ -138,7 +197,8 @@
         "state": "Alabama",
         "city": "Huntsville",
         "street": "2211 Linde St NW"
-      }
+      },
+      "exclusiveZones" : []
     }
   ]
 }

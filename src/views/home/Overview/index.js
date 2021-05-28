@@ -34,6 +34,7 @@ import BatteryAlertIcon from '@material-ui/icons/BatteryAlert';
 import DateRangeIcon from '@material-ui/icons/DateRange';
 import ParticipantList from './ParticipantList';
 import CircleMarkerGroup from './CircleMarkerGroup';
+import ExclusiveZone from './ExclusiveZone';
 import data from '../../../data/ParticipantData';
 // import { ChangeParticipantName } from 'src/layouts/DashboardLayout/NavBar';
 import { ParticipantContext } from '../../../context/ParticipantContext';
@@ -104,15 +105,33 @@ export default function HomeView() {
   // const [circleMarker, setCircleMarker] = useState(null);
   const [toggleCircleMarker, setToggleCircleMarker] = useState([]);
   const [toggleCMState, setToggleCMState] = useState(true);
+  const [selectedExclusiveZones, setSelectedExclusiveZones] = useState([]);
 
   const participantContext = useContext(ParticipantContext);
 
   useEffect(() => {
     setToggleCircleMarker(valueCircleMarker);
+    // SelectParticipant(participantContext.name);
   }, []);
 
-  function SelectParticipant(index) {
-    // console.log("Select Participant | index.js | index = " + index);
+  useEffect(() => {
+    SelectParticipant(participantContext.name);
+  }, participantContext);
+
+  function SelectParticipant(participantName) {
+    var index;
+
+    participants.map((participant) => {
+      if (participant.name == participantName) {
+        index = participant.id;
+        participantContext.setName(participant.name);
+        participantContext.setStreet(participant.address.street);
+        participantContext.setCity(participant.address.city);
+        participantContext.setState(participant.address.state);
+        setSelectedExclusiveZones(participant.exclusiveZones);
+      }
+    });
+
     for (let i = 1; i < participants.length + 1; i++) {
       valueCircleMarker[i] = false;
     }
@@ -127,61 +146,66 @@ export default function HomeView() {
       }
       setToggleCircleMarker(valueCircleMarker1);
     }
+  }
 
+  const GetSelectedParticipantZones = (participantName) => {
+    console.log(participantName);
     participants.map((participant) => {
-      if (participant.id == index) {
-        participantContext.setName(participant.name);
-        participantContext.setStreet(participant.address.street);
-        participantContext.setCity(participant.address.city);
-        participantContext.setState(participant.address.state);
-        // console.log(`toggleCircleMarker: ${participant.id}`);
+      if (participant.name == participantName) {
+        console.log("exclusiveZones @index.js: " + JSON.stringify(participant.exclusiveZones));
+        return participant.exclusiveZones;
       }
     });
   }
 
   return (
     <React.Fragment>
-        <Page
-          className={classes.root}
-          title="AI-SMS"
-        ></Page>
-        <Container maxWidth='false'>
-            <Grid container className={classes.participantContainer}>
-                {/* ParticipantList */}
-                <Grid item xs={12} className={classes.participantList}>
-                    <ParticipantList
-                      participantData={participants}
-                      toggleCircleMarkerData={toggleCircleMarker}
-                      selectParticipant={SelectParticipant}
-                    />
-                </Grid>
-            </Grid>
+      <Page
+        className={classes.root}
+        title="AI-SMS"
+      ></Page>
+      <Container maxWidth='false'>
+        <Grid container className={classes.participantContainer}>
+          {/* ParticipantList */}
+          <Grid item xs={12} className={classes.participantList}>
+            <ParticipantList
+              participantData={participants}
+              toggleCircleMarkerData={toggleCircleMarker}
+              selectParticipant={SelectParticipant}
+            />
+          </Grid>
+        </Grid>
+      </Container>
+
+      <Card className={classes.cardContainer}>
+        <Container maxWidth='true' className={classes.container}>
+          {/* <Grid container> */}
+          {/* Maps */}
+          {/* <Grid container item> */}
+          {/* <MapContainer spacing={3} center={position} zoom={14} zoomControl={false} scrollWheelZoom={false} className={classes.map} whenCreated={setMap}> */}
+          <MapContainer spacing={3} center={position} zoom={14} zoomControl={false} scrollWheelZoom={false} className={classes.map}>
+            <TileLayer
+              attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+
+            <ZoomControl position="topright" />
+
+            <CircleMarkerGroup
+              participantData={participants}
+              toggleCircleMarkerData={toggleCircleMarker}
+            />
+
+            <ExclusiveZone
+              exclusiveZones={selectedExclusiveZones}
+              participantName={participantContext.name}
+            />
+
+          </MapContainer>
+          {/* </Grid> */}
+          {/* </Grid> */}
         </Container>
-
-        <Card className={classes.cardContainer}>
-          <Container maxWidth='true' className={classes.container}>
-              {/* <Grid container> */}
-                  {/* Maps */}
-                  {/* <Grid container item> */}
-                      {/* <MapContainer spacing={3} center={position} zoom={14} zoomControl={false} scrollWheelZoom={false} className={classes.map} whenCreated={setMap}> */}
-                      <MapContainer spacing={3} center={position} zoom={14} zoomControl={false} scrollWheelZoom={false} className={classes.map}>
-                          <TileLayer
-                              attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                          />
-
-                          <ZoomControl position="topright" />
-
-                          <CircleMarkerGroup
-                            participantData={participants}
-                            toggleCircleMarkerData={toggleCircleMarker}
-                          /> 
-
-                      </MapContainer>
-                  {/* </Grid> */}
-              {/* </Grid> */}
-          </Container>
-        </Card>
+      </Card>
     </React.Fragment>
   );
 }
