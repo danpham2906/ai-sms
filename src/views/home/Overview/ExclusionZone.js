@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 360,
     backgroundColor: theme.palette.background.paper,
   },
-  exclusiveZoneTooltip: {
+  exclusionZoneTooltip: {
     padding: '0px 4px 0px 4px !important',
     color: 'red',
   },
@@ -49,22 +49,18 @@ const useStyles = makeStyles((theme) => ({
 const colorOption1 = { color: 'blue' };
 const colorOption2 = { color: 'red' };
 
-const ExclusiveZone = ({ className, exclusiveZones, participantName, ...rest }) => {
+const ExclusionZone = ({ className, exclusionZones, participantName, ...rest }) => {
   const classes = useStyles();
-
-  console.log("exclusiveZones @ExclusiveZone.js 1: " + exclusiveZones);
-  console.log("exclusiveZones @ExclusiveZone.js 2: " + JSON.stringify(exclusiveZones));
 
   return (
     <div>
       {
-        exclusiveZones.map((zone) => {
+        exclusionZones.map((zone) => {
           return (
             <div>
-              {/* {console.log(zone)} */}
               <CircleMarker center={zone.center} pathOptions={colorOption2} radius={zone.radius / 10} opacity={1}>
-                <Tooltip direction='bottom' opacity={1} className={classes.exclusiveZoneTooltip} offset={[0, 7]}>
-                  {participantName}&apos;s Exclusive Zones
+                <Tooltip direction='bottom' opacity={1} className={classes.exclusionZoneTooltip} offset={[0, 7]}>
+                  {participantName}&apos;s Exclusion Zones
               </Tooltip>
               </CircleMarker>
             </div>
@@ -75,8 +71,8 @@ const ExclusiveZone = ({ className, exclusiveZones, participantName, ...rest }) 
   );
 }
 
-ExclusiveZone.propTypes = {
+ExclusionZone.propTypes = {
   className: PropTypes.string
 };
 
-export default ExclusiveZone;
+export default ExclusionZone;

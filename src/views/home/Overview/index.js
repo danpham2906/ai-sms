@@ -34,7 +34,7 @@ import BatteryAlertIcon from '@material-ui/icons/BatteryAlert';
 import DateRangeIcon from '@material-ui/icons/DateRange';
 import ParticipantList from './ParticipantList';
 import CircleMarkerGroup from './CircleMarkerGroup';
-import ExclusiveZone from './ExclusiveZone';
+import ExclusionZone from './ExclusionZone';
 import data from '../../../data/ParticipantData';
 // import { ChangeParticipantName } from 'src/layouts/DashboardLayout/NavBar';
 import { ParticipantContext } from '../../../context/ParticipantContext';
@@ -105,13 +105,12 @@ export default function HomeView() {
   // const [circleMarker, setCircleMarker] = useState(null);
   const [toggleCircleMarker, setToggleCircleMarker] = useState([]);
   const [toggleCMState, setToggleCMState] = useState(true);
-  const [selectedExclusiveZones, setSelectedExclusiveZones] = useState([]);
+  const [selectedExclusionZones, setSelectedExclusionZones] = useState([]);
 
   const participantContext = useContext(ParticipantContext);
 
   useEffect(() => {
     setToggleCircleMarker(valueCircleMarker);
-    // SelectParticipant(participantContext.name);
   }, []);
 
   useEffect(() => {
@@ -128,7 +127,7 @@ export default function HomeView() {
         participantContext.setStreet(participant.address.street);
         participantContext.setCity(participant.address.city);
         participantContext.setState(participant.address.state);
-        setSelectedExclusiveZones(participant.exclusiveZones);
+        setSelectedExclusionZones(participant.exclusionZones);
       }
     });
 
@@ -146,16 +145,6 @@ export default function HomeView() {
       }
       setToggleCircleMarker(valueCircleMarker1);
     }
-  }
-
-  const GetSelectedParticipantZones = (participantName) => {
-    console.log(participantName);
-    participants.map((participant) => {
-      if (participant.name == participantName) {
-        console.log("exclusiveZones @index.js: " + JSON.stringify(participant.exclusiveZones));
-        return participant.exclusiveZones;
-      }
-    });
   }
 
   return (
@@ -196,8 +185,8 @@ export default function HomeView() {
               toggleCircleMarkerData={toggleCircleMarker}
             />
 
-            <ExclusiveZone
-              exclusiveZones={selectedExclusiveZones}
+            <ExclusionZone
+              exclusionZones={selectedExclusionZones}
               participantName={participantContext.name}
             />
 

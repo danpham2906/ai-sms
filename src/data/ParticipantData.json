@@ -13,7 +13,7 @@
         "city": "Huntsville",
         "street": "3223  Maple Lane"
       },
-      "exclusiveZones" : [
+      "exclusionZones" : [
         {
           "center": [34.745, -86.63],
           "radius": 1500
@@ -37,7 +37,7 @@
         "city": "Huntsville",
         "street": "6807 Criner Rd SE"
       },
-      "exclusiveZones" : [
+      "exclusionZones" : [
         {
           "center": [34.749, -86.635],
           "radius": 1400
@@ -57,7 +57,7 @@
         "city": "Huntsville",
         "street": "6603 Willow Springs Blvd NW"
       },
-      "exclusiveZones" : [
+      "exclusionZones" : [
         {
           "center": [34.73, -86.60],
           "radius": 1400
@@ -81,7 +81,7 @@
         "city": "Huntsville",
         "street": "8009 Randall Rd SW"
       },
-      "exclusiveZones" : [
+      "exclusionZones" : [
         {
           "center": [34.748, -86.60],
           "radius": 1150
@@ -105,7 +105,7 @@
         "city": "Huntsville",
         "street": "712 Mountain Gap Rd SE"
       },
-      "exclusiveZones" : [
+      "exclusionZones" : [
         {
           "center": [34.748, -86.60],
           "radius": 1256
@@ -133,7 +133,7 @@
         "city": "Huntsville",
         "street": "1689  Ritter Street"
       },
-      "exclusiveZones" : [
+      "exclusionZones" : [
         {
           "center": [34.751, -86.642],
           "radius": 1600
@@ -153,7 +153,7 @@
         "city": "Huntsville",
         "street": "371 College Park Cir NW"
       },
-      "exclusiveZones" : []
+      "exclusionZones" : []
     },
     {
       "id": 8,
@@ -168,7 +168,7 @@
         "city": "Huntsville",
         "street": "3907 Harwood Ave SW"
       },
-      "exclusiveZones" : []
+      "exclusionZones" : []
     },
     {
       "id": 9,
@@ -183,7 +183,7 @@
         "city": "Huntsville",
         "street": "712 Mountain Gap Rd SE"
       },
-      "exclusiveZones" : []
+      "exclusionZones" : []
     },
     {
       "id": 10,
@@ -198,7 +198,7 @@
         "city": "Huntsville",
         "street": "2211 Linde St NW"
       },
-      "exclusiveZones" : []
+      "exclusionZones" : []
     }
   ]
 }
