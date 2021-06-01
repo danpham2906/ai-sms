@@ -3,8 +3,8 @@ import { useD3 } from './useD3';
 import { forwardRef, useImperativeHandle } from 'react';
 import * as d3 from 'd3';
 
-const HorizontalBarChart = forwardRef (({ data, subData, width, height, color }, ref) => {
-  const margin = {top: 30, right: 0, bottom: 10, left: 80};
+const HorizontalBarChart = forwardRef(({ data, subData, width, height, color }, ref) => {
+  const margin = { top: 30, right: 0, bottom: 10, left: 80 };
   // const barHeight = 25;
 
   const chartRef = useD3(
@@ -22,8 +22,8 @@ const HorizontalBarChart = forwardRef (({ data, subData, width, height, color },
 
       const xAxis = g => g
         .attr("transform", `translate(0,${margin.top})`)
-        .call(d3.axisTop(x).ticks(width / 80, data.format))
-        .call(g => g.select(".domain").remove());
+        .call(d3.axisTop(x).ticks(width / 80, data.format));
+        // .call(g => g.select(".domain").remove());
 
       const yAxis = g => g
         .attr("transform", `translate(${margin.left},0)`)
@@ -36,41 +36,45 @@ const HorizontalBarChart = forwardRef (({ data, subData, width, height, color },
       } else if (color == "OliveDrab") {
         barChartID = "barChartOliveDrab";
       }
-      
+
       svg.attr("id", barChartID)
-          .append("g")
-          .attr("fill", color)
-          .selectAll("rect")
-          .data(data)
-          .join("rect")
-          .attr("x", x(0))
-          .attr("y", (d, i) => y(i))
-          .attr("width", d => x(d.value) - x(0))
-          .attr("height", y.bandwidth());
+        .append("g")
+        .attr("id", "rect")
+        .attr("fill", color)
+        .selectAll("rect")
+        .data(data)
+        .join("rect")
+        .attr("x", x(0))
+        .attr("y", (d, i) => y(i))
+        .attr("width", d => x(d.value) - x(0))
+        .attr("height", y.bandwidth());
 
       svg.append("g")
-          .attr("fill", "white")
-          .attr("text-anchor", "end")
-          .attr("font-family", "sans-serif")
-          .attr("font-size", 12)
+        .attr("id", "text")
+        .attr("fill", "white")
+        .attr("text-anchor", "end")
+        .attr("font-family", "sans-serif")
+        .attr("font-size", 12)
         .selectAll("text")
         .data(data)
         .join("text")
-          .attr("x", d => x(d.value))
-          .attr("y", (d, i) => y(i) + y.bandwidth() / 2)
-          .attr("dy", "0.35em")
-          .attr("dx", -4)
-          .text(d => format(d.value))
+        .attr("x", d => x(d.value))
+        .attr("y", (d, i) => y(i) + y.bandwidth() / 2)
+        .attr("dy", "0.35em")
+        .attr("dx", -4)
+        .text(d => format(d.value))
         .call(text => text.filter(d => x(d.value) - x(0) < 20) // short bars
           .attr("dx", +4)
           .attr("fill", "black")
           .attr("text-anchor", "start"));
 
       svg.append("g")
-          .call(xAxis);
+        .attr("id", "xAxis")
+        .call(xAxis);
 
       svg.append("g")
-          .call(yAxis);
+        .attr("id", "yAxis")
+        .call(yAxis);
     },
     [data.length]
   );
@@ -107,49 +111,61 @@ const HorizontalBarChart = forwardRef (({ data, subData, width, height, color },
 
       const xAxis = g => g
         .attr("transform", `translate(0,${margin.top})`)
-        .call(d3.axisTop(x).ticks(width / 80, dataUsed.format))
-        .call(g => g.select(".domain").remove());
+        .call(d3.axisTop(x).ticks(width / 80, dataUsed.format));
+        // .call(g => g.select(".domain").remove());
 
       const yAxis = g => g
         .attr("transform", `translate(${margin.left},0)`)
         .call(d3.axisLeft(y).tickFormat(i => dataUsed[i].name).tickSizeOuter(0));
 
       let svg = d3.select(barChartID);
-      svg.selectAll("g").remove();
-      
-      svg.append("g")
-            .attr("fill", color)
-            .selectAll("rect")
-            .data(dataUsed)
-            .join("rect")
-            .attr("x", x(0))
-            .attr("y", (d, i) => y(i))
-            .attr("width", d => x(d.value) - x(0))
-            .attr("height", y.bandwidth());
+      // svg.selectAll("g").remove();
 
-      svg.append("g")
-          .attr("fill", "white")
-          .attr("text-anchor", "end")
-          .attr("font-family", "sans-serif")
-          .attr("font-size", 12)
+      svg
+        // .append("g")
+        .selectAll("g#rect")
+        .attr("fill", color)
+        .selectAll("rect")
+        .data(dataUsed)
+        // .join("rect")
+        .transition()
+        .duration(1000)
+        .attr("x", x(0))
+        .attr("y", (d, i) => y(i))
+        .attr("width", d => x(d.value) - x(0))
+        .attr("height", y.bandwidth());
+
+      svg
+        // .append("g")
+        .selectAll("g#text")
+        .attr("font-family", "sans-serif")
+        .attr("font-size", 12)
         .selectAll("text")
         .data(dataUsed)
-        .join("text")
-          .attr("x", d => x(d.value))
-          .attr("y", (d, i) => y(i) + y.bandwidth() / 2)
-          .attr("dy", "0.35em")
-          .attr("dx", -4)
-          .text(d => format(d.value))
+        // .join("text")
+        .transition()
+        .duration(1000)
+        .attr("x", d => x(d.value))
+        .attr("y", (d, i) => y(i) + y.bandwidth() / 2)
+        .attr("dy", "0.35em")
+        .attr("dx", -4)
+        .text(d => Math.round(format(d.value)))
+        .attr("fill", "white")
+        .attr("text-anchor", "end")
         .call(text => text.filter(d => x(d.value) - x(0) < 20) // short bars
           .attr("dx", +4)
           .attr("fill", "black")
           .attr("text-anchor", "start"));
 
-      svg.append("g")
-          .call(xAxis);
+      svg.selectAll("g#xAxis")
+        .transition()
+        .duration(1000)
+        .call(xAxis);
 
-      svg.append("g")
-          .call(yAxis);
+      svg.selectAll("g#yAxis")
+        // .transition()
+        // .duration(1000)
+        .call(yAxis);
     }
 
   }));
