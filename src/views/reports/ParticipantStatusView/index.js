@@ -6,11 +6,12 @@ import {
   makeStyles
 } from '@material-ui/core';
 import Page from 'src/components/Page';
-import PersonalInformation from './PersonalInformation';
+import OffenderSummary from './OffenderSummary';
+import Employment from './Employment';
 import Schedule from './Schedule';
 import Messaging from './Messaging';
-import BraceletStatus from './BraceletStatus';
-import SentencingInformation from './SentencingInformation';
+import CaseInformation from './CaseInformation';
+import Appointments from './Appointments';
 import TimelineLog from './TimelineLog';
 
 const useStyles = makeStyles((theme) => ({
@@ -37,30 +38,40 @@ const Overview = () => {
         >
           <Grid
             item
-            lg={4}
-            sm={6}
-            xl={4}
-            xs={12}
+            lg={7}
+            sm={10}
+            xl={7}
+            xs={20}
           >
-            <PersonalInformation />
-          </Grid>
-          <Grid
-            item
-            lg={3}
-            sm={6}
-            xl={3}
-            xs={12}
-          >
-            <SentencingInformation />
+            <OffenderSummary />
           </Grid>
           <Grid
             item
             lg={5}
-            sm={6}
+            sm={8}
             xl={5}
-            xs={12}
+            xs={16}
           >
-            <BraceletStatus />
+            <CaseInformation />
+          </Grid>
+
+          <Grid
+            item
+            lg={4}
+            sm={6}
+            xl={4}
+            xs={14}
+          >
+            <Employment />
+          </Grid>
+          <Grid
+            item
+            lg={8}
+            sm={12}
+            xl={8}
+            xs={22}
+          >
+            <Appointments />
           </Grid>
 
           <Grid

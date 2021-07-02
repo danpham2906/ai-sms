@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     margin: '12% 35%',
   },
   avatarContainer: {
-    padding: '20px 20px 20px 20px',
+    padding: '0px 20px 0px 20px',
   },
   participantName: {
     padding: '18px 20px 15px 20px',
@@ -43,13 +43,17 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     'flex-direction': 'column',
     'min-height': 0,
-    height: 200,
-    // padding: '5px 3px 15px 5px',
-    padding: '5px 3px 15px 15px',
+    // height: 200,
+    padding: '5px 15px 0px 15px',
   },
   column: {
     float: 'left',
     width: '50%'
+  },
+  title: {
+    width: '100%',
+    flex: 1,
+    margin: '0px 10px',
   },
 }));
 
@@ -65,9 +69,24 @@ const PersonalInformation = ({ className, ...rest }) => {
       <CardContent>
         <Grid
           container
-          spacing={6}
+          // spacing={6}
         >
-          <Grid item lg={4} className={classes.avatarContainer}>
+          <Grid item>
+            <Typography
+              color="textSecondary"
+              // gutterBottom
+              variant="h6"
+              // className={classes.title}
+            >
+              OFFENDER SUMMARY
+            </Typography>
+          </Grid>
+        </Grid>
+        <Grid
+          container
+          className={classes.avatarContainer}
+        >
+          <Grid item lg={4}>
             <Avatar className={classes.avatar} src='/static/images/avatars/avatar01.png' />
           </Grid>
           <Grid item lg={8}>
@@ -83,7 +102,10 @@ const PersonalInformation = ({ className, ...rest }) => {
             </Typography>
           </Grid>
         </Grid>
-        <Grid container className={classes.flexSection}>
+        <Grid
+          container
+          className={classes.flexSection}
+        >
             <Grid
                 item
                 // className={classes.flexColScroll}
@@ -96,11 +118,11 @@ const PersonalInformation = ({ className, ...rest }) => {
                     <div className={classes.column}>
                       <b>Physical Profile</b><br/>
                       Date of Birth: 02/05/1986<br/>
-                      Weight: 230 lbs.<br/>
-                      Hair: Brown<br/>
-                      Sex: Male<br/>
-                      Height: 6 ft. 03 in.<br/>
-                      Eyes: Brown
+                      Sex: 230 lbs.<br/>
+                      Race: Brown<br/>
+                      Height: Male<br/>
+                      Weight: 6 ft. 03 in.<br/>
+                      Alerts and Warnings: Brown
                     </div>
                     <div className={classes.column}>
                       <b>Parole Info</b><br/>

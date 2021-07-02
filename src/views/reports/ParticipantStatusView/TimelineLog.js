@@ -50,7 +50,6 @@ const useStyles = makeStyles((theme) => ({
     'min-height': '100%',
     height:'100%',
     'overflow-x': 'hidden',
-    // 'overflow-y': 'hidden'
   },
   flexSection: {
     'flex-grow': 1,

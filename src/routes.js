@@ -9,7 +9,6 @@ import ParticipantStatusView from 'src/views/reports/ParticipantStatusView';
 import Overview from 'src/views/home/Overview';
 import LoginView from 'src/views/auth/LoginView';
 import NotFoundView from 'src/views/errors/NotFoundView';
-import ProductListView from 'src/views/product/ProductListView';
 import RegisterView from 'src/views/auth/RegisterView';
 import SettingsView from 'src/views/settings/SettingsView';
 import AppTasksView from 'src/views/apptasks/AppTasksView';
@@ -23,9 +22,7 @@ const routes = [
       { path: 'overview', element: <Overview /> },
       { path: 'participantstatus', element: <ParticipantStatusView /> },
       { path: 'schedule', element: <ScheduleView /> },
-      // { path: 'documents', element: <ProductListView /> },
       { path: 'documents', element: <DocumentsView /> },
-      // { path: 'apptask', element: <SettingsView /> },
       { path: 'goalapp', element: <AppTasksView /> },
       { path: 'analytics', element: <AnalyticsView /> },
       { path: '*', element: <Navigate to="/404" /> }

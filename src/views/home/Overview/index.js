@@ -19,33 +19,32 @@ import {
   Tooltip
 } from 'react-leaflet';
 import Page from 'src/components/Page';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import ListItemText from '@material-ui/core/ListItemText';
+// import List from '@material-ui/core/List';
+// import ListItem from '@material-ui/core/ListItem';
+// import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+// import ListItemText from '@material-ui/core/ListItemText';
 import {
   Typography,
   Card
 } from '@material-ui/core';
-import IconButton from '@material-ui/core/IconButton';
-import AnnouncementIcon from '@material-ui/icons/Announcement';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import BatteryAlertIcon from '@material-ui/icons/BatteryAlert';
-import DateRangeIcon from '@material-ui/icons/DateRange';
+// import IconButton from '@material-ui/core/IconButton';
+// import AnnouncementIcon from '@material-ui/icons/Announcement';
+// import FavoriteIcon from '@material-ui/icons/Favorite';
+// import BatteryAlertIcon from '@material-ui/icons/BatteryAlert';
+// import DateRangeIcon from '@material-ui/icons/DateRange';
 import ParticipantList from './ParticipantList';
 import CircleMarkerGroup from './CircleMarkerGroup';
-import ExclusionZone from './ExclusionZone';
 import data from '../../../data/ParticipantData';
 // import { ChangeParticipantName } from 'src/layouts/DashboardLayout/NavBar';
 import { ParticipantContext } from '../../../context/ParticipantContext';
-import {
-  MarkerIcon,
-  MarkerPlaceAlertIcon,
-  MarkerOutOfBatteryIcon,
-  MarkerHeartRateIcon,
-  MarkerCalendarIcon,
-  MarkerEmptyIcon
-} from './MarkerIcon';
+// import {
+//   MarkerIcon,
+//   MarkerPlaceAlertIcon,
+//   MarkerOutOfBatteryIcon,
+//   MarkerHeartRateIcon,
+//   MarkerCalendarIcon,
+//   MarkerEmptyIcon
+// } from './MarkerIcon';
 
 const useStyles = makeStyles((theme) => ({
   map: {
@@ -183,11 +182,6 @@ export default function HomeView() {
             <CircleMarkerGroup
               participantData={participants}
               toggleCircleMarkerData={toggleCircleMarker}
-            />
-
-            <ExclusionZone
-              exclusionZones={selectedExclusionZones}
-              participantName={participantContext.name}
             />
 
           </MapContainer>
