@@ -32,12 +32,12 @@ const useStyles = makeStyles((theme) => ({
     marginRight: 'auto'
   },
   active: {
-    color: theme.palette.primary.main,
+    color: theme.palette.text.link,
     '& $title': {
       fontWeight: theme.typography.fontWeightMedium
     },
     '& $icon': {
-      color: theme.palette.primary.main
+      color: theme.palette.text.link
     }
   }
 }));
@@ -64,10 +64,7 @@ const NavItem = ({
         component={RouterLink}
         to={href}
         onClick={() => {
-          if (title == "Home")
-            titleContext.setName("Home & Participant Selection");
-          else
-            titleContext.setName(title);
+          titleContext.setName(title);
         }}
       >
         {Icon && (

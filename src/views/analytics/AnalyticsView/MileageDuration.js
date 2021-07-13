@@ -2,7 +2,7 @@
 import React, { useContext } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import { Line } from '@reactchartjs/react-chart.js';
+// import { Line } from '@reactchartjs/react-chart.js';
 import {
   Card,
   CardContent,

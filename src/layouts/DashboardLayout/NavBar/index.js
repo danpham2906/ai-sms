@@ -30,7 +30,7 @@ import { ParticipantContext } from '../../../context/ParticipantContext';
 
 const user = {
   avatar: '/static/images/avatars/avatar01.png',
-  jobTitle: 'Senior Developer',
+  // jobTitle: 'Senior Developer',
   // name: participant.name
 };
 
@@ -53,11 +53,6 @@ const items = [
     icon: CalendarIcon,
     title: 'Schedule'
   },
-  // {
-  //   href: '/app/documents',
-  //   icon: FileTextIcon,
-  //   title: 'Documents'
-  // },
   {
     href: '/app/goalapp',
     icon: BriefcaseIcon,
@@ -73,16 +68,6 @@ const items = [
   //   icon: LockIcon,
   //   title: 'Setting'
   // },
-  // {
-  //   href: '/register',
-  //   icon: UserPlusIcon,
-  //   title: 'Register'
-  // },
-  // {
-  //   href: '/404',
-  //   icon: AlertCircleIcon,
-  //   title: 'Error'
-  // }
 ];
 
 const useStyles = makeStyles(() => ({
@@ -179,7 +164,7 @@ const NavBar = ({ onMobileClose, openMobile }) => {
         />
         <Typography
           className={classes.name}
-          color="textPrimary"
+          color="textSecondary"
           variant="h5"
         >
           {participant.name}

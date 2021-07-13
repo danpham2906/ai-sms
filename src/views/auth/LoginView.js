@@ -1,4 +1,4 @@
-import React from 'react';
+import { useContext } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
@@ -15,6 +15,8 @@ import {
 import FacebookIcon from 'src/icons/Facebook';
 import GoogleIcon from 'src/icons/Google';
 import Page from 'src/components/Page';
+import { TitleContext } from '../../context/TitleContext';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,12 +24,16 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
     paddingBottom: theme.spacing(3),
     paddingTop: theme.spacing(3)
+  },
+  loginContent: {
+    padding: "0px 0px 120px 0px",
   }
 }));
 
 const LoginView = () => {
   const classes = useStyles();
   const navigate = useNavigate();
+  const titleContext = useContext(TitleContext);
 
   return (
     <Page
@@ -39,6 +45,7 @@ const LoginView = () => {
         flexDirection="column"
         height="100%"
         justifyContent="center"
+        className={classes.loginContent}
       >
         <Container maxWidth="sm">
           <Formik
@@ -51,7 +58,7 @@ const LoginView = () => {
               password: Yup.string().max(255).required('Password is required')
             })}
             onSubmit={() => {
-              navigate('/app/dashboard', { replace: true });
+              navigate('/app/overview', { replace: true });
             }}
           >
             {({
@@ -79,7 +86,7 @@ const LoginView = () => {
                     Sign in on the internal platform
                   </Typography>
                 </Box>
-                <Grid
+                {/* <Grid
                   container
                   spacing={3}
                 >
@@ -126,7 +133,7 @@ const LoginView = () => {
                   >
                     or login with email address
                   </Typography>
-                </Box>
+                </Box> */}
                 <TextField
                   error={Boolean(touched.email && errors.email)}
                   fullWidth
@@ -161,11 +168,14 @@ const LoginView = () => {
                     size="large"
                     type="submit"
                     variant="contained"
+                    onClick={() => {
+                      titleContext.setName("Overview");
+                    }}
                   >
                     Sign in now
                   </Button>
                 </Box>
-                <Typography
+                {/* <Typography
                   color="textSecondary"
                   variant="body1"
                 >
@@ -178,7 +188,7 @@ const LoginView = () => {
                   >
                     Sign up
                   </Link>
-                </Typography>
+                </Typography> */}
               </form>
             )}
           </Formik>

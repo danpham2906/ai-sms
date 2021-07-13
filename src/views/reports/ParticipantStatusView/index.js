@@ -38,19 +38,19 @@ const Overview = () => {
         >
           <Grid
             item
-            lg={7}
-            sm={10}
-            xl={7}
-            xs={20}
+            lg={6}
+            sm={9}
+            xl={6}
+            xs={18}
           >
             <OffenderSummary />
           </Grid>
           <Grid
             item
-            lg={5}
-            sm={8}
-            xl={5}
-            xs={16}
+            lg={6}
+            sm={9}
+            xl={6}
+            xs={18}
           >
             <CaseInformation />
           </Grid>

@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { useContext } from 'react';
+import React, { useContext, createRef, useState, useEffect } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import {
@@ -10,7 +10,10 @@ import {
   Grid,
   Typography,
   colors,
-  makeStyles
+  makeStyles,
+  TextField,
+  Button,
+  List, ListItem,
 } from '@material-ui/core';
 import { ParticipantContext } from '../../../context/ParticipantContext';
 // import data from '../../../data/data';
@@ -35,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     'flex-grow': 1,
     overflow: 'scroll',
     'min-height': '100%',
-    height:'100%',
+    height: '100%',
     'overflow-x': 'hidden',
   },
   flexSection: {
@@ -43,8 +46,8 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     'flex-direction': 'column',
     'min-height': 0,
-    height: 150,
-    padding: '0px 3px 5px 5px',
+    height: 260,
+    padding: '10px 3px 5px 5px',
   },
   column: {
     float: 'left',
@@ -63,11 +66,102 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
     margin: '0px 10px',
   },
+  textFieldContainer: {
+    'flex-grow': 1,
+    padding: '20px 20px 20px 20px',
+    margin: '0px 10px 0px 10px',
+  },
+  textField: {
+    width: '100%'
+  },
+  buttonContainer: {
+    'flex-grow': 1,
+    margin: '1% 0%',
+  },
+  buttonSearch: {
+    'top': '50%',
+    'left': '50%',
+    '- ms - transform': 'translate(- 50%, -50%)',
+    'transform': 'translate(-50%, -50%)',
+  },
 }));
 
 const Appointments = ({ className, ...rest }) => {
   const classes = useStyles();
   const participant = useContext(ParticipantContext);
+
+  // const appointmentList = [
+  //   { id: 1, name: 'Date and Time:' },
+  //   { id: 2, name: 'Note Type:' },
+  //   { id: 3, name: 'Status:' },
+  // ];
+
+  const appointmentList = [
+    'Date and Time:',
+    'Note Type:',
+    'Status:',
+    'Officer:',
+    'Case Management:',
+    'Intake Note:',
+    'IRAS:',
+    'Administrative Hearing:',
+    'Administrative Assigned Officer:',
+    'Case Condition Complete:',
+    'Case Status:',
+    'Case Supervision Level:',
+    'Case Type:',
+    'Court Fact:',
+    'Drug Test:',
+    'Email:',
+    'Field - Employment, Other, Residence:',
+    'Incarceration:',
+    'Jail Visit:',
+    'Mail:',
+    'Other:',
+    'Out Of Home Placement:',
+    'Pre - trial Assessment:',
+    'Sanction / Incentive / Intervention:',
+    'Staff Note:',
+    'Telephone:',
+    'Text Notification:',
+    'Violation:',
+    'Violation Created:',
+    'Work Release Note:',
+  ];
+
+  const arrLength = appointmentList.length;
+  const [appointmentRefs, setAppointmentRefs] = React.useState([]);
+
+  useEffect(() => {
+    // console.log("REF");
+    setAppointmentRefs(appointmentRefs => (
+      Array(arrLength).fill().map((_, i) => appointmentRefs[i] || createRef())
+    ));
+  }, [arrLength]);
+
+  const handleChangeSearchInput = (event) => {
+    console.log(event.target.value);
+
+    var idScroll = -1;
+    var prefix = event.target.value;
+    appointmentList.map((itemList, id) => {
+      if (itemList.startsWith(prefix) && idScroll == -1) {
+        idScroll = id;
+        console.log(idScroll + " " + itemList);
+      }
+    });
+
+    if (appointmentRefs[idScroll] != undefined) {
+      if (appointmentRefs[idScroll].current != null) {
+        console.log("Scroll to " + idScroll);
+        if (idScroll > -1 && idScroll < arrLength) {
+          appointmentRefs[idScroll].current.scrollIntoView();
+        }
+      }
+    } else {
+      appointmentRefs[0].current.scrollIntoView();
+    }
+  };
 
   return (
     <Card
@@ -80,7 +174,7 @@ const Appointments = ({ className, ...rest }) => {
           <Grid
             item
             lg={24}
-            // className={classes.title}
+          // className={classes.title}
           >
             <Typography
               color="textSecondary"
@@ -91,6 +185,25 @@ const Appointments = ({ className, ...rest }) => {
             </Typography>
           </Grid>
         </Grid>
+        <Grid
+          container
+          spacing={2}
+        >
+          <Grid item className={classes.textFieldContainer}>
+            <TextField
+              id="search-input"
+              placeholder="Search"
+              variant="outlined"
+              className={classes.textField}
+              onChange={event => handleChangeSearchInput(event)}
+            />
+          </Grid>
+          {/* <Grid item lg={2} className={classes.buttonContainer}>
+            <Button variant="contained" color="secondary" className={classes.buttonSearch}>
+              SEARCH
+            </Button>
+          </Grid> */}
+        </Grid>
         <Grid container
           className={classes.flexSection}
         >
@@ -99,44 +212,20 @@ const Appointments = ({ className, ...rest }) => {
             //   className={classes.textAlign}
             lg={24}
           >
-              <Typography
-                  color="textSecondary"
-                  variant="body1"
+            <Typography
+              color="textSecondary"
+              variant="body1"
+            >
+              <List
+              // component="nav"
+              // className={classes.root}
+              // aria-label="mailbox folders"
               >
-                {/* <b>Sentencing Information</b><br/> */}
-                <br/>
-                CASE NOTE<br/>
-                Date and Time: 3<br/>
-                Note Type: 1<br/>
-                Status: Fenon Pose/Use Weapon/FireArm<br/>
-                Officer: 03/22/2020<br/>
-                Case Management: 30 months<br/>
-                Intake Note: 30 months<br/>
-                IRAS:<br/>
-                Administrative Hearing:<br/>
-                Administrative Assigned Officer:<br/>
-                Case Condition Complete:<br/>
-                Case Status:<br/>
-                Case Supervision Level:<br/>
-                Case Type:<br/>
-                Court Fact:<br/>
-                Drug Test:<br/>
-                Email:<br/>
-                Field-Employment, Other, Residence:<br/>
-                Incarceration:<br/>
-                Jail Visit:<br/>
-                Mail:<br/>
-                Other:<br/>
-                Out Of Home Placement:<br/>
-                Pre-trial Assessment:<br/>
-                Sanction/Incentive/Intervention:<br/>
-                Staff Note:<br/>
-                Telephone:<br/>
-                Text Notification:<br/>
-                Violation:<br/>
-                Violation Created:<br/>
-                Work Release Note:<br/>
-              </Typography>
+                {appointmentList.map((itemList, id) => (
+                  <ListItem ref={appointmentRefs[id]} divider>{itemList}</ListItem>
+                ))}
+              </List>
+            </Typography>
           </Grid>
         </Grid>
       </CardContent>

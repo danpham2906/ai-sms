@@ -10,7 +10,8 @@ import {
   Grid,
   Typography,
   colors,
-  makeStyles
+  makeStyles,
+  List, ListItem,
 } from '@material-ui/core';
 import { ParticipantContext } from '../../../context/ParticipantContext';
 // import data from '../../../data/data';
@@ -35,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     'flex-grow': 1,
     overflow: 'scroll',
     'min-height': '100%',
-    height:'100%',
+    height: '100%',
     'overflow-x': 'hidden',
   },
   flexSection: {
@@ -57,12 +58,23 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
     'justify-content': 'left',
     'align-items': 'left',
+  },
+  mainContent: {
+    flexGrow: 1,
   }
 }));
 
 const Employment = ({ className, ...rest }) => {
   const classes = useStyles();
   const participant = useContext(ParticipantContext);
+
+  const employmentList = [
+    'Employer name: ',
+    'Address: ',
+    'Start Date: ',
+    'End Date: ',
+    'Salary: ',
+  ];
 
   return (
     <Card
@@ -71,7 +83,7 @@ const Employment = ({ className, ...rest }) => {
     >
       <CardContent>
         <Grid container
-          // className={classes.flexSection}
+        // className={classes.flexSection}
         >
           <Grid item>
             <Typography
@@ -85,21 +97,20 @@ const Employment = ({ className, ...rest }) => {
         </Grid>
         <Grid container>
           <Grid item
-            // className={classes.flexColScroll}
-            //   className={classes.textAlign}
+          // className={classes.flexColScroll}
+            className={classes.mainContent}
           >
-              <Typography
-                  color="textSecondary"
-                  variant="body1"
+            <Typography
+              color="textSecondary"
+              variant="body1"
+            >
+              <List
               >
-                {/* <b>Sentencing Information</b><br/> */}
-                <br/>
-                Employer name: 3<br/>
-                Address: 1<br/>
-                Start Date: Fenon Pose/Use Weapon/FireArm<br/>
-                End Date: 03/22/2020<br/>
-                Salary: 30 months<br/>
-              </Typography>
+                {employmentList.map((itemList, id) => (
+                  <ListItem divider>{itemList}</ListItem>
+                ))}
+              </List>
+            </Typography>
           </Grid>
         </Grid>
       </CardContent>

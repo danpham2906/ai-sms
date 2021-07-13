@@ -1,12 +1,12 @@
 /* eslint-disable */
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from "react";
 
 export const TitleContext = createContext();
 
 export const TitleProvider = ({children}) => {
   let currentTitle = window.location.href.split('/');
   currentTitle = currentTitle[currentTitle.length-1];
-  if (currentTitle == "overview") {
+  if (currentTitle == "overview" || currentTitle == "") {
     currentTitle = "Overview";
   } else if (currentTitle == "apptask") {
     currentTitle = "App&Tasks or JOB";
@@ -19,7 +19,7 @@ export const TitleProvider = ({children}) => {
   }
 
   const [name, setName] = useState(currentTitle);
-  
+
   return (
       <TitleContext.Provider
         value={{
