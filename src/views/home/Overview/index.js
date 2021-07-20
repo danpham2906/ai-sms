@@ -2,7 +2,7 @@
 import React, {
   useEffect,
   useState,
-  useContext
+  useContext,
 } from 'react';
 import {
   makeStyles
@@ -13,38 +13,21 @@ import {
   MapContainer,
   TileLayer,
   Marker,
-  // Popup,
   ZoomControl,
   CircleMarker,
-  Tooltip
+  Tooltip,
+  // useMap,
 } from 'react-leaflet';
 import Page from 'src/components/Page';
-// import List from '@material-ui/core/List';
-// import ListItem from '@material-ui/core/ListItem';
-// import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-// import ListItemText from '@material-ui/core/ListItemText';
 import {
   Typography,
   Card
 } from '@material-ui/core';
-// import IconButton from '@material-ui/core/IconButton';
-// import AnnouncementIcon from '@material-ui/icons/Announcement';
-// import FavoriteIcon from '@material-ui/icons/Favorite';
-// import BatteryAlertIcon from '@material-ui/icons/BatteryAlert';
-// import DateRangeIcon from '@material-ui/icons/DateRange';
 import ParticipantList from './ParticipantList';
 import CircleMarkerGroup from './CircleMarkerGroup';
-import data from '../../../data/ParticipantData';
-// import { ChangeParticipantName } from 'src/layouts/DashboardLayout/NavBar';
+// import data from '../../../data/ParticipantData';
 import { ParticipantContext } from '../../../context/ParticipantContext';
-// import {
-//   MarkerIcon,
-//   MarkerPlaceAlertIcon,
-//   MarkerOutOfBatteryIcon,
-//   MarkerHeartRateIcon,
-//   MarkerCalendarIcon,
-//   MarkerEmptyIcon
-// } from './MarkerIcon';
+import ConvertLocationStr from '../../../utils/ConvertLocationStr';
 
 const useStyles = makeStyles((theme) => ({
   map: {
@@ -66,12 +49,14 @@ const useStyles = makeStyles((theme) => ({
     width: 'calc(100% - 300px)',
   },
   participantList: {
-    height: 240,
+    height: '416',
     width: 300,
     position: 'absolute',
-    top: '20px',
+    top: '30px',
     left: '20px',
     'z-index': theme.zIndex.drawer - 1,
+    maxHeight: '416',
+    overflow: 'auto',
   },
   root: {
     maxWidth: 360,
@@ -84,66 +69,90 @@ const useStyles = makeStyles((theme) => ({
 
 const position = [34.73, -86.60];
 
-// console.log("participants: " + data.participants.map((participant) => JSON.stringify(participant)))
-
-const participants = data.participants;
-
 const valueCircleMarker = [];
 const valueCircleMarker1 = [];
-// console.log(`valueCircleMarker.length: ${valueCircleMarker.length}`);
-if (valueCircleMarker.length < 1) {
-  for (let i = 1; i < participants.length + 1; i++) {
-    valueCircleMarker[i] = false;
-  }
-}
+// if (valueCircleMarker.length < 1 && participants != undefined) {
+//   for (let i = 1; i < participants.length + 1; i++) {
+//     valueCircleMarker[i] = false;
+//   }
+// }
 
 export default function HomeView() {
   const classes = useStyles();
-
-  // const [map, setMap] = useState(null);
-  // const [circleMarker, setCircleMarker] = useState(null);
   const [toggleCircleMarker, setToggleCircleMarker] = useState([]);
   const [toggleCMState, setToggleCMState] = useState(true);
-  const [selectedExclusionZones, setSelectedExclusionZones] = useState([]);
-
+  // const [selectedExclusionZones, setSelectedExclusionZones] = useState([]);
   const participantContext = useContext(ParticipantContext);
+  const [participants, setParticipants] = useState(participantContext.list);
+  const [map, setMap] = useState(null);
 
   useEffect(() => {
     setToggleCircleMarker(valueCircleMarker);
   }, []);
 
   useEffect(() => {
+    setParticipants(participantContext.list);
+  }, [participantContext]);
+
+  useEffect(() => {
     SelectParticipant(participantContext.name);
   }, participantContext);
+
+  function MapSetCenter(center) {
+    // console.log(center);
+    map.setView(center);
+  }
+
+  function MapFlyTo(location) {
+    // console.log(location);
+    if (location.length && map) {
+      map.flyTo(location, 14, {
+        duration: 1,
+      });
+    }
+    // else console.log("Cant determine location!");
+    return null;
+  }
 
   function SelectParticipant(participantName) {
     var index;
 
-    participants.map((participant) => {
-      if (participant.name == participantName) {
-        index = participant.id;
-        participantContext.setName(participant.name);
-        participantContext.setStreet(participant.address.street);
-        participantContext.setCity(participant.address.city);
-        participantContext.setState(participant.address.state);
-        setSelectedExclusionZones(participant.exclusionZones);
-      }
-    });
+    if (participants != undefined) {
+      participants.map((participant) => {
+        if (participant.name == participantName) {
+          index = participant.id;
+          MapFlyTo(ConvertLocationStr(participant.latestLocation));
+          participantContext.setName(participant.name);
+          participantContext.setId(participant.id);
+          if (participant.address) {
+            participantContext.setStreet(participant.address.street);
+            participantContext.setCity(participant.address.city);
+            participantContext.setState(participant.address.state);
+          } else {
+            participantContext.setStreet("");
+            participantContext.setCity("");
+            participantContext.setState("");
+          }
+          // setSelectedExclusionZones(participant.exclusionZones);
+        }
+      });
 
-    for (let i = 1; i < participants.length + 1; i++) {
-      valueCircleMarker[i] = false;
-    }
-    valueCircleMarker[index] = true;
-
-    setToggleCMState(!toggleCMState);
-    if (toggleCMState) {
-      setToggleCircleMarker(valueCircleMarker);
-    } else {
       for (let i = 1; i < participants.length + 1; i++) {
-        valueCircleMarker1[i] = valueCircleMarker[i];
+        valueCircleMarker[i] = false;
       }
-      setToggleCircleMarker(valueCircleMarker1);
+      valueCircleMarker[index] = true;
+
+      setToggleCMState(!toggleCMState);
+      if (toggleCMState) {
+        setToggleCircleMarker(valueCircleMarker);
+      } else {
+        for (let i = 1; i < participants.length + 1; i++) {
+          valueCircleMarker1[i] = valueCircleMarker[i];
+        }
+        setToggleCircleMarker(valueCircleMarker1);
+      }
     }
+
   }
 
   return (
@@ -154,12 +163,12 @@ export default function HomeView() {
       ></Page>
       <Container maxWidth='false'>
         <Grid container className={classes.participantContainer}>
-          {/* ParticipantList */}
           <Grid item xs={12} className={classes.participantList}>
             <ParticipantList
               participantData={participants}
               toggleCircleMarkerData={toggleCircleMarker}
               selectParticipant={SelectParticipant}
+              mapSetCenter={MapSetCenter}
             />
           </Grid>
         </Grid>
@@ -167,11 +176,7 @@ export default function HomeView() {
 
       <Card className={classes.cardContainer}>
         <Container maxWidth='true' className={classes.container}>
-          {/* <Grid container> */}
-          {/* Maps */}
-          {/* <Grid container item> */}
-          {/* <MapContainer spacing={3} center={position} zoom={14} zoomControl={false} scrollWheelZoom={false} className={classes.map} whenCreated={setMap}> */}
-          <MapContainer spacing={3} center={position} zoom={14} zoomControl={false} scrollWheelZoom={false} className={classes.map}>
+          <MapContainer spacing={3} center={position} zoom={14} zoomControl={false} scrollWheelZoom={false} className={classes.map} whenCreated={setMap}>
             <TileLayer
               attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -181,12 +186,13 @@ export default function HomeView() {
 
             <CircleMarkerGroup
               participantData={participants}
-              toggleCircleMarkerData={toggleCircleMarker}
+              toggleCircleMarker={toggleCircleMarker}
+              mapFlyTo={MapFlyTo}
             />
 
+            {/* <MapFlyTo /> */}
+
           </MapContainer>
-          {/* </Grid> */}
-          {/* </Grid> */}
         </Container>
       </Card>
     </React.Fragment>

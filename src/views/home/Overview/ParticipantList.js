@@ -1,9 +1,10 @@
 /* eslint-disable */
-import React, {
+import {
   useState,
   useContext,
   useEffect
 } from 'react';
+import Axios from 'axios';
 import PropTypes from 'prop-types';
 import {
   makeStyles
@@ -20,6 +21,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import BatteryAlertIcon from '@material-ui/icons/BatteryAlert';
 import DateRangeIcon from '@material-ui/icons/DateRange';
 import { ParticipantContext } from '../../../context/ParticipantContext';
+import ConvertLocationStr from '../../../utils/ConvertLocationStr';
 
 const useStyles = makeStyles((theme) => ({
   map: {
@@ -40,17 +42,22 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     width: 'calc(100% - 300px)',
   },
+  // participantList: {
+  //   height: 240,
+  //   width: 300,
+  //   position: 'absolute',
+  //   top: '50px',
+  //   left: '20px',
+  //   'z-index': theme.zIndex.drawer - 1,
+  //   // maxHeight: '416',
+  //   // overflow: 'auto',
+  // },
   participantList: {
-    height: 240,
-    width: 300,
-    position: 'absolute',
-    top: '20px',
-    left: '20px',
-    'z-index': theme.zIndex.drawer - 1,
-  },
-  root: {
     maxWidth: 360,
     backgroundColor: theme.palette.background.paper,
+    maxHeight: 416,
+    overflow: 'auto',
+    // backgroundColor: theme.palette.primary.main,
   },
   leafletTooltip: {
     padding: '0px 4px 0px 4px !important',
@@ -60,22 +67,76 @@ const useStyles = makeStyles((theme) => ({
 const valueCircleMarker = [];
 const valueCircleMarker1 = [];
 
-const ParticipantList = ({ className, participantData, toggleCircleMarkerData, selectParticipant, ...rest }) => {
+const ParticipantList = ({ className, participantData, toggleCircleMarkerData, selectParticipant, mapSetCenter, ...rest }) => {
   const classes = useStyles();
-  const participants = participantData;
   const [toggleCircleMarker, setToggleCircleMarker] = useState(toggleCircleMarkerData);
   const [toggleCMState, setToggleCMState] = useState(true);
+  const [participants, setParticipants] = useState([]);
   const participantContext = useContext(ParticipantContext);
 
   useEffect(() => {
-    handleParticipantSelection(participantContext.name);
-  }, participantContext);
+    // console.log("participants in Axios call: " + participants.length);
+    // console.log("[context] participants in Axios call: " + participantContext.list.length);
 
-  function handleParticipantSelection (participantName) {
+    if (participants.length != 0 && participantContext.name == "") {
+      var firstParticipant = participants[0];
+      participantContext.setName(firstParticipant.name);
+      participantContext.setId(firstParticipant.id);
+      handleParticipantSelection(firstParticipant.name);
+      mapSetCenter(ConvertLocationStr(firstParticipant.latestLocation));
+      if (firstParticipant.address) {
+        participantContext.setStreet(firstParticipant.address.street);
+        participantContext.setCity(firstParticipant.address.city);
+        participantContext.setState(firstParticipant.address.state);
+      } else {
+        participantContext.setStreet("");
+        participantContext.setCity("");
+        participantContext.setState("");
+      }
+    }
+  }, [participants]);
+
+  useEffect(() => {
+    Axios.get('http://128.186.151.67:8080/api/nij/ai-sms/user-info/all', {}, {})
+      .then(res => {
+        var newParticipantArr = [];
+        res.data.map((participant) => {
+          newParticipantArr.push(participant);
+        });
+        setParticipants(newParticipantArr);
+        participantContext.setList(newParticipantArr);
+      })
+
+    const intervalId = setInterval(() => {
+      try {
+        Axios.get('http://128.186.151.67:8080/api/nij/ai-sms/user-info/all', {}, {})
+          .then(res => {
+            var newParticipantArr = [];
+            res.data.map((participant) => {
+              newParticipantArr.push(participant);
+            });
+            setParticipants(newParticipantArr);
+            participantContext.setList(newParticipantArr);
+          })
+      } catch (error) {
+        console.log(error);
+      }
+    }, 5000)
+
+    // console.log("SetGEOAPI " + intervalId);
+    // return () => clearInterval(intervalId);
+  }, []);
+
+  // useEffect(() => {
+  //   handleParticipantSelection(participantContext.name);
+  // }, participantContext);
+
+  const handleParticipantSelection = (participantName) => {
     var id;
     participants.map((participant) => {
       if (participant.name == participantName) {
         id = participant.id;
+        // console.log(participant.name + " " + participant.id);
       }
     });
 
@@ -98,28 +159,28 @@ const ParticipantList = ({ className, participantData, toggleCircleMarkerData, s
   }
 
   return (
-    <List dense className={classes.root}>
-      {participants.map((participant) => {
+    <List dense className={classes.participantList}>
+      {participants.length ? participants.map((participant) => {
         const labelId = `checkbox-list-secondary-label-${participant.id}`;
+        // console.log(participant);
         return (
-          // <ListItem key={value} button>
           <ListItem key={participant.id} button onClick={() => handleParticipantSelection(participant.name)} >
-            {toggleCircleMarker[participant.id] ? 
-              <ListItemText id={labelId} disableTypography primary={<Typography style={{ color: 'LightSeaGreen', 'font-weight': 'bold' }}>{`${participant.name}`}</Typography>}/>
-              : 
-              <ListItemText id={labelId} primary={<Typography>{`${participant.name}`}</Typography>}/>
+            {toggleCircleMarker[participant.id] ?
+              <ListItemText id={labelId} disableTypography primary={<Typography style={{ color: 'LightSeaGreen', 'font-weight': 'bold' }}>{`${participant.name}`}</Typography>} />
+              :
+              <ListItemText id={labelId} primary={<Typography>{`${participant.name}`}</Typography>} />
             }
             <div>
               <ListItemSecondaryAction>
-                  {participant.outOfBattery === true ? (<BatteryAlertIcon style={{ color: 'DarkGray' }} />) : ''}
-                  {participant.placeAlert === true ? (<AnnouncementIcon style={{ color: 'DarkTurquoise' }}/>) : ''}
-                  {participant.heartRate === true ? (<FavoriteIcon style={{ color: 'LightCoral' }}/>) : ''}
-                  {participant.calendar === true ? (<DateRangeIcon style={{ color: 'DarkSlateBlue' }}/>) : ''}
+                {participant.outOfBattery === true ? (<BatteryAlertIcon style={{ color: 'DarkGray' }} />) : ''}
+                {participant.placeAlert === true ? (<AnnouncementIcon style={{ color: 'DarkTurquoise' }} />) : ''}
+                {participant.heartRate === true ? (<FavoriteIcon style={{ color: 'LightCoral' }} />) : ''}
+                {participant.calendar === true ? (<DateRangeIcon style={{ color: 'DarkSlateBlue' }} />) : ''}
               </ListItemSecondaryAction>
             </div>
           </ListItem>
         );
-      })}
+      }) : ''}
     </List>
   );
 }

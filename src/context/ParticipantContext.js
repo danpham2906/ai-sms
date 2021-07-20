@@ -5,14 +5,18 @@ import data from '../data/ParticipantData';
 export const ParticipantContext = createContext();
 
 export const ParticipantProvider = ({children}) => {
-    const [name, setName] = useState(data.participants[0].name);
-    const [street, setStreet] = useState(data.participants[0].address.street);
-    const [city, setCity] = useState(data.participants[0].address.city);
-    const [state, setState] = useState(data.participants[0].address.state);
+    const [list, setList] = useState([]);
+    const [id, setId] = useState("");
+    const [name, setName] = useState("");
+    const [street, setStreet] = useState("");
+    const [city, setCity] = useState("");
+    const [state, setState] = useState("");
   
     return (
       <ParticipantContext.Provider
         value={{
+          list, setList,
+          id, setId,
           name, setName,
           street, setStreet,
           city, setCity,
