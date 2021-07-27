@@ -10,7 +10,9 @@ import {
   Grid,
   Typography,
   colors,
-  makeStyles
+  makeStyles,
+  List, ListItem,
+  Divider,
 } from '@material-ui/core';
 import { ParticipantContext } from '../../../context/ParticipantContext';
 // import data from '../../../data/data';
@@ -35,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
     'flex-grow': 1,
     overflow: 'scroll',
     'min-height': '100%',
-    height:'100%',
+    height: '100%',
     'overflow-x': 'hidden',
   },
   flexSection: {
@@ -44,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
     'flex-direction': 'column',
     'min-height': 0,
     // height: 200,
-    padding: '5px 15px 0px 15px',
+    // padding: '5px 15px 0px 15px',
   },
   column: {
     float: 'left',
@@ -61,6 +63,38 @@ const PersonalInformation = ({ className, ...rest }) => {
   const classes = useStyles();
   const participant = useContext(ParticipantContext);
 
+  const offenderSummaryLeft = [
+    'Date of Birth',
+    'Sex',
+    'Race',
+    'Height',
+    'Weight',
+  ];
+
+  const offenderSummaryLeftInfo = [
+    '02/05/1986',
+    'Male',
+    'White',
+    '6 ft. 03 in.',
+    '230 lbs.',
+  ];
+
+  const offenderSummaryRight = [
+    'Admission Date',
+    'Parole Date',
+    'Last Paroled Date',
+    'Discharge Date',
+    'Alert and Warnings',
+  ];
+
+  const offenderSummaryRightInfo = [
+    '04/27/2020',
+    '01/10/2021',
+    '01/10/2021',
+    '01/10/2022',
+    'Violent offender',
+  ];
+
   return (
     <Card
       className={clsx(classes.root, className)}
@@ -69,14 +103,14 @@ const PersonalInformation = ({ className, ...rest }) => {
       <CardContent>
         <Grid
           container
-          // spacing={6}
+        // spacing={6}
         >
           <Grid item>
             <Typography
               color="textSecondary"
               // gutterBottom
               variant="h6"
-              // className={classes.title}
+            // className={classes.title}
             >
               OFFENDER SUMMARY
             </Typography>
@@ -96,44 +130,58 @@ const PersonalInformation = ({ className, ...rest }) => {
               variant="h4"
               className={classes.participantName}
             >
-              {participant.name}<br></br>
-              {participant.street}<br></br>
-              {participant.city}, {participant.state}<br></br>
+              {participant.name}<br/>3223 Maple Lane<br/>Huntsville, Alabama
             </Typography>
           </Grid>
         </Grid>
         <Grid
-          container
+          // container
           className={classes.flexSection}
         >
-            <Grid
-                item
-                // className={classes.flexColScroll}
-            >
-                <Typography
-                    color="textSecondary"
-                    variant="body1"
-                >
-                  <div className={classes.row}>
-                    <div className={classes.column}>
-                      <b>Physical Profile</b><br/>
-                      Date of Birth: 02/05/1986<br/>
-                      Sex: 230 lbs.<br/>
-                      Race: Brown<br/>
-                      Height: Male<br/>
-                      Weight: 6 ft. 03 in.<br/>
-                      Alerts and Warnings: Brown
+          {/* <Grid
+            item
+          // className={classes.flexColScroll}
+          > */}
+          <Typography
+            color="textSecondary"
+            variant="body1"
+          >
+            <div className={classes.row}>
+              <div className={classes.column}>
+                <List>
+                  <ListItem><b>PHYSICAL PROFILE</b></ListItem>
+                  <Divider />
+                  {offenderSummaryLeft.map((itemList, id) => (
+                    <div className={classes.row}>
+                      <div className={classes.column}>
+                        <ListItem><b>{itemList}</b></ListItem>
+                      </div>
+                      <div className={classes.column}>
+                        <ListItem>{offenderSummaryLeftInfo[id]}</ListItem>
+                      </div>
                     </div>
-                    <div className={classes.column}>
-                      <b>Parole Info</b><br/>
-                      Admission Date: 04/27/2020<br/>
-                      Parole Date: 01/10/2021<br/>
-                      Last Paroled Date:<br/>
-                      Discharge Date: 01/10/2022
+                  ))}
+                </List>
+              </div>
+              <div className={classes.column}>
+                <List>
+                  <ListItem><b>PAROLE INFO</b></ListItem>
+                  <Divider />
+                  {offenderSummaryRight.map((itemList, id) => (
+                    <div className={classes.row}>
+                      <div className={classes.column}>
+                        <ListItem><b>{itemList}</b></ListItem>
+                      </div>
+                      <div className={classes.column}>
+                        <ListItem>{offenderSummaryRightInfo[id]}</ListItem>
+                      </div>
                     </div>
-                  </div>
-                </Typography>
-            </Grid>
+                  ))}
+                </List>
+              </div>
+            </div>
+          </Typography>
+          {/* </Grid> */}
         </Grid>
       </CardContent>
     </Card>

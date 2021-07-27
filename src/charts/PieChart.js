@@ -27,7 +27,7 @@ function PieChart({ data, width, height }) {
         .innerRadius(radius * 0.67)
         .outerRadius(radius - 1);
 
-      const colorScale = d3.scaleOrdinal().range(["#C8C7C8", "CornflowerBlue", "#C8C7C8"]);
+      const colorScale = d3.scaleOrdinal().range(["CornflowerBlue", "#C8C7C8", "#C8C7C8"]);
 
       const color = colorScale;
 

@@ -47,9 +47,13 @@ const useStyles = makeStyles((theme) => ({
     height: 200,
     padding: '15px 3px 5px 5px',
   },
-  column: {
+  columnLeft: {
     float: 'left',
-    width: '50%'
+    width: '35%'
+  },
+  columnRight: {
+    float: 'left',
+    width: '65%'
   },
   textAlign: {
     // height: '400px',
@@ -69,11 +73,19 @@ const Employment = ({ className, ...rest }) => {
   const participant = useContext(ParticipantContext);
 
   const employmentList = [
-    'Employer name: ',
-    'Address: ',
-    'Start Date: ',
-    'End Date: ',
-    'Salary: ',
+    'Employer name',
+    'Address',
+    'Start Date',
+    'End Date',
+    'Salary',
+  ];
+
+  const employmentListInfo = [
+    'Radiology Clinic',
+    '3907 Harwood Ave SW, Huntsville, AL',
+    '06/10/2021',
+    '09/10/2021',
+    '$10,000',
   ];
 
   return (
@@ -97,17 +109,23 @@ const Employment = ({ className, ...rest }) => {
         </Grid>
         <Grid container>
           <Grid item
-          // className={classes.flexColScroll}
+            // className={classes.flexColScroll}
             className={classes.mainContent}
           >
             <Typography
               color="textSecondary"
               variant="body1"
             >
-              <List
-              >
+              <List>
                 {employmentList.map((itemList, id) => (
-                  <ListItem divider>{itemList}</ListItem>
+                  <div className={classes.row}>
+                    <div className={classes.columnLeft}>
+                      <ListItem><b>{itemList}</b></ListItem>
+                    </div>
+                    <div className={classes.columnRight}>
+                      <ListItem>{employmentListInfo[id]}</ListItem>
+                    </div>
+                  </div>
                 ))}
               </List>
             </Typography>

@@ -4,7 +4,6 @@ import {
   useContext,
   useEffect
 } from 'react';
-import Axios from 'axios';
 import PropTypes from 'prop-types';
 import {
   makeStyles
@@ -72,69 +71,28 @@ const ParticipantList = ({ className, participantData, toggleCircleMarkerData, s
   const [toggleCircleMarker, setToggleCircleMarker] = useState(toggleCircleMarkerData);
   const [toggleCMState, setToggleCMState] = useState(true);
   const [participants, setParticipants] = useState([]);
+  const [firstParticipantSelected, setFirstParticipantSelected] = useState(false);
   const participantContext = useContext(ParticipantContext);
 
   useEffect(() => {
-    // console.log("participants in Axios call: " + participants.length);
-    // console.log("[context] participants in Axios call: " + participantContext.list.length);
-
-    if (participants.length != 0 && participantContext.name == "") {
-      var firstParticipant = participants[0];
-      participantContext.setName(firstParticipant.name);
-      participantContext.setId(firstParticipant.id);
-      handleParticipantSelection(firstParticipant.name);
-      mapSetCenter(ConvertLocationStr(firstParticipant.latestLocation));
-      if (firstParticipant.address) {
-        participantContext.setStreet(firstParticipant.address.street);
-        participantContext.setCity(firstParticipant.address.city);
-        participantContext.setState(firstParticipant.address.state);
-      } else {
-        participantContext.setStreet("");
-        participantContext.setCity("");
-        participantContext.setState("");
+    if (participantContext != undefined) {
+      if (participantContext.list.length != 0) {
+        setParticipants(participantContext.list);
       }
     }
-  }, [participants]);
+    if (participants.length != 0 && firstParticipantSelected == false) {
+      setFirstParticipantSelected(true);
+      var firstParticipant = participants[0];
+      console.log(firstParticipant.id);
+      handleParticipantSelection(firstParticipant.id);
+      mapSetCenter(ConvertLocationStr(firstParticipant.latestLocation));
+    }
+  }, [participantContext]);
 
-  useEffect(() => {
-    Axios.get('http://128.186.151.67:8080/api/nij/ai-sms/user-info/all', {}, {})
-      .then(res => {
-        var newParticipantArr = [];
-        res.data.map((participant) => {
-          newParticipantArr.push(participant);
-        });
-        setParticipants(newParticipantArr);
-        participantContext.setList(newParticipantArr);
-      })
-
-    const intervalId = setInterval(() => {
-      try {
-        Axios.get('http://128.186.151.67:8080/api/nij/ai-sms/user-info/all', {}, {})
-          .then(res => {
-            var newParticipantArr = [];
-            res.data.map((participant) => {
-              newParticipantArr.push(participant);
-            });
-            setParticipants(newParticipantArr);
-            participantContext.setList(newParticipantArr);
-          })
-      } catch (error) {
-        console.log(error);
-      }
-    }, 5000)
-
-    // console.log("SetGEOAPI " + intervalId);
-    // return () => clearInterval(intervalId);
-  }, []);
-
-  // useEffect(() => {
-  //   handleParticipantSelection(participantContext.name);
-  // }, participantContext);
-
-  const handleParticipantSelection = (participantName) => {
+  const handleParticipantSelection = (participantId) => {
     var id;
     participants.map((participant) => {
-      if (participant.name == participantName) {
+      if (participant.id == participantId) {
         id = participant.id;
         // console.log(participant.name + " " + participant.id);
       }
@@ -155,7 +113,7 @@ const ParticipantList = ({ className, participantData, toggleCircleMarkerData, s
       setToggleCircleMarker(valueCircleMarker1);
     }
 
-    selectParticipant(participantName);
+    selectParticipant(participantId);
   }
 
   return (
@@ -164,7 +122,7 @@ const ParticipantList = ({ className, participantData, toggleCircleMarkerData, s
         const labelId = `checkbox-list-secondary-label-${participant.id}`;
         // console.log(participant);
         return (
-          <ListItem key={participant.id} button onClick={() => handleParticipantSelection(participant.name)} >
+          <ListItem key={participant.id} button onClick={() => handleParticipantSelection(participant.id)} >
             {toggleCircleMarker[participant.id] ?
               <ListItemText id={labelId} disableTypography primary={<Typography style={{ color: 'LightSeaGreen', 'font-weight': 'bold' }}>{`${participant.name}`}</Typography>} />
               :

@@ -10,7 +10,6 @@ async function requests() {
             "password": "4567"
         }
         )
-        // console.log(res.data)
         // console.log(res.data.jwtToken)
         token = res.data.jwtToken;
     } catch (error) {
@@ -19,7 +18,7 @@ async function requests() {
 
     try {
         // console.log(token)
-        const res = await Axios.post('http://128.186.151.67:8080/api/nij/ai-sms/location/gps-data?lon=-86.9228&lat=40.47', {
+        const res = await Axios.post('http://128.186.151.67:8080/api/nij/ai-sms/location/gps-data?lon=-86.9232&lat=40.45', {
         }, {
             headers: {
                 'Authorization': `Bearer ${token}`

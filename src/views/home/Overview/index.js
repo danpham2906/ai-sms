@@ -114,12 +114,12 @@ export default function HomeView() {
     return null;
   }
 
-  function SelectParticipant(participantName) {
+  function SelectParticipant(participantId) {
     var index;
 
     if (participants != undefined) {
       participants.map((participant) => {
-        if (participant.name == participantName) {
+        if (participant.id == participantId) {
           index = participant.id;
           MapFlyTo(ConvertLocationStr(participant.latestLocation));
           participantContext.setName(participant.name);

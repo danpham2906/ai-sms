@@ -53,6 +53,14 @@ const useStyles = makeStyles((theme) => ({
     float: 'left',
     width: '50%'
   },
+  columnLeft: {
+    float: 'left',
+    width: '35%'
+  },
+  columnRight: {
+    float: 'left',
+    width: '65%'
+  },
   textAlign: {
     // height: '400px',
     position: 'relative',
@@ -97,36 +105,63 @@ const Appointments = ({ className, ...rest }) => {
   // ];
 
   const appointmentList = [
-    'Date and Time:',
-    'Note Type:',
-    'Status:',
-    'Officer:',
-    'Case Management:',
-    'Intake Note:',
-    'IRAS:',
-    'Administrative Hearing:',
-    'Administrative Assigned Officer:',
-    'Case Condition Complete:',
-    'Case Status:',
-    'Case Supervision Level:',
-    'Case Type:',
-    'Court Fact:',
-    'Drug Test:',
-    'Email:',
-    'Field - Employment, Other, Residence:',
-    'Incarceration:',
-    'Jail Visit:',
-    'Mail:',
-    'Other:',
-    'Out Of Home Placement:',
-    'Pre - trial Assessment:',
-    'Sanction / Incentive / Intervention:',
-    'Staff Note:',
-    'Telephone:',
-    'Text Notification:',
-    'Violation:',
-    'Violation Created:',
-    'Work Release Note:',
+    'Date and Time',
+    'Note Type',
+    'Status',
+    'Officer',
+    'Administrative Hearing',
+    'Administrative Assigned Officer',
+    'Case Condition Complete',
+    'Case Status',
+    'Case Supervision Level',
+    'Case Type',
+    'Court Fact',
+    'Drug Test',
+    'Email',
+    'Field - Employment, Other, Residence',
+    'Incarceration',
+    'Jail Visit',
+    'Mail',
+    'Other',
+    'Out Of Home Placement',
+    'Pre - trial Assessment',
+    'Sanction / Incentive / Intervention',
+    'Staff Note',
+    'Telephone',
+    'Text Notification',
+    'Violation',
+    'Violation Created',
+    'Work Release Note',
+  ];
+
+  const appointmentListInfo = [
+    '07/24/2021',
+    'IRAS',
+    'Pending',
+    'John Roe',
+    'Presly Alday',
+    'Evalynn Duhart',
+    'Lorem ipsum',
+    'Lorem ipsum',
+    'Lorem ipsum',
+    'Lorem ipsum',
+    'Lorem ipsum',
+    'Lorem ipsum',
+    'Lorem ipsum',
+    'Lorem ipsum',
+    'Lorem ipsum',
+    'Lorem ipsum',
+    'Lorem ipsum',
+    'Lorem ipsum',
+    'Lorem ipsum',
+    'Lorem ipsum',
+    'Lorem ipsum',
+    'Lorem ipsum',
+    'Lorem ipsum',
+    'Lorem ipsum',
+    'Lorem ipsum',
+    'Lorem ipsum',
+    'Lorem ipsum',
   ];
 
   const arrLength = appointmentList.length;
@@ -216,13 +251,16 @@ const Appointments = ({ className, ...rest }) => {
               color="textSecondary"
               variant="body1"
             >
-              <List
-              // component="nav"
-              // className={classes.root}
-              // aria-label="mailbox folders"
-              >
+              <List>
                 {appointmentList.map((itemList, id) => (
-                  <ListItem ref={appointmentRefs[id]} divider>{itemList}</ListItem>
+                  <div className={classes.row}>
+                    <div className={classes.columnLeft}>
+                      <ListItem ref={appointmentRefs[id]} divider><b>{itemList}</b></ListItem>
+                    </div>
+                    <div className={classes.columnRight}>
+                      <ListItem divider>{appointmentListInfo[id]}</ListItem>
+                    </div>
+                  </div>
                 ))}
               </List>
             </Typography>
