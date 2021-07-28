@@ -14,6 +14,7 @@ import {
   makeStyles
 } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
+import MenuIcon from '@material-ui/icons/Menu';
 import { TitleContext } from '../../context/TitleContext';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
@@ -186,7 +187,7 @@ const TopBar = ({
           <IconButton color="inherit">
             <InputIcon />
           </IconButton>
-        </Hidden>
+        </Hidden> */}
         <Hidden lgUp>
           <IconButton
             color="inherit"
@@ -194,7 +195,7 @@ const TopBar = ({
           >
             <MenuIcon />
           </IconButton>
-        </Hidden> */}
+        </Hidden>
       </Toolbar>
     </AppBar>
   );

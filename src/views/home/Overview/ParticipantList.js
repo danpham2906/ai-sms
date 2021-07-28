@@ -83,7 +83,7 @@ const ParticipantList = ({ className, participantData, toggleCircleMarkerData, s
     if (participants.length != 0 && firstParticipantSelected == false) {
       setFirstParticipantSelected(true);
       var firstParticipant = participants[0];
-      console.log(firstParticipant.id);
+      // console.log(firstParticipant.id);
       handleParticipantSelection(firstParticipant.id);
       mapSetCenter(ConvertLocationStr(firstParticipant.latestLocation));
     }

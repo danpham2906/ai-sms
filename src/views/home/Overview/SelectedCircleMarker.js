@@ -1,5 +1,4 @@
 /* eslint-disable */
-import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
   makeStyles
@@ -8,7 +7,6 @@ import {
   CircleMarker,
   Tooltip
 } from 'react-leaflet';
-import { ParticipantContext } from '../../../context/ParticipantContext';
 import ConvertLocationStr from '../../../utils/ConvertLocationStr';
 
 const useStyles = makeStyles((theme) => ({
@@ -30,14 +28,6 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     width: 'calc(100% - 300px)',
   },
-  participantList: {
-    height: 240,
-    width: 300,
-    position: 'absolute',
-    top: '20px',
-    left: '20px',
-    'z-index': theme.zIndex.drawer - 1,
-  },
   root: {
     maxWidth: 360,
     backgroundColor: theme.palette.background.paper,
@@ -50,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const CircleMarkerGroup = ({ className, participantData, toggleCircleMarker, selectParticipant, mapFlyTo, ...rest }) => {
+const SelectedCircleMarker = ({ className, participantData, toggleCircleMarker, selectParticipant, mapFlyTo, ...rest }) => {
   const classes = useStyles();
   const participants = participantData;
   // const [toggleCircleMarker, setToggleCircleMarker] = useState(toggleCircleMarker);
@@ -58,18 +48,18 @@ const CircleMarkerGroup = ({ className, participantData, toggleCircleMarker, sel
   const colorOption1 = { color: 'blue' };
   const colorOption2 = { color: 'red' };
 
-  var circleMarkerGroup = [];
+  var selectedCircleMarker = [];
   if (participants != undefined) {
     participants.map((participant) => {
       // if (participant.outOfBattery || participant.placeAlert || participant.heartRate || participant.calendar) {
       if (participant.latestLocation != undefined) {
         var latestLocation = ConvertLocationStr(participant.latestLocation);
-        if (!toggleCircleMarker[participant.id]) {
-          circleMarkerGroup.push(
+        if (toggleCircleMarker[participant.id]) {
+          selectedCircleMarker.push(
             <CircleMarker
               center={latestLocation}
-              pathOptions={colorOption1}
-              pane={"overlayPane"}
+              pathOptions={colorOption2}
+              pane={"selectedCircle"}
               radius={10}
               opacity={1}
             >
@@ -79,7 +69,7 @@ const CircleMarkerGroup = ({ className, participantData, toggleCircleMarker, sel
                 permanent
                 className={classes.leafletTooltip}
                 offset={[0, 7]}
-                pane={"tooltipPane"}
+                pane={"selectedCircleTooltip"}
               >
                 {participant.name}
               </Tooltip>
@@ -92,13 +82,13 @@ const CircleMarkerGroup = ({ className, participantData, toggleCircleMarker, sel
 
   return (
     <div>
-      {circleMarkerGroup}
+      {selectedCircleMarker}
     </div>
   );
 }
 
-CircleMarkerGroup.propTypes = {
+SelectedCircleMarker.propTypes = {
   className: PropTypes.string
 };
 
-export default CircleMarkerGroup;
+export default SelectedCircleMarker;

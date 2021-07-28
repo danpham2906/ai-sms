@@ -12,11 +12,8 @@ import Grid from '@material-ui/core/Grid';
 import {
   MapContainer,
   TileLayer,
-  Marker,
   ZoomControl,
-  CircleMarker,
-  Tooltip,
-  // useMap,
+  Pane,
 } from 'react-leaflet';
 import Page from 'src/components/Page';
 import {
@@ -25,6 +22,7 @@ import {
 } from '@material-ui/core';
 import ParticipantList from './ParticipantList';
 import CircleMarkerGroup from './CircleMarkerGroup';
+import SelectedCircleMarker from './SelectedCircleMarker';
 // import data from '../../../data/ParticipantData';
 import { ParticipantContext } from '../../../context/ParticipantContext';
 import ConvertLocationStr from '../../../utils/ConvertLocationStr';
@@ -90,6 +88,9 @@ export default function HomeView() {
     setToggleCircleMarker(valueCircleMarker);
   }, []);
 
+  // useEffect(() => {
+  // }, [CircleMarkerGroup]);
+
   useEffect(() => {
     setParticipants(participantContext.list);
   }, [participantContext]);
@@ -99,12 +100,10 @@ export default function HomeView() {
   }, participantContext);
 
   function MapSetCenter(center) {
-    // console.log(center);
     map.setView(center);
   }
 
   function MapFlyTo(location) {
-    // console.log(location);
     if (location.length && map) {
       map.flyTo(location, 14, {
         duration: 1,
@@ -177,6 +176,8 @@ export default function HomeView() {
       <Card className={classes.cardContainer}>
         <Container maxWidth='true' className={classes.container}>
           <MapContainer spacing={3} center={position} zoom={14} zoomControl={false} scrollWheelZoom={false} className={classes.map} whenCreated={setMap}>
+            <Pane name="selectedCircle" style={{ zIndex: 401 }} />
+            <Pane name="selectedCircleTooltip" style={{ zIndex: 651 }} />
             <TileLayer
               attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -187,10 +188,12 @@ export default function HomeView() {
             <CircleMarkerGroup
               participantData={participants}
               toggleCircleMarker={toggleCircleMarker}
-              mapFlyTo={MapFlyTo}
             />
 
-            {/* <MapFlyTo /> */}
+            <SelectedCircleMarker
+              participantData={participants}
+              toggleCircleMarker={toggleCircleMarker}
+            />
 
           </MapContainer>
         </Container>
