@@ -13,6 +13,15 @@ import {
   makeStyles,
   List, ListItem,
 } from '@material-ui/core';
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  // Popup,
+  ZoomControl,
+  CircleMarker,
+  Tooltip
+} from 'react-leaflet';
 import { ParticipantContext } from '../../../context/ParticipantContext';
 // import data from '../../../data/data';
 
@@ -65,12 +74,25 @@ const useStyles = makeStyles((theme) => ({
   },
   mainContent: {
     flexGrow: 1,
-  }
+    padding: '0px 0px 10px 0px',
+  },
+  employerMap: {
+    width: '100%',
+    height: '200px',
+  },
+  map: {
+    width: '100%',
+    height: '100%',
+    // position: 'absolute',
+    // overflow: 'unset',
+  },
 }));
 
 const Employment = ({ className, ...rest }) => {
   const classes = useStyles();
   const participant = useContext(ParticipantContext);
+
+  const position = [34.707348637025916, -86.62204035764367];
 
   const employmentList = [
     'Employer name',
@@ -129,6 +151,33 @@ const Employment = ({ className, ...rest }) => {
                 ))}
               </List>
             </Typography>
+          </Grid>
+        </Grid>
+        <Grid container>
+          <Grid item
+            className={classes.employerMap}
+          >
+            <MapContainer
+              spacing={3}
+              center={position}
+              zoom={14}
+              zoomControl={false}
+              scrollWheelZoom={false}
+              className={classes.map}
+            // whenCreated={setMap}
+            >
+              <TileLayer
+                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              />
+
+              <ZoomControl position="topright" />
+
+              <Marker position={position} />
+
+              {/* <VisitedMarker visitedPlaces={dataUsed} /> */}
+
+            </MapContainer>
           </Grid>
         </Grid>
       </CardContent>
