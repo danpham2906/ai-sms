@@ -23,7 +23,7 @@ const routes = [
       { path: 'participantstatus', element: <ParticipantStatusView /> },
       { path: 'schedule', element: <ScheduleView /> },
       { path: 'documents', element: <DocumentsView /> },
-      { path: 'goalapp', element: <AppTasksView /> },
+      { path: 'taskmanagement', element: <AppTasksView /> },
       { path: 'analytics', element: <AnalyticsView /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]

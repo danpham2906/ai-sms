@@ -175,8 +175,6 @@ const Employment = ({ className, ...rest }) => {
 
               <Marker position={position} />
 
-              {/* <VisitedMarker visitedPlaces={dataUsed} /> */}
-
             </MapContainer>
           </Grid>
         </Grid>

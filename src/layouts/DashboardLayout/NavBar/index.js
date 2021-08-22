@@ -40,9 +40,9 @@ const items = [
     icon: HomeIcon,
     title: 'Overview'
   },
-  {
-    title: 'Support the 5-Key Model'
-  },
+  // {
+  //   title: 'Support the 5-Key Model'
+  // },
   {
     href: '/app/participantstatus',
     icon: LayoutIcon,
@@ -54,9 +54,9 @@ const items = [
     title: 'Schedule'
   },
   {
-    href: '/app/goalapp',
+    href: '/app/taskmanagement',
     icon: BriefcaseIcon,
-    title: 'GOAL App'
+    title: 'Task Management'
   },
   {
     href: '/app/analytics',

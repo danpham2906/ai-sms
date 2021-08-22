@@ -37,6 +37,10 @@ const HorizontalBarChart = forwardRef(({ data, subData, width, height, color }, 
         barChartID = "barChartOliveDrab";
       }
 
+      data.sort(function(a, b) {
+        return d3.ascending(a.value, b.value)
+      });
+
       svg.attr("id", barChartID)
         .append("g")
         .attr("id", "rect")
@@ -120,6 +124,10 @@ const HorizontalBarChart = forwardRef(({ data, subData, width, height, color }, 
 
       let svg = d3.select(barChartID);
       // svg.selectAll("g").remove();
+
+      dataUsed.sort(function(a, b) {
+        return d3.ascending(a.value, b.value)
+      });
 
       svg
         // .append("g")

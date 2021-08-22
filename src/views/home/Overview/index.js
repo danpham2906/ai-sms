@@ -14,6 +14,7 @@ import {
   TileLayer,
   ZoomControl,
   Pane,
+  Polygon,
 } from 'react-leaflet';
 import Page from 'src/components/Page';
 import {
@@ -26,6 +27,7 @@ import SelectedCircleMarker from './SelectedCircleMarker';
 // import data from '../../../data/ParticipantData';
 import { ParticipantContext } from '../../../context/ParticipantContext';
 import ConvertLocationStr from '../../../utils/ConvertLocationStr';
+import RestrictedZone from './RestrictedZone';
 
 const useStyles = makeStyles((theme) => ({
   map: {
@@ -79,7 +81,7 @@ export default function HomeView() {
   const classes = useStyles();
   const [toggleCircleMarker, setToggleCircleMarker] = useState([]);
   const [toggleCMState, setToggleCMState] = useState(true);
-  // const [selectedExclusionZones, setSelectedExclusionZones] = useState([]);
+  const [restrictedLocation, setRestrictedLocation] = useState([]);
   const participantContext = useContext(ParticipantContext);
   const [participants, setParticipants] = useState(participantContext.list);
   const [map, setMap] = useState(null);
@@ -88,8 +90,9 @@ export default function HomeView() {
     setToggleCircleMarker(valueCircleMarker);
   }, []);
 
-  // useEffect(() => {
-  // }, [CircleMarkerGroup]);
+  useEffect(() => {
+    console.log(restrictedLocation)
+  }, [restrictedLocation]);
 
   useEffect(() => {
     setParticipants(participantContext.list);
@@ -193,6 +196,17 @@ export default function HomeView() {
             <SelectedCircleMarker
               participantData={participants}
               toggleCircleMarker={toggleCircleMarker}
+            />
+
+            <RestrictedZone
+              participantData={participants}
+              selectedParticipantId={participantContext.id}
+              setRestrictedLocationIndex={setRestrictedLocation}
+            />
+
+            <Polygon
+              pathOptions={{ color: 'green' }}
+              positions={restrictedLocation}
             />
 
           </MapContainer>

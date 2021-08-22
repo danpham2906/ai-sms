@@ -13,7 +13,7 @@ import {
 } from "@material-ui/core/styles/colorManipulator";
 import Page from 'src/components/Page';
 import Results from './Results';
-// import Toolbar from './Toolbar';
+import ListToolbar from './Toolbar';
 // import data from './data';
 import { ViewState } from '@devexpress/dx-react-scheduler';
 import {
@@ -69,6 +69,9 @@ const styles = theme => ({
     '&:hover': {
       opacity: 0.6,
     },
+  },
+  appointmentList: {
+    paddingTop: "20px",
   },
 });
 
@@ -140,7 +143,7 @@ const initialCurrentDate = '2021-05-06';
 class ScheduleView extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {entries: data.entries, currentDateInfo: initialCurrentDate};
+    this.state = { entries: data.entries, currentDateInfo: initialCurrentDate };
     this.scheduler = React.createRef();
 
     this.convertSchedule();
@@ -149,10 +152,12 @@ class ScheduleView extends React.Component {
     this.convertSchedule = this.convertSchedule.bind(this);
     this.handleScheduleChange = this.handleScheduleChange.bind(this);
     this.hoverScheduleHandler = this.hoverScheduleHandler.bind(this);
+    this.handleAppointmentListChange = this.handleAppointmentListChange.bind(this);
   }
 
   convertSchedule() {
     let schedulerContainer = [];
+    // console.log(this.state.entries);
     for (var i in this.state.entries) {
       let timeStrStart = this.state.entries[i].time;
       let timeArr = timeStrStart.split(",");
@@ -160,7 +165,7 @@ class ScheduleView extends React.Component {
       timeStrStart = timeDate[2] + "-";
       timeStrStart += (timeDate[0].length == "1" ? "0" : "") + timeDate[0] + "-";
       timeStrStart += (timeDate[1].length == "1" ? "0" : "") + timeDate[1] + "T";
-      let timeStrEnd = timeStrStart; 
+      let timeStrEnd = timeStrStart;
 
       let timeHour = timeArr[1].split(" ");
       let timeHour2 = timeHour[1].split(":");
@@ -188,8 +193,8 @@ class ScheduleView extends React.Component {
     console.log(this.scheduler.current);
   }
 
-  currentDateChange (currentDate) {
-    this.setState({currentDateInfo: currentDate});
+  currentDateChange(currentDate) {
+    this.setState({ currentDateInfo: currentDate });
   };
 
   handleScheduleChange() {
@@ -197,13 +202,19 @@ class ScheduleView extends React.Component {
     // console.log(this.state.entries);
     this.convertSchedule();
     // console.log(this.state.schedulerEntries);
-    this.setState({schedulerEntries: this.state.schedulerEntries});
+    this.setState({ schedulerEntries: this.state.schedulerEntries });
   }
 
   hoverScheduleHandler(id) {
     console.log("Hover in Scheduler!! Id = " + id.toString());
     console.log(this.scheduler.current.props.children);
     // this.childIsHover = isHover;
+  }
+
+  handleAppointmentListChange(newAppointmentList) {
+    this.state.entries = newAppointmentList;
+    console.log(this.state.entries);
+    this.convertSchedule();
   }
 
   render() {
@@ -217,27 +228,30 @@ class ScheduleView extends React.Component {
         <Scheduler
           data={this.state.schedulerEntries}
           height={800}
-          // overlay={this.childIsHover}
+        // overlay={this.childIsHover}
         >
           <ViewState
-              currentDate={this.state.currentDateInfo}
-              onCurrentDateChange={this.currentDateChange}
+            currentDate={this.state.currentDateInfo}
+            onCurrentDateChange={this.currentDateChange}
           />
           <WeekView
-              startDayHour={6}
-              endDayHour={22}
+            startDayHour={6}
+            endDayHour={22}
           />
           <Toolbar />
           <DateNavigator />
-          <TodayButton/>
-          <Appointments 
+          <TodayButton />
+          <Appointments
             appointmentContentComponent={AppointmentContent}
             ref={this.scheduler}
           />
           <Resources data={resources} />
         </Scheduler>
-        <Container maxWidth={false}>
-          {/* <Toolbar /> */}
+        <Container maxWidth={false} className={classes.appointmentList}>
+          <ListToolbar
+            data={this.state.entries}
+            onAppointmentListChange={this.handleAppointmentListChange}
+          />
           <Box mt={3}>
             <Results
               entries={this.state.entries}
@@ -249,7 +263,7 @@ class ScheduleView extends React.Component {
       </Page>
     );
   }
-  
+
 };
 
 export default withStyles(styles, { withTheme: true })(ScheduleView);

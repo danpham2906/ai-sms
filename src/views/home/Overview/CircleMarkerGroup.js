@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const CircleMarkerGroup = ({ className, participantData, toggleCircleMarker, selectParticipant, mapFlyTo, ...rest }) => {
+const CircleMarkerGroup = ({ className, participantData, toggleCircleMarker, ...rest }) => {
   const classes = useStyles();
   const participants = participantData;
   // const [toggleCircleMarker, setToggleCircleMarker] = useState(toggleCircleMarker);

@@ -131,7 +131,7 @@ const ParticipantList = ({ className, participantData, toggleCircleMarkerData, s
             <div>
               <ListItemSecondaryAction>
                 {participant.outOfBattery === true ? (<BatteryAlertIcon style={{ color: 'DarkGray' }} />) : ''}
-                {participant.placeAlert === true ? (<AnnouncementIcon style={{ color: 'DarkTurquoise' }} />) : ''}
+                {participant.violation === true ? (<AnnouncementIcon style={{ color: 'DarkTurquoise' }} />) : ''}
                 {participant.heartRate === true ? (<FavoriteIcon style={{ color: 'LightCoral' }} />) : ''}
                 {participant.calendar === true ? (<DateRangeIcon style={{ color: 'DarkSlateBlue' }} />) : ''}
               </ListItemSecondaryAction>

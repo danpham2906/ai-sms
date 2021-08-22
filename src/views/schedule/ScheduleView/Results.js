@@ -96,7 +96,7 @@ const Results = ({ className, entries, onScheduleChange, onScheduleHover, ...res
   }
 
   function hoverHandler(event, id) {
-    console.log("Hover in Table Row " + id.toString());
+    // console.log("Hover in Table Row " + id.toString());
     onScheduleHover(id);
   }
 
@@ -127,9 +127,9 @@ const Results = ({ className, entries, onScheduleChange, onScheduleHover, ...res
                 <TableCell>
                   Time
                 </TableCell>
-                {/* <TableCell>
-                  Parolee Photo
-                </TableCell> */}
+                <TableCell>
+                  Case Worker
+                </TableCell>
                 <TableCell>
                   Parolee
                 </TableCell>
@@ -171,7 +171,7 @@ const Results = ({ className, entries, onScheduleChange, onScheduleHover, ...res
                       value="true"
                     />
                   </TableCell>
-                  <TableCell width="10%">
+                  <TableCell width="7%">
                     <Box
                       alignItems="center"
                       display="flex"
@@ -190,6 +190,9 @@ const Results = ({ className, entries, onScheduleChange, onScheduleHover, ...res
                       {getInitials(entry.parolee)}
                     </Avatar>
                   </TableCell> */}
+                  <TableCell width="10%">
+                    {entry.caseworker}
+                  </TableCell>
                   <TableCell width="10%">
                     {entry.parolee}
                   </TableCell>

@@ -12,6 +12,8 @@ export const TitleProvider = ({children}) => {
     currentTitle = "App&Tasks or JOB";
   } else if (currentTitle == "participantstatus") {
     currentTitle = "Participant Status";
+  } else if (currentTitle == "taskmanagement") {
+    currentTitle = "Task Management";
   } else if (currentTitle == "goalapp") {
     currentTitle = "GOAL App";
   } else {
