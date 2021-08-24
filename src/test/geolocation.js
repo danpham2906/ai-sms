@@ -37,7 +37,7 @@ async function requests() {
     // }
 
     try {
-        const res = await Axios.get('http://128.186.151.67:8080/api/nij/ai-sms/location/violation-check?gpslogId=44', { 'Authorization': token  })
+        const res = await Axios.get('http://128.186.151.67:8080/api/nij/ai-sms/location/violation-check?gpslogId=16', { 'Authorization': token  })
         console.log(res.data)
     } catch (error) {
         console.log(error)

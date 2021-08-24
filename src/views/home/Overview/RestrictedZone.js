@@ -77,18 +77,18 @@ const RestrictedZone = ({ className, participantData, selectedParticipantId, set
   const GetRestrictedZoneLocation = async (gpslogId) => {
     const restrictedLocation = await Axios.get('http://128.186.151.67:8080/api/nij/ai-sms/location/violation-check?gpslogId=' + gpslogId)
       .then(res => {
-        console.log(res.data[0].restrictLocation.coordinates);
+        // console.log(res.data[0].restrictLocation.coordinates);
         setRestrictedLocation(res.data[0].restrictLocation.coordinates[0]);
         setRestrictedLocationIndex(ConvertRestrictedLocation(res.data[0].restrictLocation.coordinates[0]));
       })
       .catch(() => {
-        console.log('error')
+        // console.log('error')
       });
   }
 
   var restrictedZone;
   useEffect(() => {
-    console.log(restrictedLocation);
+    // console.log(restrictedLocation);
     restrictedZone = [];
     if (restrictedLocation != []) {
       restrictedZone.push(
@@ -98,7 +98,7 @@ const RestrictedZone = ({ className, participantData, selectedParticipantId, set
           // pane={"selectedCircle"}
         />
       );
-      console.log(restrictedZone);
+      // console.log(restrictedZone);
     };
   }, [restrictedLocation]);
 

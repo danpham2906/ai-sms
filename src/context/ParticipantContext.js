@@ -35,9 +35,9 @@ export const ParticipantProvider = ({ children }) => {
   useEffect(() => {
     getParticipantAPI();
 
-    // const intervalId = setInterval(() => {
-    //   getParticipantAPI();
-    // }, 5000);
+    const intervalId = setInterval(() => {
+      getParticipantAPI();
+    }, 2000);
 
     // console.log("SetGEOAPI " + intervalId);
     // return () => clearInterval(intervalId);

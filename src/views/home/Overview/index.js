@@ -31,7 +31,8 @@ import RestrictedZone from './RestrictedZone';
 
 const useStyles = makeStyles((theme) => ({
   map: {
-    width: '100vw',
+    // width: '100vw',
+    width: '100%',
     height: '100vh',
     // position: 'absolute',
     overflow: 'unset',
@@ -91,7 +92,7 @@ export default function HomeView() {
   }, []);
 
   useEffect(() => {
-    console.log(restrictedLocation)
+    // console.log(restrictedLocation)
   }, [restrictedLocation]);
 
   useEffect(() => {
