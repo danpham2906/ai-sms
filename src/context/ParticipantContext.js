@@ -37,7 +37,7 @@ export const ParticipantProvider = ({ children }) => {
 
     const intervalId = setInterval(() => {
       getParticipantAPI();
-    }, 2000);
+    }, 1000);
 
     // console.log("SetGEOAPI " + intervalId);
     // return () => clearInterval(intervalId);
