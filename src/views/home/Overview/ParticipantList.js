@@ -22,6 +22,8 @@ import DateRangeIcon from '@material-ui/icons/DateRange';
 import { ParticipantContext } from '../../../context/ParticipantContext';
 import ConvertLocationStr from '../../../utils/ConvertLocationStr';
 
+import geolocation_warning from '../../../img/geolocation_warning_32px.png';
+
 const useStyles = makeStyles((theme) => ({
   map: {
     width: '100vw',
@@ -131,7 +133,8 @@ const ParticipantList = ({ className, participantData, toggleCircleMarkerData, s
             <div>
               <ListItemSecondaryAction>
                 {participant.outOfBattery === true ? (<BatteryAlertIcon style={{ color: 'DarkGray' }} />) : ''}
-                {participant.violation === true ? (<AnnouncementIcon style={{ color: 'DarkTurquoise' }} />) : ''}
+                {/* {participant.violation === true ? (<AnnouncementIcon style={{ color: 'DarkTurquoise' }} />) : ''} */}
+                {participant.violation === true ? (<img src={geolocation_warning} />) : ''}
                 {participant.heartRate === true ? (<FavoriteIcon style={{ color: 'LightCoral' }} />) : ''}
                 {participant.calendar === true ? (<DateRangeIcon style={{ color: 'DarkSlateBlue' }} />) : ''}
               </ListItemSecondaryAction>

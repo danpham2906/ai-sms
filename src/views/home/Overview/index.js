@@ -28,6 +28,7 @@ import SelectedCircleMarker from './SelectedCircleMarker';
 import { ParticipantContext } from '../../../context/ParticipantContext';
 import ConvertLocationStr from '../../../utils/ConvertLocationStr';
 import RestrictedZone from './RestrictedZone';
+import RestrictedZoneToggleButton from './RestrictedZoneToggleButton';
 
 const useStyles = makeStyles((theme) => ({
   map: {
@@ -66,6 +67,20 @@ const useStyles = makeStyles((theme) => ({
   leafletTooltip: {
     padding: '0px 4px 0px 4px !important',
   },
+  restrictedButtonContainer: {
+    paddingTop: theme.spacing(4),
+    paddingBottom: theme.spacing(4),
+    position: 'absolute',
+    width: '100px',
+    left: 'calc(100% - 130px)',
+  },
+  restrictedButton: {
+    position: 'absolute',
+    top: '15px',
+    // left: 'calc(100% - 120px)',
+    'z-index': theme.zIndex.drawer - 1,
+    overflow: 'auto',
+  }
 }));
 
 const position = [34.73, -86.60];
@@ -173,6 +188,14 @@ export default function HomeView() {
               selectParticipant={SelectParticipant}
               mapSetCenter={MapSetCenter}
             />
+          </Grid>
+        </Grid>
+      </Container>
+
+      <Container maxWidth='false'>
+        <Grid container className={classes.restrictedButtonContainer}>
+          <Grid item xs={6} className={classes.restrictedButton}>
+            {/* <RestrictedZoneToggleButton /> */}
           </Grid>
         </Grid>
       </Container>

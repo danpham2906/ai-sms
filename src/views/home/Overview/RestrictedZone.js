@@ -56,7 +56,7 @@ const RestrictedZone = ({ className, participantData, selectedParticipantId, set
   const [restrictedLocation, setRestrictedLocation] = useState([]);
 
   const blueOption = { color: 'blue' };
-  const greenOption = { color: 'green' };
+  const redOption = { color: 'red' };
 
   const polygon = [
     [40.5091508, -86.8251592],
@@ -93,7 +93,7 @@ const RestrictedZone = ({ className, participantData, selectedParticipantId, set
     if (restrictedLocation != []) {
       restrictedZone.push(
         <Polygon
-          pathOptions={greenOption}
+          pathOptions={redOption}
           positions={ConvertRestrictedLocation(restrictedLocation)}
           // pane={"selectedCircle"}
         />
