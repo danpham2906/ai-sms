@@ -229,7 +229,7 @@ export default function HomeView() {
             />
 
             <Polygon
-              pathOptions={{ color: 'green' }}
+              pathOptions={{ color: 'DarkOrange' }}
               positions={restrictedLocation}
             />
 
