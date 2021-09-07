@@ -24,6 +24,8 @@ import ConvertLocationStr from '../../../utils/ConvertLocationStr';
 import RestrictedZone from './RestrictedZone';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 
+import geolocation_warning from '../../../img/geolocation_warning_32px.png';
+
 const useStyles = makeStyles((theme) => ({
   map: {
     width: '100vw',
@@ -63,10 +65,33 @@ const useStyles = makeStyles((theme) => ({
   leafletTooltip: {
     padding: '0px 4px 0px 4px !important',
   },
+  toggleButton0ff: {
+    backgroundColor: 'white',
+    "&:hover": {
+      color: 'rgba(0, 0, 0, 0.5)',
+      backgroundColor: 'rgba(255, 255, 255, 0.5)',
+    },
+  },
+  toggleButtonOn: {
+    backgroundColor: 'black',
+    "&:hover": {
+      color: 'rgba(0, 0, 0, 0.5)',
+      backgroundColor: 'rgba(255, 255, 255, 0.5)',
+    },
+  },
 }));
 
-const RestrictedZoneToggleButton = ({ className, ...rest }) => {
+const RestrictedZoneToggleButton = ({ setToggle, ...rest }) => {
+  const classes = useStyles();
   const [showRestrictedZone, setShowRestrictedZone] = useState(false);
+
+  const toggleButtonClass = () => {
+    if (showRestrictedZone) {
+      return classes.toggleButtonOn;
+    } else {
+      return classes.toggleButton0ff;
+    }
+  }
 
   return (
     <ToggleButton
@@ -74,10 +99,13 @@ const RestrictedZoneToggleButton = ({ className, ...rest }) => {
       selected={showRestrictedZone}
       onChange={() => {
         // console.log("toggle");
+        setToggle(!showRestrictedZone);
         setShowRestrictedZone(!showRestrictedZone);
       }}
+      className={classes.toggleButton0ff}
     >
-      <AnnouncementIcon />
+      {/* <AnnouncementIcon /> */}
+      <img src={geolocation_warning} />
     </ToggleButton>
   );
 }

@@ -80,6 +80,7 @@ const RestrictedZone = ({ className, participantData, selectedParticipantId, set
         // console.log(res.data[0].restrictLocation.coordinates);
         setRestrictedLocation(res.data[0].restrictLocation.coordinates[0]);
         setRestrictedLocationIndex(ConvertRestrictedLocation(res.data[0].restrictLocation.coordinates[0]));
+        // console.log(ConvertRestrictedLocation(res.data[0].restrictLocation.coordinates[0]));
       })
       .catch(() => {
         // console.log('error')

@@ -29,6 +29,7 @@ import { ParticipantContext } from '../../../context/ParticipantContext';
 import ConvertLocationStr from '../../../utils/ConvertLocationStr';
 import RestrictedZone from './RestrictedZone';
 import RestrictedZoneToggleButton from './RestrictedZoneToggleButton';
+import RestrictedZoneGroup from './RestrictedZoneGroup';
 
 const useStyles = makeStyles((theme) => ({
   map: {
@@ -74,13 +75,13 @@ const useStyles = makeStyles((theme) => ({
     width: '100px',
     left: 'calc(100% - 130px)',
   },
-  restrictedButton: {
+  restrictedButtonGrid: {
     position: 'absolute',
     top: '15px',
     // left: 'calc(100% - 120px)',
     'z-index': theme.zIndex.drawer - 1,
     overflow: 'auto',
-  }
+  },
 }));
 
 const position = [34.73, -86.60];
@@ -102,13 +103,27 @@ export default function HomeView() {
   const [participants, setParticipants] = useState(participantContext.list);
   const [map, setMap] = useState(null);
 
+  const [restrictedzoneGroup, setRestrictedzoneGroup] = useState([]);
+  const [restrictedzoneGroupToggleOn, setRestrictedzoneGroupToggleOn] = useState(false);
+  const [restrictedzoneGroupData, setRestrictedzoneGroupData] = useState([]);
+
   useEffect(() => {
     setToggleCircleMarker(valueCircleMarker);
   }, []);
 
   useEffect(() => {
     // console.log(restrictedLocation)
-  }, [restrictedLocation]);
+    // console.log(restrictedzoneGroup);
+  }, [restrictedLocation, restrictedzoneGroupData]);
+
+  useEffect(() => {
+    // console.log(restrictedzoneGroupToggleOn);
+    if (restrictedzoneGroupToggleOn) {
+      setRestrictedzoneGroup(restrictedzoneGroupData);
+    } else {
+      setRestrictedzoneGroup([]);
+    }
+  }, [restrictedzoneGroupToggleOn]);
 
   useEffect(() => {
     setParticipants(participantContext.list);
@@ -194,8 +209,10 @@ export default function HomeView() {
 
       <Container maxWidth='false'>
         <Grid container className={classes.restrictedButtonContainer}>
-          <Grid item xs={6} className={classes.restrictedButton}>
-            {/* <RestrictedZoneToggleButton /> */}
+          <Grid item xs={6} className={classes.restrictedButtonGrid}>
+            <RestrictedZoneToggleButton 
+              setToggle={setRestrictedzoneGroupToggleOn}
+            />
           </Grid>
         </Grid>
       </Container>
@@ -232,6 +249,10 @@ export default function HomeView() {
               pathOptions={{ color: 'DarkOrange' }}
               positions={restrictedLocation}
             />
+
+            <RestrictedZoneGroup setZoneGroup={setRestrictedzoneGroupData} />
+
+            {restrictedzoneGroup}
 
           </MapContainer>
         </Container>
