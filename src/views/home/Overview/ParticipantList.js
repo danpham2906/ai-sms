@@ -14,6 +14,9 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import {
   Typography,
+  TextField,
+  Card,
+  CardContent,
 } from '@material-ui/core';
 import AnnouncementIcon from '@material-ui/icons/Announcement';
 import FavoriteIcon from '@material-ui/icons/Favorite';
@@ -35,7 +38,10 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative',
   },
   cardContainer: {
-    height: '100%',
+    padding: '6px',
+    "&:last-child": {
+      paddingBottom: '6px',
+    },
   },
   participantContainer: {
     paddingTop: theme.spacing(4),
@@ -43,25 +49,18 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     width: 'calc(100% - 300px)',
   },
-  // participantList: {
-  //   height: 240,
-  //   width: 300,
-  //   position: 'absolute',
-  //   top: '50px',
-  //   left: '20px',
-  //   'z-index': theme.zIndex.drawer - 1,
-  //   // maxHeight: '416',
-  //   // overflow: 'auto',
-  // },
   participantList: {
     maxWidth: 360,
     backgroundColor: theme.palette.background.paper,
-    maxHeight: 416,
+    maxHeight: 368,
     overflow: 'auto',
-    // backgroundColor: theme.palette.primary.main,
+    marginTop: '5px',
   },
   leafletTooltip: {
     padding: '0px 4px 0px 4px !important',
+  },
+  textField: {
+    width: '100%'
   },
 }));
 
@@ -75,19 +74,23 @@ const ParticipantList = ({ className, participantData, toggleCircleMarkerData, s
   const [participants, setParticipants] = useState([]);
   const [firstParticipantSelected, setFirstParticipantSelected] = useState(false);
   const participantContext = useContext(ParticipantContext);
+  const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
-    if (participantContext != undefined) {
-      if (participantContext.list.length != 0) {
-        setParticipants(participantContext.list);
+    if (searchValue == "") {
+      // console.log("empty");
+      if (participantContext != undefined) {
+        if (participantContext.list.length != 0) {
+          setParticipants(participantContext.list);
+        }
       }
-    }
-    if (participants.length != 0 && firstParticipantSelected == false) {
-      setFirstParticipantSelected(true);
-      var firstParticipant = participants[0];
-      // console.log(firstParticipant.id);
-      handleParticipantSelection(firstParticipant.id);
-      mapSetCenter(ConvertLocationStr(firstParticipant.latestLocation));
+      if (participants.length != 0 && firstParticipantSelected == false && participantContext.id == 0) {
+        setFirstParticipantSelected(true);
+        var firstParticipant = participants[0];
+        // console.log(firstParticipant.id);
+        handleParticipantSelection(firstParticipant.id);
+        mapSetCenter(ConvertLocationStr(firstParticipant.latestLocation));
+      }
     }
   }, [participantContext]);
 
@@ -118,31 +121,64 @@ const ParticipantList = ({ className, participantData, toggleCircleMarkerData, s
     selectParticipant(participantId);
   }
 
+  const handleChangeSearchInput = (event) => {
+    // console.log(event.target.value);
+
+    var prefix = event.target.value;
+    setSearchValue(prefix);
+    var tmpList = [];
+    participantContext.list.map((participant, id) => {
+      var name1 = participant.name.toLowerCase();
+      var name2 = prefix.toLowerCase();
+      if (name1.startsWith(name2)) {
+        // console.log(id + " " + participant.name);
+        tmpList.push(participant);
+      }
+    });
+
+    setParticipants(tmpList);
+  };
+
   return (
-    <List dense className={classes.participantList}>
-      {participants.length ? participants.map((participant) => {
-        const labelId = `checkbox-list-secondary-label-${participant.id}`;
-        // console.log(participant);
-        return (
-          <ListItem key={participant.id} button onClick={() => handleParticipantSelection(participant.id)} >
-            {toggleCircleMarker[participant.id] ?
-              <ListItemText id={labelId} disableTypography primary={<Typography style={{ color: 'LightSeaGreen', 'font-weight': 'bold' }}>{`${participant.name}`}</Typography>} />
-              :
-              <ListItemText id={labelId} primary={<Typography>{`${participant.name}`}</Typography>} />
-            }
-            <div>
-              <ListItemSecondaryAction>
-                {participant.outOfBattery === true ? (<BatteryAlertIcon style={{ color: 'DarkGray' }} />) : ''}
-                {/* {participant.violation === true ? (<AnnouncementIcon style={{ color: 'DarkTurquoise' }} />) : ''} */}
-                {participant.violation === true ? (<img src={geolocation_warning} />) : ''}
-                {participant.heartRate === true ? (<FavoriteIcon style={{ color: 'LightCoral' }} />) : ''}
-                {participant.calendar === true ? (<DateRangeIcon style={{ color: 'DarkSlateBlue' }} />) : ''}
-              </ListItemSecondaryAction>
-            </div>
-          </ListItem>
-        );
-      }) : ''}
-    </List>
+    <Card
+      // className={clsx(classes.root, className)}
+      {...rest}
+    >
+      <CardContent className={classes.cardContainer}>
+        <TextField
+          id="search-input"
+          placeholder="Search"
+          variant="outlined"
+          className={classes.textField}
+          onChange={event => handleChangeSearchInput(event)}
+        />
+
+        <List dense className={classes.participantList}>
+          {participants.length ? participants.map((participant) => {
+            const labelId = `checkbox-list-secondary-label-${participant.id}`;
+            // console.log(participant);
+            return (
+              <ListItem key={participant.id} button onClick={() => handleParticipantSelection(participant.id)} >
+                {participant.id == participantContext.id ?
+                  <ListItemText id={labelId} disableTypography primary={<Typography style={{ color: 'LightSeaGreen', 'font-weight': 'bold' }}>{`${participant.name}`}</Typography>} />
+                  :
+                  <ListItemText id={labelId} primary={<Typography>{`${participant.name}`}</Typography>} />
+                }
+                <div>
+                  <ListItemSecondaryAction>
+                    {participant.outOfBattery === true ? (<BatteryAlertIcon style={{ color: 'DarkGray' }} />) : ''}
+                    {/* {participant.violation === true ? (<AnnouncementIcon style={{ color: 'DarkTurquoise' }} />) : ''} */}
+                    {participant.violation === true ? (<img src={geolocation_warning} />) : ''}
+                    {participant.heartRate === true ? (<FavoriteIcon style={{ color: 'LightCoral' }} />) : ''}
+                    {participant.calendar === true ? (<DateRangeIcon style={{ color: 'DarkSlateBlue' }} />) : ''}
+                  </ListItemSecondaryAction>
+                </div>
+              </ListItem>
+            );
+          }) : ''}
+        </List>
+      </CardContent>
+    </Card>
   );
 }
 

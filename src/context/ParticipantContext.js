@@ -9,6 +9,7 @@ export const ParticipantProvider = ({ children }) => {
   const [list, setList] = useState([]);
   const [id, setId] = useState("");
   const [name, setName] = useState("");
+  const [latestLocation, setLatestLocation] = useState([]);
   const [street, setStreet] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
@@ -19,6 +20,7 @@ export const ParticipantProvider = ({ children }) => {
         var firstParticipant = list[0];
         setName(firstParticipant.name);
         setId(firstParticipant.id);
+        setLatestLocation(firstParticipant.latestLocation);
         if (firstParticipant.address) {
           setStreet(firstParticipant.address.street);
           setCity(firstParticipant.address.city);
@@ -65,6 +67,7 @@ export const ParticipantProvider = ({ children }) => {
         list, setList,
         id, setId,
         name, setName,
+        latestLocation, setLatestLocation,
         street, setStreet,
         city, setCity,
         state, setState,

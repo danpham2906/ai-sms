@@ -84,10 +84,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const position = [34.73, -86.60];
-
-const valueCircleMarker = [];
-const valueCircleMarker1 = [];
+// const valueCircleMarker = [];
+// const valueCircleMarker1 = [];
 // if (valueCircleMarker.length < 1 && participants != undefined) {
 //   for (let i = 1; i < participants.length + 1; i++) {
 //     valueCircleMarker[i] = false;
@@ -96,20 +94,52 @@ const valueCircleMarker1 = [];
 
 export default function HomeView() {
   const classes = useStyles();
-  const [toggleCircleMarker, setToggleCircleMarker] = useState([]);
-  const [toggleCMState, setToggleCMState] = useState(true);
+  // const [toggleCircleMarker, setToggleCircleMarker] = useState([]);
+  // const [toggleCMState, setToggleCMState] = useState(true);
+  const [firstload, setFirstload] = useState(false);
   const [restrictedLocation, setRestrictedLocation] = useState([]);
   const participantContext = useContext(ParticipantContext);
   const [participants, setParticipants] = useState(participantContext.list);
   const [map, setMap] = useState(null);
 
+  var position = [34.73, -86.60];
+
   const [restrictedzoneGroup, setRestrictedzoneGroup] = useState([]);
   const [restrictedzoneGroupToggleOn, setRestrictedzoneGroupToggleOn] = useState(false);
   const [restrictedzoneGroupData, setRestrictedzoneGroupData] = useState([]);
 
+  // useEffect(() => {
+  //   setToggleCircleMarker(valueCircleMarker);
+  // }, []);
+
+  // useEffect(() => {
+  //   if (participantContext.latestLocation != null) {
+  //     if (participantContext.latestLocation.length != 0) {
+  //       console.log(position);
+  //       console.log(participantContext.latestLocation);
+  //     }
+  //   }
+  // }, [position]);
+
   useEffect(() => {
-    setToggleCircleMarker(valueCircleMarker);
-  }, []);
+    // if (participantContext.latestLocation != null) {
+    //   if (map != null && participantContext.latestLocation.length != 0) {
+    //     console.log(participantContext.name);
+    //     MapSetCenter(ConvertLocationStr(participantContext.latestLocation));
+    //   }
+    // }
+  }, [map]);
+
+  useEffect(() => {
+    // console.log(firstload);
+    if (participantContext.latestLocation != null && firstload == false && map != null) {
+      if (participantContext.latestLocation.length != 0) {
+        // console.log(participantContext.latestLocation);
+        MapSetCenter(ConvertLocationStr(participantContext.latestLocation));
+        setFirstload(true);
+      }
+    }
+  }, [participantContext, map]);
 
   useEffect(() => {
     // console.log(restrictedLocation)
@@ -157,6 +187,7 @@ export default function HomeView() {
           MapFlyTo(ConvertLocationStr(participant.latestLocation));
           participantContext.setName(participant.name);
           participantContext.setId(participant.id);
+          participantContext.setLatestLocation(participant.latestLocation);
           if (participant.address) {
             participantContext.setStreet(participant.address.street);
             participantContext.setCity(participant.address.city);
@@ -170,20 +201,20 @@ export default function HomeView() {
         }
       });
 
-      for (let i = 1; i < participants.length + 1; i++) {
-        valueCircleMarker[i] = false;
-      }
-      valueCircleMarker[index] = true;
+      // for (let i = 1; i < participants.length + 1; i++) {
+      //   valueCircleMarker[i] = false;
+      // }
+      // valueCircleMarker[index] = true;
 
-      setToggleCMState(!toggleCMState);
-      if (toggleCMState) {
-        setToggleCircleMarker(valueCircleMarker);
-      } else {
-        for (let i = 1; i < participants.length + 1; i++) {
-          valueCircleMarker1[i] = valueCircleMarker[i];
-        }
-        setToggleCircleMarker(valueCircleMarker1);
-      }
+      // setToggleCMState(!toggleCMState);
+      // if (toggleCMState) {
+      //   setToggleCircleMarker(valueCircleMarker);
+      // } else {
+      //   for (let i = 1; i < participants.length + 1; i++) {
+      //     valueCircleMarker1[i] = valueCircleMarker[i];
+      //   }
+      //   setToggleCircleMarker(valueCircleMarker1);
+      // }
     }
 
   }
@@ -199,7 +230,7 @@ export default function HomeView() {
           <Grid item xs={12} className={classes.participantList}>
             <ParticipantList
               participantData={participants}
-              toggleCircleMarkerData={toggleCircleMarker}
+              // toggleCircleMarkerData={toggleCircleMarker}
               selectParticipant={SelectParticipant}
               mapSetCenter={MapSetCenter}
             />
@@ -210,7 +241,7 @@ export default function HomeView() {
       <Container maxWidth='false'>
         <Grid container className={classes.restrictedButtonContainer}>
           <Grid item xs={6} className={classes.restrictedButtonGrid}>
-            <RestrictedZoneToggleButton 
+            <RestrictedZoneToggleButton
               setToggle={setRestrictedzoneGroupToggleOn}
             />
           </Grid>
@@ -231,12 +262,12 @@ export default function HomeView() {
 
             <CircleMarkerGroup
               participantData={participants}
-              toggleCircleMarker={toggleCircleMarker}
+            // toggleCircleMarker={toggleCircleMarker}
             />
 
             <SelectedCircleMarker
               participantData={participants}
-              toggleCircleMarker={toggleCircleMarker}
+            // toggleCircleMarker={toggleCircleMarker}
             />
 
             <RestrictedZone

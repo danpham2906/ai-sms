@@ -1,4 +1,5 @@
 const ConvertLocationStr = (locationStr) => {
+    // console.log(locationStr);
     var res = [];
     if (locationStr != null) {
         locationStr = locationStr.split("POINT(");

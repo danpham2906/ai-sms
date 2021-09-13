@@ -1,4 +1,5 @@
 /* eslint-disable */
+import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import {
   makeStyles
@@ -7,6 +8,7 @@ import {
   CircleMarker,
   Tooltip
 } from 'react-leaflet';
+import { ParticipantContext } from '../../../context/ParticipantContext';
 import ConvertLocationStr from '../../../utils/ConvertLocationStr';
 
 const useStyles = makeStyles((theme) => ({
@@ -43,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
 const SelectedCircleMarker = ({ className, participantData, toggleCircleMarker, selectParticipant, mapFlyTo, ...rest }) => {
   const classes = useStyles();
   const participants = participantData;
+  const participantContext = useContext(ParticipantContext);
   // const [toggleCircleMarker, setToggleCircleMarker] = useState(toggleCircleMarker);
 
   const colorOption1 = { color: 'blue' };
@@ -54,7 +57,7 @@ const SelectedCircleMarker = ({ className, participantData, toggleCircleMarker, 
       // if (participant.outOfBattery || participant.placeAlert || participant.heartRate || participant.calendar) {
       if (participant.latestLocation != undefined) {
         var latestLocation = ConvertLocationStr(participant.latestLocation);
-        if (toggleCircleMarker[participant.id]) {
+        if (participant.id == participantContext.id) {
           selectedCircleMarker.push(
             <CircleMarker
               center={latestLocation}

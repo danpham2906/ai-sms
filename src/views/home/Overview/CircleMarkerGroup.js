@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import {
   makeStyles
@@ -53,6 +53,7 @@ const useStyles = makeStyles((theme) => ({
 const CircleMarkerGroup = ({ className, participantData, toggleCircleMarker, ...rest }) => {
   const classes = useStyles();
   const participants = participantData;
+  const participantContext = useContext(ParticipantContext);
   // const [toggleCircleMarker, setToggleCircleMarker] = useState(toggleCircleMarker);
 
   const colorOption1 = { color: 'blue' };
@@ -64,7 +65,7 @@ const CircleMarkerGroup = ({ className, participantData, toggleCircleMarker, ...
       // if (participant.outOfBattery || participant.placeAlert || participant.heartRate || participant.calendar) {
       if (participant.latestLocation != undefined) {
         var latestLocation = ConvertLocationStr(participant.latestLocation);
-        if (!toggleCircleMarker[participant.id]) {
+        if (participant.id != participantContext.id) {
           circleMarkerGroup.push(
             <CircleMarker
               center={latestLocation}
