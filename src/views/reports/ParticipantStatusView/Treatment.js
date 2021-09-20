@@ -13,9 +13,17 @@ import {
   makeStyles,
   List, ListItem, Divider,
 } from '@material-ui/core';
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  // Popup,
+  ZoomControl,
+  CircleMarker,
+  Tooltip
+} from 'react-leaflet';
 import { ParticipantContext } from '../../../context/ParticipantContext';
 // import data from '../../../data/data';
-import PieChart from '../../../charts/PieChart';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,128 +56,79 @@ const useStyles = makeStyles((theme) => ({
       display: 'block',
     },
   },
+  columnAddressLeft: {
+    float: 'left',
+    width: '20%',
+    "& li": {
+      overflowWrap: 'break-word',
+      display: 'block',
+    },
+  },
+  columnAddressRight: {
+    float: 'left',
+    width: '80%',
+    "& li": {
+      overflowWrap: 'break-word',
+      display: 'block',
+    },
+  },
   row: {
     display: 'flex',
   },
   sectionTitle: {
     color: theme.palette.text.sectionTitle,
   },
-  textAlign: {
-    position: 'relative',
-    display: 'flex',
-    flex: 1,
-    'justify-content': 'left',
-    'align-items': 'left',
+  employerMap: {
+    width: '100%',
+    height: '200px',
   },
-  pieChart: {
-    position: 'relative',
-    top: '50%',
-    left: '0%',
+  map: {
+    width: '100%',
+    height: '100%',
   },
-  pieChartText: {
-    position: 'absolute',
-    top: '50%',
-    transform: 'translate(210%,-50%)',
-  },
-  mainContent: {
-  },
-  textCenter: {
-    textAlign: 'center!important',
-  }
 }));
 
-const CaseInformation = ({ className, ...rest }) => {
+const Treatment = ({ className, ...rest }) => {
   const classes = useStyles();
   const participant = useContext(ParticipantContext);
 
-  const caseInformationLeft = [
+  const treatmentLeft = [
     'Case Number #',
-    'Program Entry Date',
+    'Initial Case Management Date',
+    'Start Date',
     'Completion Date',
-    'Max Out Date',
+  ];
+
+  const treatmentLeftInfo = [
+    'N/A',
+    'N/A',
+    'N/A',
+    'N/A',
+  ];
+
+  const treatmentRight = [
+    'Goal Date',
+    'Treatment Status',
+    'Treatment Type',
     'Comments',
-    'Dorm',
-    'Bed',
-    'Risk Level',
-    'Status',
   ];
 
-  const caseInformationLeftInfo = [
-    'FSU-2021',
-    'September 1, 2021',
-    'February 1, 2022',
+  const treatmentRightInfo = [
     'N/A',
     'N/A',
-    'N/A',
-    'N/A',
-    'Moderate',
-    'Active',
+    '12-Step Program',
+    'Additional requirement for successful completion of supervision, must attend Treatment for Substance Abuse: Two 12-Step Program/attend weekly',
   ];
 
-  const caseInformationRight = [
-    'Court',
-    'Judge',
-    'Defense Attorney',
-    'Prosecuting Attorney',
-    'Received From',
-    'Disposition',
-    'Sentence Term',
-    'Case Details',
+  const treatmentAddress = [
+    'Treatment Address',
   ];
 
-  const caseInformationRightInfo = [
-    'N/A',
-    'N/A',
-    'N/A',
-    'N/A',
-    'N/A',
-    'N/A',
-    'N/A',
-    'N/A',
+  const treatmentAddressInfo = [
+    '3907 Harwood Ave SW, Huntsville, AL',
   ];
 
-  const offenseDetails = [
-    'Offense Level',
-    'Offense',
-    'IC Code',
-    'Sentencing Date',
-    'Years',
-    'Additional Charges',
-    'Received Code',
-    'Level of Supervision',
-  ];
-
-  const offenseDetailsInfo = [
-    'Class A Misdemeanor',
-    'B – 202- Possession or Use of Controlled Substance or Alcohol',
-    'N/A',
-    'August 25, 2021',
-    'N/A',
-    'N/A',
-    'N/A',
-    'N/A',
-  ];
-
-  const dataLine = [];
-  var randomDate = new Date('2020-01-29');
-  for (let i = 0; i < 2; i++) {
-    randomDate.setDate(randomDate.getDate() + Math.round(Math.random()) + 1);
-    var randomDateStr = randomDate.getUTCFullYear() + "-";
-    randomDateStr = randomDateStr + (randomDate.getUTCMonth() + 1) + "-";
-    randomDateStr = randomDateStr + randomDate.getUTCDate();
-    if (i == 0) {
-      dataLine.push({
-        date: randomDateStr,
-        value: 26
-      });
-    } else {
-      var randomValue = Math.random() * i * 10;
-      dataLine.push({
-        date: randomDateStr,
-        value: 7
-      });
-    }
-  }
+  const position = [34.707348637025916, -86.62204035764367];
 
   return (
     <Card
@@ -188,43 +147,42 @@ const CaseInformation = ({ className, ...rest }) => {
               gutterBottom
               variant="h6"
             >
-              CASE INFORMATION
+              TREATMENT
             </Typography>
           </Grid>
         </Grid>
+
         <Grid
           container
           className={classes.container}
         >
-          <Grid item lg={8}>
+          <Grid item lg={12}>
             <Typography
               color="textSecondary"
               variant="body1"
             >
               <List>
-                <ListItem className={classes.sectionTitle}><b>CASE INFORMATION</b></ListItem>
-                <Divider />
                 <div className={classes.column}>
-                  {caseInformationLeft.map((itemList, id) => (
+                  {treatmentLeft.map((itemList, id) => (
                     <div className={classes.row}>
                       <div className={classes.columnLeft}>
                         <ListItem><b>{itemList}</b></ListItem>
                       </div>
                       <div className={classes.columnRight}>
-                        <ListItem>{caseInformationLeftInfo[id]}</ListItem>
+                        <ListItem>{treatmentLeftInfo[id]}</ListItem>
                       </div>
                     </div>
                   ))}
                 </div>
 
                 <div className={classes.column}>
-                  {caseInformationRight.map((itemList, id) => (
+                  {treatmentRight.map((itemList, id) => (
                     <div className={classes.row}>
                       <div className={classes.columnLeft}>
                         <ListItem><b>{itemList}</b></ListItem>
                       </div>
                       <div className={classes.columnRight}>
-                        <ListItem>{caseInformationRightInfo[id]}</ListItem>
+                        <ListItem>{treatmentRightInfo[id]}</ListItem>
                       </div>
                     </div>
                   ))}
@@ -232,22 +190,25 @@ const CaseInformation = ({ className, ...rest }) => {
               </List>
             </Typography>
           </Grid>
+        </Grid>
 
-          <Grid item lg={4}>
+        <Grid
+          container
+          className={classes.container}
+        >
+          <Grid item lg={12}>
             <Typography
               color="textSecondary"
               variant="body1"
             >
               <List>
-                <ListItem className={classes.sectionTitle}><b>DETAILS OF OFFENSE</b></ListItem>
-                <Divider />
-                {offenseDetails.map((itemList, id) => (
+                {treatmentAddress.map((itemList, id) => (
                   <div className={classes.row}>
-                    <div className={classes.columnLeft}>
+                    <div className={classes.columnAddressLeft}>
                       <ListItem><b>{itemList}</b></ListItem>
                     </div>
-                    <div className={classes.columnRight}>
-                      <ListItem>{offenseDetailsInfo[id]}</ListItem>
+                    <div className={classes.columnAddressRight}>
+                      <ListItem>{treatmentAddressInfo[id]}</ListItem>
                     </div>
                   </div>
                 ))}
@@ -255,13 +216,41 @@ const CaseInformation = ({ className, ...rest }) => {
             </Typography>
           </Grid>
         </Grid>
+
+        <Grid
+          container
+          className={classes.container}
+        >
+          <Grid item
+            className={classes.employerMap}
+          >
+            <MapContainer
+              spacing={3}
+              center={position}
+              zoom={14}
+              zoomControl={false}
+              scrollWheelZoom={false}
+              className={classes.map}
+            >
+              <TileLayer
+                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              />
+
+              <ZoomControl position="topright" />
+
+              <Marker position={position} />
+
+            </MapContainer>
+          </Grid>
+        </Grid>
       </CardContent>
     </Card >
   );
 };
 
-CaseInformation.propTypes = {
+Treatment.propTypes = {
   className: PropTypes.string
 };
 
-export default CaseInformation;
+export default Treatment;

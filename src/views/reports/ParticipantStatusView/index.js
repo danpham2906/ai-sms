@@ -6,6 +6,7 @@ import {
   makeStyles
 } from '@material-ui/core';
 import Page from 'src/components/Page';
+import Profile from './Profile';
 import OffenderSummary from './OffenderSummary';
 import Employment from './Employment';
 import Schedule from './Schedule';
@@ -13,6 +14,13 @@ import Messaging from './Messaging';
 import CaseInformation from './CaseInformation';
 import Appointments from './Appointments';
 import TimelineLog from './TimelineLog';
+import DrugScreens from './DrugScreens';
+import Treatment from './Treatment';
+import Assessment from './Assessment';
+import Tracking from './Tracking';
+import CommunityService from './CommunityService';
+import Financial from './Financial';
+import CourtOrders from './CourtOrders';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,19 +46,19 @@ const Overview = () => {
         >
           <Grid
             item
-            lg={6}
-            sm={9}
-            xl={6}
-            xs={18}
+            lg={12}
+            sm={18}
+            xl={12}
+            xs={36}
           >
-            <OffenderSummary />
+            <Profile />
           </Grid>
           <Grid
             item
-            lg={6}
-            sm={9}
-            xl={6}
-            xs={18}
+            lg={12}
+            sm={18}
+            xl={12}
+            xs={36}
           >
             <CaseInformation />
           </Grid>
@@ -62,7 +70,7 @@ const Overview = () => {
             xl={4}
             xs={14}
           >
-            <Employment />
+            <DrugScreens />
           </Grid>
           <Grid
             item
@@ -71,7 +79,54 @@ const Overview = () => {
             xl={8}
             xs={22}
           >
-            <Appointments />
+            <Treatment />
+          </Grid>
+
+          <Grid
+            item
+            lg={4}
+            sm={6}
+            xl={4}
+            xs={14}
+          >
+            <Assessment />
+          </Grid>
+          <Grid
+            item
+            lg={4}
+            sm={6}
+            xl={4}
+            xs={14}
+          >
+            <Tracking />
+          </Grid>
+          <Grid
+            item
+            lg={4}
+            sm={6}
+            xl={4}
+            xs={14}
+          >
+            <CommunityService />
+          </Grid>
+
+          <Grid
+            item
+            lg={8}
+            sm={12}
+            xl={8}
+            xs={22}
+          >
+            <Financial />
+          </Grid>
+          <Grid
+            item
+            lg={4}
+            sm={6}
+            xl={4}
+            xs={12}
+          >
+            <CourtOrders />
           </Grid>
 
           <Grid
@@ -101,7 +156,7 @@ const Overview = () => {
           >
             <TimelineLog />
           </Grid>
-          
+
           {/* <Grid
             item
             lg={8}

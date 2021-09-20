@@ -78,48 +78,51 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const CaseInformation = ({ className, ...rest }) => {
+const CourtOrders = ({ className, ...rest }) => {
   const classes = useStyles();
   const participant = useContext(ParticipantContext);
 
-  const caseInformationLeft = [
+  const courtOrders = [
+    'Court Order #',
+    'Date of Entry',
+    'Report within Days',
+    'Referring Court',
+    'Length/ Conditions',
+    'Program',
     'Case Number #',
-    'Program Entry Date',
-    'Completion Date',
-    'Max Out Date',
+    'Status/ Progress',
+    'Child/ Children',
     'Comments',
-    'Dorm',
-    'Bed',
-    'Risk Level',
-    'Status',
   ];
 
-  const caseInformationLeftInfo = [
-    'FSU-2021',
-    'September 1, 2021',
-    'February 1, 2022',
+  const courtOrdersInfo = [
     'N/A',
     'N/A',
     'N/A',
     'N/A',
-    'Moderate',
-    'Active',
+    'N/A',
+    'N/A',
+    'N/A',
+    'N/A',
+    'N/A',
+    "-License Suspended until fines/fees paid and supervision completed: " + 
+    "Two 12-Step Meeting per week; 1 Community Service activity each month; Must attend in-person case manager meeting and submit drug screen every 8 weeks; " +
+    "Cannot be outside of home between the hours of 8PM-6PM; " +
+    "Cannot leave Tippacanoe County; " +
+    "Cannot be within 150ft of liquor establishment for more than 5 minutes. " +
+    "**Need to meet with field officer 2x/month",
   ];
 
-  const caseInformationRight = [
-    'Court',
-    'Judge',
-    'Defense Attorney',
-    'Prosecuting Attorney',
-    'Received From',
-    'Disposition',
-    'Sentence Term',
-    'Case Details',
+  const courtOrdersLeft = [
+    'Court Order #',
+    'Date of Entry',
+    'Report within Days',
+    'Referring Court',
+    'Length/ Conditions',
+    'Program',
   ];
 
-  const caseInformationRightInfo = [
-    'N/A',
-    'N/A',
+  const courtOrdersLeftInfo = [
     'N/A',
     'N/A',
     'N/A',
@@ -128,26 +131,23 @@ const CaseInformation = ({ className, ...rest }) => {
     'N/A',
   ];
 
-  const offenseDetails = [
-    'Offense Level',
-    'Offense',
-    'IC Code',
-    'Sentencing Date',
-    'Years',
-    'Additional Charges',
-    'Received Code',
-    'Level of Supervision',
+  const courtOrdersRight = [
+    'Case Number #',
+    'Status/ Progress',
+    'Child/ Children',
+    'Comments',
   ];
 
-  const offenseDetailsInfo = [
-    'Class A Misdemeanor',
-    'B – 202- Possession or Use of Controlled Substance or Alcohol',
-    'N/A',
-    'August 25, 2021',
+  const courtOrdersRightInfo = [
     'N/A',
     'N/A',
     'N/A',
-    'N/A',
+    "-License Suspended until fines/fees paid and supervision completed: " + 
+    "Two 12-Step Meeting per week; 1 Community Service activity each month; Must attend in-person case manager meeting and submit drug screen every 8 weeks; " +
+    "Cannot be outside of home between the hours of 8PM-6PM; " +
+    "Cannot leave Tippacanoe County; " +
+    "Cannot be within 150ft of liquor establishment for more than 5 minutes. " +
+    "**Need to meet with field officer 2x/month",
   ];
 
   const dataLine = [];
@@ -188,7 +188,7 @@ const CaseInformation = ({ className, ...rest }) => {
               gutterBottom
               variant="h6"
             >
-              CASE INFORMATION
+              COURT ORDERS
             </Typography>
           </Grid>
         </Grid>
@@ -196,61 +196,50 @@ const CaseInformation = ({ className, ...rest }) => {
           container
           className={classes.container}
         >
-          <Grid item lg={8}>
+          <Grid item lg={12}>
             <Typography
               color="textSecondary"
               variant="body1"
             >
-              <List>
-                <ListItem className={classes.sectionTitle}><b>CASE INFORMATION</b></ListItem>
-                <Divider />
+              {/* <List>
                 <div className={classes.column}>
-                  {caseInformationLeft.map((itemList, id) => (
+                  {courtOrdersLeft.map((itemList, id) => (
                     <div className={classes.row}>
                       <div className={classes.columnLeft}>
                         <ListItem><b>{itemList}</b></ListItem>
                       </div>
                       <div className={classes.columnRight}>
-                        <ListItem>{caseInformationLeftInfo[id]}</ListItem>
+                        <ListItem>{courtOrdersLeftInfo[id]}</ListItem>
                       </div>
                     </div>
                   ))}
                 </div>
 
                 <div className={classes.column}>
-                  {caseInformationRight.map((itemList, id) => (
+                  {courtOrdersRight.map((itemList, id) => (
                     <div className={classes.row}>
                       <div className={classes.columnLeft}>
                         <ListItem><b>{itemList}</b></ListItem>
                       </div>
                       <div className={classes.columnRight}>
-                        <ListItem>{caseInformationRightInfo[id]}</ListItem>
+                        <ListItem>{courtOrdersRightInfo[id]}</ListItem>
                       </div>
                     </div>
                   ))}
                 </div>
-              </List>
-            </Typography>
-          </Grid>
+              </List> */}
 
-          <Grid item lg={4}>
-            <Typography
-              color="textSecondary"
-              variant="body1"
-            >
               <List>
-                <ListItem className={classes.sectionTitle}><b>DETAILS OF OFFENSE</b></ListItem>
-                <Divider />
-                {offenseDetails.map((itemList, id) => (
-                  <div className={classes.row}>
-                    <div className={classes.columnLeft}>
-                      <ListItem><b>{itemList}</b></ListItem>
+                  {courtOrders.map((itemList, id) => (
+                    <div className={classes.row}>
+                      <div className={classes.columnLeft}>
+                        <ListItem><b>{itemList}</b></ListItem>
+                      </div>
+                      <div className={classes.columnRight}>
+                        <ListItem>{courtOrdersInfo[id]}</ListItem>
+                      </div>
                     </div>
-                    <div className={classes.columnRight}>
-                      <ListItem>{offenseDetailsInfo[id]}</ListItem>
-                    </div>
-                  </div>
-                ))}
+                  ))}
               </List>
             </Typography>
           </Grid>
@@ -260,8 +249,8 @@ const CaseInformation = ({ className, ...rest }) => {
   );
 };
 
-CaseInformation.propTypes = {
+CourtOrders.propTypes = {
   className: PropTypes.string
 };
 
-export default CaseInformation;
+export default CourtOrders;

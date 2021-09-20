@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
   columnLeft: {
     float: 'left',
-    width: '40%',
+    width: '35%',
     "& li": {
       overflowWrap: 'break-word',
       display: 'block',
@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   },
   columnRight: {
     float: 'left',
-    width: '60%',
+    width: '65%',
     "& li": {
       overflowWrap: 'break-word',
       display: 'block',
@@ -78,98 +78,51 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const CaseInformation = ({ className, ...rest }) => {
+const Financial = ({ className, ...rest }) => {
   const classes = useStyles();
   const participant = useContext(ParticipantContext);
 
-  const caseInformationLeft = [
-    'Case Number #',
-    'Program Entry Date',
-    'Completion Date',
-    'Max Out Date',
-    'Comments',
-    'Dorm',
-    'Bed',
-    'Risk Level',
+  const chargeSummaryLeft = [
+    'Begin DT',
+    'End DT',
+    'Case Number',
+    'Charge Type',
+    'Frequency',
+    'Amount',
+    'Total',
+    'Paid',
+  ];
+
+  const chargeSummaryLeftInfo = [
+    'N/A',
+    'N/A',
+    'N/A',
+    'N/A',
+    'N/A',
+    'N/A',
+    'N/A',
+    'N/A',
+  ];
+
+  const chargeSummaryRight = [
+    'Total Balance',
+    'Current Balance',
+    'Pay',
+    'Payment Amount',
     'Status',
+    'UNC',
+    'Memo',
   ];
 
-  const caseInformationLeftInfo = [
-    'FSU-2021',
-    'September 1, 2021',
-    'February 1, 2022',
+  const chargeSummaryRightInfo = [
     'N/A',
     'N/A',
     'N/A',
     'N/A',
-    'Moderate',
-    'Active',
+    'N/A',
+    'N/A',
+    'Total Balance: $0 until supervision begins (09/01/2021). $25 per week for supervision. Every 8 weeks additional $20 for drug screening cost. Total Balance cannot exceed $225.00',
   ];
-
-  const caseInformationRight = [
-    'Court',
-    'Judge',
-    'Defense Attorney',
-    'Prosecuting Attorney',
-    'Received From',
-    'Disposition',
-    'Sentence Term',
-    'Case Details',
-  ];
-
-  const caseInformationRightInfo = [
-    'N/A',
-    'N/A',
-    'N/A',
-    'N/A',
-    'N/A',
-    'N/A',
-    'N/A',
-    'N/A',
-  ];
-
-  const offenseDetails = [
-    'Offense Level',
-    'Offense',
-    'IC Code',
-    'Sentencing Date',
-    'Years',
-    'Additional Charges',
-    'Received Code',
-    'Level of Supervision',
-  ];
-
-  const offenseDetailsInfo = [
-    'Class A Misdemeanor',
-    'B – 202- Possession or Use of Controlled Substance or Alcohol',
-    'N/A',
-    'August 25, 2021',
-    'N/A',
-    'N/A',
-    'N/A',
-    'N/A',
-  ];
-
-  const dataLine = [];
-  var randomDate = new Date('2020-01-29');
-  for (let i = 0; i < 2; i++) {
-    randomDate.setDate(randomDate.getDate() + Math.round(Math.random()) + 1);
-    var randomDateStr = randomDate.getUTCFullYear() + "-";
-    randomDateStr = randomDateStr + (randomDate.getUTCMonth() + 1) + "-";
-    randomDateStr = randomDateStr + randomDate.getUTCDate();
-    if (i == 0) {
-      dataLine.push({
-        date: randomDateStr,
-        value: 26
-      });
-    } else {
-      var randomValue = Math.random() * i * 10;
-      dataLine.push({
-        date: randomDateStr,
-        value: 7
-      });
-    }
-  }
 
   return (
     <Card
@@ -188,7 +141,7 @@ const CaseInformation = ({ className, ...rest }) => {
               gutterBottom
               variant="h6"
             >
-              CASE INFORMATION
+              FINANCIAL
             </Typography>
           </Grid>
         </Grid>
@@ -196,35 +149,35 @@ const CaseInformation = ({ className, ...rest }) => {
           container
           className={classes.container}
         >
-          <Grid item lg={8}>
+          <Grid item lg={12}>
             <Typography
               color="textSecondary"
               variant="body1"
             >
               <List>
-                <ListItem className={classes.sectionTitle}><b>CASE INFORMATION</b></ListItem>
+                <ListItem className={classes.sectionTitle}><b>CASE #09202021</b></ListItem>
                 <Divider />
-                <div className={classes.column}>
-                  {caseInformationLeft.map((itemList, id) => (
+                <div className={classes.columnLeft}>
+                  {chargeSummaryLeft.map((itemList, id) => (
                     <div className={classes.row}>
-                      <div className={classes.columnLeft}>
+                      <div className={classes.column}>
                         <ListItem><b>{itemList}</b></ListItem>
                       </div>
-                      <div className={classes.columnRight}>
-                        <ListItem>{caseInformationLeftInfo[id]}</ListItem>
+                      <div className={classes.column}>
+                        <ListItem>{chargeSummaryLeftInfo[id]}</ListItem>
                       </div>
                     </div>
                   ))}
                 </div>
 
-                <div className={classes.column}>
-                  {caseInformationRight.map((itemList, id) => (
+                <div className={classes.columnRight}>
+                  {chargeSummaryRight.map((itemList, id) => (
                     <div className={classes.row}>
                       <div className={classes.columnLeft}>
                         <ListItem><b>{itemList}</b></ListItem>
                       </div>
                       <div className={classes.columnRight}>
-                        <ListItem>{caseInformationRightInfo[id]}</ListItem>
+                        <ListItem>{chargeSummaryRightInfo[id]}</ListItem>
                       </div>
                     </div>
                   ))}
@@ -232,25 +185,45 @@ const CaseInformation = ({ className, ...rest }) => {
               </List>
             </Typography>
           </Grid>
+        </Grid>
 
-          <Grid item lg={4}>
+        <Grid
+          container
+          className={classes.container}
+        >
+          <Grid item lg={12}>
             <Typography
               color="textSecondary"
               variant="body1"
             >
               <List>
-                <ListItem className={classes.sectionTitle}><b>DETAILS OF OFFENSE</b></ListItem>
+                <ListItem className={classes.sectionTitle}><b>CASE #08242021</b></ListItem>
                 <Divider />
-                {offenseDetails.map((itemList, id) => (
-                  <div className={classes.row}>
-                    <div className={classes.columnLeft}>
-                      <ListItem><b>{itemList}</b></ListItem>
+                <div className={classes.columnLeft}>
+                  {chargeSummaryLeft.map((itemList, id) => (
+                    <div className={classes.row}>
+                      <div className={classes.column}>
+                        <ListItem><b>{itemList}</b></ListItem>
+                      </div>
+                      <div className={classes.column}>
+                        <ListItem>{chargeSummaryLeftInfo[id]}</ListItem>
+                      </div>
                     </div>
-                    <div className={classes.columnRight}>
-                      <ListItem>{offenseDetailsInfo[id]}</ListItem>
+                  ))}
+                </div>
+
+                <div className={classes.columnRight}>
+                  {chargeSummaryRight.map((itemList, id) => (
+                    <div className={classes.row}>
+                      <div className={classes.columnLeft}>
+                        <ListItem><b>{itemList}</b></ListItem>
+                      </div>
+                      <div className={classes.columnRight}>
+                        <ListItem>{chargeSummaryRightInfo[id]}</ListItem>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </List>
             </Typography>
           </Grid>
@@ -260,8 +233,8 @@ const CaseInformation = ({ className, ...rest }) => {
   );
 };
 
-CaseInformation.propTypes = {
+Financial.propTypes = {
   className: PropTypes.string
 };
 
-export default CaseInformation;
+export default Financial;
