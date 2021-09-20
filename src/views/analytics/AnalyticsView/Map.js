@@ -1,28 +1,17 @@
 /* eslint-disable */
-import React, { forwardRef, useImperativeHandle, useState } from 'react';
+import { forwardRef, useImperativeHandle, useState } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import {
-  Avatar,
-  Box,
   Card,
-  CardContent,
-  Grid,
-  Typography,
   colors,
   makeStyles
 } from '@material-ui/core';
 import {
   MapContainer,
   TileLayer,
-  Marker,
-  // Popup,
   ZoomControl,
-  CircleMarker,
-  Tooltip
 } from 'react-leaflet';
-import { ParticipantContext } from '../../../context/ParticipantContext';
-// import data from '../../../data/data';
 import VisitedMarker from './VisitedMarker';
 import data from '../../../data/VisitedPlaces.json';
 
@@ -60,7 +49,6 @@ const useStyles = makeStyles((theme) => ({
   map: {
     width: '100%',
     height: '100%',
-    // position: 'absolute',
     overflow: 'unset',
   }
 }));
@@ -68,7 +56,6 @@ const useStyles = makeStyles((theme) => ({
 const Map = forwardRef (({ className, ...rest }, ref) => {
   const classes = useStyles();
   const [dataUsed, setDataUsed] = useState(data.visitedPlaces);
-  // const [map, setMap] = useState(null);
 
   const position = [34.73, -86.60];
 
@@ -103,7 +90,6 @@ const Map = forwardRef (({ className, ...rest }, ref) => {
         zoomControl={false}
         scrollWheelZoom={false}
         className={classes.map}
-        // whenCreated={setMap}
       >
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'

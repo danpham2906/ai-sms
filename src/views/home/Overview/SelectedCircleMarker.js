@@ -15,7 +15,6 @@ const useStyles = makeStyles((theme) => ({
   map: {
     width: '100vw',
     height: '100vh',
-    // position: 'absolute',
     overflow: 'unset',
   },
   container: {
@@ -46,7 +45,6 @@ const SelectedCircleMarker = ({ className, participantData, toggleCircleMarker, 
   const classes = useStyles();
   const participants = participantData;
   const participantContext = useContext(ParticipantContext);
-  // const [toggleCircleMarker, setToggleCircleMarker] = useState(toggleCircleMarker);
 
   const colorOption1 = { color: 'blue' };
   const colorOption2 = { color: 'red' };
@@ -54,7 +52,6 @@ const SelectedCircleMarker = ({ className, participantData, toggleCircleMarker, 
   var selectedCircleMarker = [];
   if (participants != undefined) {
     participants.map((participant) => {
-      // if (participant.outOfBattery || participant.placeAlert || participant.heartRate || participant.calendar) {
       if (participant.latestLocation != undefined) {
         var latestLocation = ConvertLocationStr(participant.latestLocation);
         if (participant.id == participantContext.id) {

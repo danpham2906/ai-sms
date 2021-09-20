@@ -4,11 +4,7 @@ import React, { useEffect } from 'react';
 import * as d3 from 'd3';
 
 function LineChart({ data, range, width, height, color }) {
-  // const svg = d3.create("svg")
-  //     .attr("viewBox", [0, 0, width, height]);
-
   const margin = { top: 20, right: 30, bottom: 30, left: 50 };
-  // const height = 500;
 
   const parser = d3.timeParse("%Y-%m-%d");
   for (var i in data) {
@@ -78,8 +74,6 @@ function LineChart({ data, range, width, height, color }) {
   );
 
   useEffect(() => {
-    // console.log("LineChart.js | range = " + JSON.stringify(range));
-
     const lineChart = d3.line()
       .defined(d => !isNaN(d.value))
       .x(d => x(d.date))
@@ -127,10 +121,6 @@ function LineChart({ data, range, width, height, color }) {
       lineChartID = "lineChartTurquoise";
     }
 
-    // let svg = d3.select("#"+lineChartID);
-    // svg.selectAll("g").remove();
-    // svg.selectAll("path").remove();
-
     d3.select("#" + lineChartID + "Xaxis")
       .transition()
       .duration(1000)
@@ -140,21 +130,6 @@ function LineChart({ data, range, width, height, color }) {
       .transition()
       .duration(1000)
       .call(d3.axisLeft().scale(y));
-
-    // var newData = svg.selectAll("path")
-    //                   .data(dataUsed);
-
-    // newData.enter()
-    //   // .attr("class","lineTest")
-    //   .merge(newData)
-    //   .transition()
-    //   .duration(3000)
-    //   .attr("d", lineChart)
-    //   .attr("fill", "none")
-    //   .attr("stroke", color)
-    //   .attr("stroke-width", 1.5)
-    //   .attr("stroke-linejoin", "round")
-    //   .attr("stroke-linecap", "round");
 
     d3.select("#" + lineChartID + "path")
       .datum(data)
@@ -173,15 +148,11 @@ function LineChart({ data, range, width, height, color }) {
     <svg
       ref={ref}
       style={{
-        // height: 150,
         width: "100%",
         marginRight: "0px",
         marginLeft: "0px",
       }}
     >
-      {/* <g className="plot-area" />
-      <g className="x-axis" />
-      <g className="y-axis" /> */}
     </svg>
   );
 }

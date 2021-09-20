@@ -4,7 +4,7 @@ import { Link as RouterLink, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
   Avatar,
-  Box, // Button,
+  Box,
   Divider,
   Drawer,
   Hidden,
@@ -30,8 +30,6 @@ import { ParticipantContext } from '../../../context/ParticipantContext';
 
 const user = {
   avatar: '/static/images/avatars/avatar01.png',
-  // jobTitle: 'Senior Developer',
-  // name: participant.name
 };
 
 const items = [
@@ -40,9 +38,6 @@ const items = [
     icon: HomeIcon,
     title: 'Overview'
   },
-  // {
-  //   title: 'Support the 5-Key Model'
-  // },
   {
     href: '/app/participantstatus',
     icon: LayoutIcon,
@@ -63,11 +58,6 @@ const items = [
     icon: BarChartIcon,
     title: 'Analytics'
   },
-  // {
-  //   href: '/login',
-  //   icon: LockIcon,
-  //   title: 'Setting'
-  // },
 ];
 
 const useStyles = makeStyles(() => ({
@@ -80,16 +70,10 @@ const useStyles = makeStyles(() => ({
     height: 'calc(100% - 64px)'
   },
   avatar: {
-    // cursor: 'pointer',
     width: 64,
     height: 64
   }
 }));
-
-// export const ChangeParticipantName = (name) => {
-//   user.name = name;
-//   console.log(`ChangeParticipantName: ${user.name}`);
-// };
 
 const NavBar = ({ onMobileClose, openMobile }) => {
   const classes = useStyles();
@@ -100,7 +84,6 @@ const NavBar = ({ onMobileClose, openMobile }) => {
     if (openMobile && onMobileClose) {
       onMobileClose();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
 
   function NavBarItems() {
@@ -158,9 +141,7 @@ const NavBar = ({ onMobileClose, openMobile }) => {
       >
         <Avatar
           className={classes.avatar}
-          // component={RouterLink}
           src={user.avatar}
-          // to="/app/documents"
         />
         <Typography
           className={classes.name}
@@ -168,14 +149,7 @@ const NavBar = ({ onMobileClose, openMobile }) => {
           variant="h5"
         >
           {participant.name}
-          {/* {user.name} */}
         </Typography>
-        {/* <Typography
-          color="textSecondary"
-          variant="body2"
-        >
-          {user.jobTitle}
-        </Typography> */}
       </Box>
       <Divider />
       <Box p={2}>
@@ -183,39 +157,6 @@ const NavBar = ({ onMobileClose, openMobile }) => {
         
       </Box>
       <Box flexGrow={1} />
-      {/* <Box
-        p={2}
-        m={2}
-        bgcolor="background.dark"
-      >
-        <Typography
-          align="center"
-          gutterBottom
-          variant="h4"
-        >
-          Need more?
-        </Typography>
-        <Typography
-          align="center"
-          variant="body2"
-        >
-          Upgrade to PRO version and access 20 more screens
-        </Typography>
-        <Box
-          display="flex"
-          justifyContent="center"
-          mt={2}
-        >
-          <Button
-            color="primary"
-            component="a"
-            href="https://react-material-kit.devias.io"
-            variant="contained"
-          >
-            See PRO version
-          </Button>
-        </Box>
-      </Box> */}
     </Box>
   );
 

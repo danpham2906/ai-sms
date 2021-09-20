@@ -1,10 +1,8 @@
 /* eslint-disable */
 import React from 'react';
-// import { NavLink as RouterLink } from 'react-router-dom';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import {
-//   Button,
   ListItem,
   makeStyles
 } from '@material-ui/core';
@@ -62,9 +60,6 @@ const NavItemNoHref = ({
             <Typography component='body1' className={classes.title}>
                 {title}
             </Typography>
-            {/* <span className={classes.title}>
-                {title}
-            </span> */}
         </div>
     </ListItem>
   );

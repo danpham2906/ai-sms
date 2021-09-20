@@ -15,7 +15,6 @@ const useStyles = makeStyles((theme) => ({
   map: {
     width: '100vw',
     height: '100vh',
-    // position: 'absolute',
     overflow: 'unset',
   },
   container: {
@@ -51,7 +50,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const RestrictedZoneGroup = ({ setZoneGroup, ...rest }) => {
-  const classes = useStyles();
   const [restrictedzoneData, setRestrictedzoneData] = useState([]);
 
   const zoneColor = { color: 'MediumOrchid' };
@@ -67,25 +65,20 @@ const RestrictedZoneGroup = ({ setZoneGroup, ...rest }) => {
   useEffect(() => {
     restrictedzoneGroup = [];
     if (restrictedzoneData.length != 0) {
-      // console.log(restrictedzoneData);
       restrictedzoneData.map((zone) => {
         var restrictedZone = [];
         if (zone.geometry == "Polygon") {
           var zoneCoordinates = zone.coordinates.split(',');
-          // console.log(zoneCoordinates);
           var pairPoint;
-          // restrictedZone = [];
           zoneCoordinates.map((point, index) => {
             if (index % 2 == 0) {
               pairPoint = [];
               pairPoint.push(parseFloat(point));
             } else {
               pairPoint.unshift(parseFloat(point));
-              // console.log(pairPoint);
               restrictedZone.push(pairPoint);
             }
           });
-          // console.log(restrictedZone);
           restrictedzoneGroup.push(
             <Polygon
               pathOptions={zoneColor}
@@ -106,14 +99,12 @@ const RestrictedZoneGroup = ({ setZoneGroup, ...rest }) => {
           );
         }
       });
-      // console.log(restrictedzoneGroup[0]);
       setZoneGroup(restrictedzoneGroup);
     }
   }, [restrictedzoneData]);
 
   return (
     <div>
-      {restrictedzoneGroup} {/*This doesn't work */}
     </div>
   );
 }

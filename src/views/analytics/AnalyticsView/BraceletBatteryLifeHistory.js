@@ -68,15 +68,12 @@ const BraceletBatteryLifeHistory = ({ className, range, ...rest }) => {
   let nextRandomDate = new Date('2020-01-30');
   for (let i = 0; i < 100; i++) {
       let rng = seedrandom(nextRandomDate.toLocaleString());
-      // console.log("BraceletBatteryLifeHistory: " + rng());
       var randomValue = rng() * i;
       randomDate.setDate(randomDate.getDate() + Math.round(rng()) + 1);
       nextRandomDate.setDate(nextRandomDate.getDate() + Math.round(rng()) + 1);
       var randomDateStr = randomDate.getUTCFullYear() + "-";
       randomDateStr = randomDateStr + (randomDate.getUTCMonth()+1) + "-";
       randomDateStr = randomDateStr + randomDate.getUTCDate();
-      // console.log(randomDateStr);
-      // console.log(randomValue);
       data.push({
         date: randomDateStr,
         value: randomValue

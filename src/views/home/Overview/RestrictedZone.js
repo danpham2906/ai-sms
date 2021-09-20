@@ -6,7 +6,6 @@ import {
 } from '@material-ui/core/styles';
 import {
   Polygon,
-  Tooltip
 } from 'react-leaflet';
 import Axios from 'axios';
 import ConvertRestrictedLocation from '../../../utils/ConvertRestrictedLocation';
@@ -15,7 +14,6 @@ const useStyles = makeStyles((theme) => ({
   map: {
     width: '100vw',
     height: '100vh',
-    // position: 'absolute',
     overflow: 'unset',
   },
   container: {
@@ -51,18 +49,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const RestrictedZone = ({ className, participantData, selectedParticipantId, setRestrictedLocationIndex, ...rest }) => {
-  const classes = useStyles();
   const participants = participantData;
   const [restrictedLocation, setRestrictedLocation] = useState([]);
 
-  const blueOption = { color: 'blue' };
   const redOption = { color: 'red' };
-
-  const polygon = [
-    [40.5091508, -86.8251592],
-    [40.5090733, -86.8252128],
-    [40.5089836, -86.8252236],
-  ]
 
   useEffect(() => {
     if (participants != undefined) {
@@ -77,29 +67,23 @@ const RestrictedZone = ({ className, participantData, selectedParticipantId, set
   const GetRestrictedZoneLocation = async (gpslogId) => {
     const restrictedLocation = await Axios.get('http://128.186.151.67:8080/api/nij/ai-sms/location/violation-check?gpslogId=' + gpslogId)
       .then(res => {
-        // console.log(res.data[0].restrictLocation.coordinates);
         setRestrictedLocation(res.data[0].restrictLocation.coordinates[0]);
         setRestrictedLocationIndex(ConvertRestrictedLocation(res.data[0].restrictLocation.coordinates[0]));
-        // console.log(ConvertRestrictedLocation(res.data[0].restrictLocation.coordinates[0]));
       })
       .catch(() => {
-        // console.log('error')
       });
   }
 
   var restrictedZone;
   useEffect(() => {
-    // console.log(restrictedLocation);
     restrictedZone = [];
     if (restrictedLocation != []) {
       restrictedZone.push(
         <Polygon
           pathOptions={redOption}
           positions={ConvertRestrictedLocation(restrictedLocation)}
-          // pane={"selectedCircle"}
         />
       );
-      // console.log(restrictedZone);
     };
   }, [restrictedLocation]);
 

@@ -78,7 +78,6 @@ const ParticipantList = ({ className, participantData, toggleCircleMarkerData, s
 
   useEffect(() => {
     if (searchValue == "") {
-      // console.log("empty");
       if (participantContext != undefined) {
         if (participantContext.list.length != 0) {
           setParticipants(participantContext.list);
@@ -87,7 +86,6 @@ const ParticipantList = ({ className, participantData, toggleCircleMarkerData, s
       if (participants.length != 0 && firstParticipantSelected == false && participantContext.id == 0) {
         setFirstParticipantSelected(true);
         var firstParticipant = participants[0];
-        // console.log(firstParticipant.id);
         handleParticipantSelection(firstParticipant.id);
         mapSetCenter(ConvertLocationStr(firstParticipant.latestLocation));
       }
@@ -99,7 +97,6 @@ const ParticipantList = ({ className, participantData, toggleCircleMarkerData, s
     participants.map((participant) => {
       if (participant.id == participantId) {
         id = participant.id;
-        // console.log(participant.name + " " + participant.id);
       }
     });
 
@@ -122,7 +119,6 @@ const ParticipantList = ({ className, participantData, toggleCircleMarkerData, s
   }
 
   const handleChangeSearchInput = (event) => {
-    // console.log(event.target.value);
 
     var prefix = event.target.value;
     setSearchValue(prefix);
@@ -131,7 +127,6 @@ const ParticipantList = ({ className, participantData, toggleCircleMarkerData, s
       var name1 = participant.name.toLowerCase();
       var name2 = prefix.toLowerCase();
       if (name1.startsWith(name2)) {
-        // console.log(id + " " + participant.name);
         tmpList.push(participant);
       }
     });
@@ -141,7 +136,6 @@ const ParticipantList = ({ className, participantData, toggleCircleMarkerData, s
 
   return (
     <Card
-      // className={clsx(classes.root, className)}
       {...rest}
     >
       <CardContent className={classes.cardContainer}>
@@ -156,7 +150,6 @@ const ParticipantList = ({ className, participantData, toggleCircleMarkerData, s
         <List dense className={classes.participantList}>
           {participants.length ? participants.map((participant) => {
             const labelId = `checkbox-list-secondary-label-${participant.id}`;
-            // console.log(participant);
             return (
               <ListItem key={participant.id} button onClick={() => handleParticipantSelection(participant.id)} >
                 {participant.id == participantContext.id ?
@@ -167,7 +160,6 @@ const ParticipantList = ({ className, participantData, toggleCircleMarkerData, s
                 <div>
                   <ListItemSecondaryAction>
                     {participant.outOfBattery === true ? (<BatteryAlertIcon style={{ color: 'DarkGray' }} />) : ''}
-                    {/* {participant.violation === true ? (<AnnouncementIcon style={{ color: 'DarkTurquoise' }} />) : ''} */}
                     {participant.violation === true ? (<img src={geolocation_warning} />) : ''}
                     {participant.heartRate === true ? (<FavoriteIcon style={{ color: 'LightCoral' }} />) : ''}
                     {participant.calendar === true ? (<DateRangeIcon style={{ color: 'DarkSlateBlue' }} />) : ''}

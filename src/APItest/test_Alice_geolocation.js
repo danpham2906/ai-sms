@@ -12,14 +12,12 @@ export const test_Alice_geolocation = ({ children }) => {
                 "password": "4567"
             }
             )
-            // console.log(res.data.jwtToken)
             token = res.data.jwtToken;
         } catch (error) {
             console.log(error)
         }
 
         try {
-            // console.log(token)
             const res = await Axios.post('http://128.186.151.67:8080/api/nij/ai-sms/location/gps-data?lon=-86.90&lat=40.45', {
             }, {
                 headers: {
@@ -39,14 +37,12 @@ export const test_Alice_geolocation = ({ children }) => {
                 "password": "4567"
             }
             )
-            // console.log(res.data.jwtToken)
             token = res.data.jwtToken;
         } catch (error) {
             console.log(error)
         }
 
         try {
-            // console.log(token)
             const res = await Axios.post('http://128.186.151.67:8080/api/nij/ai-sms/location/gps-data?lon=-86.89&lat=40.46', {
             }, {
                 headers: {
@@ -58,8 +54,6 @@ export const test_Alice_geolocation = ({ children }) => {
             console.log(error)
         }
     }
-
-    // requests()
 
     React.useEffect(() => {
         getParticipantAPI();
@@ -73,9 +67,6 @@ export const test_Alice_geolocation = ({ children }) => {
             console.log("request 1");
             requests1();
         }, 2000);
-
-        // console.log("SetGEOAPI " + intervalId);
-        // return () => clearInterval(intervalId);
     }, []);
 }
 

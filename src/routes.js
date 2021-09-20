@@ -1,5 +1,4 @@
 /* eslint-disable */
-import React from 'react';
 import { Navigate } from 'react-router-dom';
 import DashboardLayout from 'src/layouts/DashboardLayout';
 import MainLayout from 'src/layouts/MainLayout';
@@ -10,9 +9,7 @@ import Overview from 'src/views/home/Overview';
 import LoginView from 'src/views/auth/LoginView';
 import NotFoundView from 'src/views/errors/NotFoundView';
 import RegisterView from 'src/views/auth/RegisterView';
-import SettingsView from 'src/views/settings/SettingsView';
 import AppTasksView from 'src/views/apptasks/AppTasksView';
-import DocumentsView from 'src/views/documents/DocumentsView';
 
 const routes = [
   {
@@ -22,7 +19,6 @@ const routes = [
       { path: 'overview', element: <Overview /> },
       { path: 'participantstatus', element: <ParticipantStatusView /> },
       { path: 'schedule', element: <ScheduleView /> },
-      { path: 'documents', element: <DocumentsView /> },
       { path: 'taskmanagement', element: <AppTasksView /> },
       { path: 'analytics', element: <AnalyticsView /> },
       { path: '*', element: <Navigate to="/404" /> }

@@ -24,7 +24,6 @@ import {
 import ParticipantList from './ParticipantList';
 import CircleMarkerGroup from './CircleMarkerGroup';
 import SelectedCircleMarker from './SelectedCircleMarker';
-// import data from '../../../data/ParticipantData';
 import { ParticipantContext } from '../../../context/ParticipantContext';
 import ConvertLocationStr from '../../../utils/ConvertLocationStr';
 import RestrictedZone from './RestrictedZone';
@@ -33,10 +32,8 @@ import RestrictedZoneGroup from './RestrictedZoneGroup';
 
 const useStyles = makeStyles((theme) => ({
   map: {
-    // width: '100vw',
     width: '100%',
     height: '100vh',
-    // position: 'absolute',
     overflow: 'unset',
   },
   container: {
@@ -78,24 +75,13 @@ const useStyles = makeStyles((theme) => ({
   restrictedButtonGrid: {
     position: 'absolute',
     top: '15px',
-    // left: 'calc(100% - 120px)',
     'z-index': theme.zIndex.drawer - 1,
     overflow: 'auto',
   },
 }));
 
-// const valueCircleMarker = [];
-// const valueCircleMarker1 = [];
-// if (valueCircleMarker.length < 1 && participants != undefined) {
-//   for (let i = 1; i < participants.length + 1; i++) {
-//     valueCircleMarker[i] = false;
-//   }
-// }
-
 export default function HomeView() {
   const classes = useStyles();
-  // const [toggleCircleMarker, setToggleCircleMarker] = useState([]);
-  // const [toggleCMState, setToggleCMState] = useState(true);
   const [firstload, setFirstload] = useState(false);
   const [restrictedLocation, setRestrictedLocation] = useState([]);
   const participantContext = useContext(ParticipantContext);
@@ -108,33 +94,12 @@ export default function HomeView() {
   const [restrictedzoneGroupToggleOn, setRestrictedzoneGroupToggleOn] = useState(false);
   const [restrictedzoneGroupData, setRestrictedzoneGroupData] = useState([]);
 
-  // useEffect(() => {
-  //   setToggleCircleMarker(valueCircleMarker);
-  // }, []);
-
-  // useEffect(() => {
-  //   if (participantContext.latestLocation != null) {
-  //     if (participantContext.latestLocation.length != 0) {
-  //       console.log(position);
-  //       console.log(participantContext.latestLocation);
-  //     }
-  //   }
-  // }, [position]);
-
   useEffect(() => {
-    // if (participantContext.latestLocation != null) {
-    //   if (map != null && participantContext.latestLocation.length != 0) {
-    //     console.log(participantContext.name);
-    //     MapSetCenter(ConvertLocationStr(participantContext.latestLocation));
-    //   }
-    // }
   }, [map]);
 
   useEffect(() => {
-    // console.log(firstload);
     if (participantContext.latestLocation != null && firstload == false && map != null) {
       if (participantContext.latestLocation.length != 0) {
-        // console.log(participantContext.latestLocation);
         MapSetCenter(ConvertLocationStr(participantContext.latestLocation));
         setFirstload(true);
       }
@@ -142,12 +107,9 @@ export default function HomeView() {
   }, [participantContext, map]);
 
   useEffect(() => {
-    // console.log(restrictedLocation)
-    // console.log(restrictedzoneGroup);
   }, [restrictedLocation, restrictedzoneGroupData]);
 
   useEffect(() => {
-    // console.log(restrictedzoneGroupToggleOn);
     if (restrictedzoneGroupToggleOn) {
       setRestrictedzoneGroup(restrictedzoneGroupData);
     } else {
@@ -173,7 +135,6 @@ export default function HomeView() {
         duration: 1,
       });
     }
-    // else console.log("Cant determine location!");
     return null;
   }
 
@@ -197,26 +158,9 @@ export default function HomeView() {
             participantContext.setCity("");
             participantContext.setState("");
           }
-          // setSelectedExclusionZones(participant.exclusionZones);
         }
       });
-
-      // for (let i = 1; i < participants.length + 1; i++) {
-      //   valueCircleMarker[i] = false;
-      // }
-      // valueCircleMarker[index] = true;
-
-      // setToggleCMState(!toggleCMState);
-      // if (toggleCMState) {
-      //   setToggleCircleMarker(valueCircleMarker);
-      // } else {
-      //   for (let i = 1; i < participants.length + 1; i++) {
-      //     valueCircleMarker1[i] = valueCircleMarker[i];
-      //   }
-      //   setToggleCircleMarker(valueCircleMarker1);
-      // }
     }
-
   }
 
   return (
@@ -230,7 +174,6 @@ export default function HomeView() {
           <Grid item xs={12} className={classes.participantList}>
             <ParticipantList
               participantData={participants}
-              // toggleCircleMarkerData={toggleCircleMarker}
               selectParticipant={SelectParticipant}
               mapSetCenter={MapSetCenter}
             />
@@ -262,12 +205,10 @@ export default function HomeView() {
 
             <CircleMarkerGroup
               participantData={participants}
-            // toggleCircleMarker={toggleCircleMarker}
             />
 
             <SelectedCircleMarker
               participantData={participants}
-            // toggleCircleMarker={toggleCircleMarker}
             />
 
             <RestrictedZone

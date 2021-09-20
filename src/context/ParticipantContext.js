@@ -40,9 +40,6 @@ export const ParticipantProvider = ({ children }) => {
     const intervalId = setInterval(() => {
       getParticipantAPI();
     }, 1000);
-
-    // console.log("SetGEOAPI " + intervalId);
-    // return () => clearInterval(intervalId);
   }, []);
 
   function getParticipantAPI() {
@@ -53,7 +50,6 @@ export const ParticipantProvider = ({ children }) => {
           res.data.map((participant) => {
             newParticipantArr.push(participant);
           });
-          // console.log(newParticipantArr);
           setList(newParticipantArr);
         })
     } catch (error) {

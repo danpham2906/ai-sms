@@ -35,9 +35,7 @@ const TopBar = ({ className, ...rest }) => {
       <Toolbar className={classes.toolbar}>
         <RouterLink
           to="/login"
-          // onClick={() => { titleContext.setName("Overview"); }}
         >
-          {/* <Logo /> */}
           <Typography component="h1" align="center" noWrap className={classes.appName}>
             AI-SMS
           </Typography>

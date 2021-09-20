@@ -33,12 +33,7 @@ const AppTaskView = () => {
   const mapRef = useRef();
 
   const updateRange = (newRange) => {
-    // console.log("updateRange @ index.js | Range: " + newRange);
     setRange(newRange);
-    // console.log("updateRange @ index.js | setRange: " + range);
-    // console.log("durationRef: " + JSON.stringify(durationRef));
-    
-    // console.log("newRange: " + newRange);
     if (!newRange) {
       durationRef.current.switchRange(false);
       frequencyRef.current.switchRange(false);
@@ -59,12 +54,10 @@ const AppTaskView = () => {
       className={classes.root}
       title="AppTask"
     >
-      {/* <GridList maxWidth={false} cols={3}> */}
       <Container maxWidth={false}>
         <Grid
           container
           spacing={1}
-          // direction="row"
         >
           <Grid
             item

@@ -2,7 +2,6 @@
 import React, { useContext } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-// import { Line } from '@reactchartjs/react-chart.js';
 import {
   Card,
   CardContent,
@@ -41,7 +40,6 @@ const MileageDuration = ({ className, updateRange, ...rest }) => {
   const classes = useStyles();
 
   const onUpdateRange = (newRange) => {
-    // console.log("onUpdateRange @ MileageDuration.js | Range: " + newRange);
     updateRange(newRange);
   };
 
@@ -100,7 +98,6 @@ const MileageDuration = ({ className, updateRange, ...rest }) => {
         </Grid>
         <Grid
           container
-        //   justify="space-between"
           spacing={3}
           className={classes.chartContainer}
         >

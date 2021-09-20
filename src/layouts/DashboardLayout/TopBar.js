@@ -46,7 +46,6 @@ const useStyles = makeStyles((theme) => ({
     'font-size': '1.1rem'
   },
   avatar: {
-    // cursor: 'pointer',
     width: 32,
     height: 32
   },
@@ -97,7 +96,6 @@ const TopBar = ({
           to="/"
           onClick={() => { titleContext.setName("Overview"); }}
         >
-          {/* <Logo /> */}
           <Typography component="h1" align="center" noWrap className={classes.appName}>
             AI-SMS
           </Typography>
@@ -107,43 +105,17 @@ const TopBar = ({
           {titleContext.name}
         </Typography>
 
-        {/* <Box flexDirection="row">
-          <Avatar
-            className={classes.avatar}
-            // component={RouterLink}
-            src={officer.avatar}
-          // to="/app/documents"
-          />
-        </Box>
-        <Box flexDirection="row" button
-          onClick={handleClick}>
-          <Typography
-            className={classes.name}
-            color="inherit"
-            variant="h5"
-
-          >
-            {officer.name}
-          </Typography>
-        </Box> */}
-
         <ClickAwayListener onClickAway={handleClickAway}>
           <div>
             <List
               component="nav"
-              // aria-labelledby="nested-list-subheader"
               className={classes.root}
             >
               <ListItem button onClick={handleClick}>
-                {/* <Box flexDirection="row"> */}
                   <Avatar
                     className={classes.avatar}
-                    // component={RouterLink}
                     src={officer.avatar}
-                  // to="/app/documents"
                   />
-                {/* </Box> */}
-                {/* <Box flexDirection="row"> */}
                   <Typography
                     className={classes.name}
                     color="inherit"
@@ -152,18 +124,13 @@ const TopBar = ({
                   >
                     {officer.name}
                   </Typography>
-                {/* </Box> */}
-                {/* <Box flexDirection="row"> */}
                   {open ? <ExpandMore /> : <ExpandLess />}
-                {/* </Box> */}
               </ListItem>
             </List>
 
 
             {open ?
               <List
-                // component="div"
-                // disablePadding
                 className={`${classes.caseworkerDropdown} ${classes.root}`}
               >
                 <ListItem button component={RouterLink} to="/login" >
@@ -174,20 +141,6 @@ const TopBar = ({
           </div>
         </ClickAwayListener>
 
-        {/* <Hidden mdDown>
-          <IconButton color="inherit">
-            <Badge
-              badgeContent={notifications.length}
-              color="primary"
-              variant="dot"
-            >
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
-          <IconButton color="inherit">
-            <InputIcon />
-          </IconButton>
-        </Hidden> */}
         <Hidden lgUp>
           <IconButton
             color="inherit"

@@ -5,7 +5,6 @@ import * as d3 from 'd3';
 
 const HorizontalBarChart = forwardRef(({ data, subData, width, height, color }, ref) => {
   const margin = { top: 30, right: 0, bottom: 10, left: 80 };
-  // const barHeight = 25;
 
   const chartRef = useD3(
     (svg) => {
@@ -23,7 +22,6 @@ const HorizontalBarChart = forwardRef(({ data, subData, width, height, color }, 
       const xAxis = g => g
         .attr("transform", `translate(0,${margin.top})`)
         .call(d3.axisTop(x).ticks(width / 80, data.format));
-        // .call(g => g.select(".domain").remove());
 
       const yAxis = g => g
         .attr("transform", `translate(${margin.left},0)`)
@@ -86,8 +84,6 @@ const HorizontalBarChart = forwardRef(({ data, subData, width, height, color }, 
   useImperativeHandle(ref, () => ({
 
     switchRange(isSwitched) {
-      // console.log("HorizontalBarChart.js || isSwitched = " + isSwitched);
-
       let dataUsed;
       if (!isSwitched) {
         dataUsed = data;
@@ -116,26 +112,22 @@ const HorizontalBarChart = forwardRef(({ data, subData, width, height, color }, 
       const xAxis = g => g
         .attr("transform", `translate(0,${margin.top})`)
         .call(d3.axisTop(x).ticks(width / 80, dataUsed.format));
-        // .call(g => g.select(".domain").remove());
 
       const yAxis = g => g
         .attr("transform", `translate(${margin.left},0)`)
         .call(d3.axisLeft(y).tickFormat(i => dataUsed[i].name).tickSizeOuter(0));
 
       let svg = d3.select(barChartID);
-      // svg.selectAll("g").remove();
 
       dataUsed.sort(function(a, b) {
         return d3.ascending(a.value, b.value)
       });
 
       svg
-        // .append("g")
         .selectAll("g#rect")
         .attr("fill", color)
         .selectAll("rect")
         .data(dataUsed)
-        // .join("rect")
         .transition()
         .duration(1000)
         .attr("x", x(0))
@@ -144,13 +136,11 @@ const HorizontalBarChart = forwardRef(({ data, subData, width, height, color }, 
         .attr("height", y.bandwidth());
 
       svg
-        // .append("g")
         .selectAll("g#text")
         .attr("font-family", "sans-serif")
         .attr("font-size", 12)
         .selectAll("text")
         .data(dataUsed)
-        // .join("text")
         .transition()
         .duration(1000)
         .attr("x", d => x(d.value))
@@ -171,8 +161,6 @@ const HorizontalBarChart = forwardRef(({ data, subData, width, height, color }, 
         .call(xAxis);
 
       svg.selectAll("g#yAxis")
-        // .transition()
-        // .duration(1000)
         .call(yAxis);
     }
 
@@ -182,10 +170,7 @@ const HorizontalBarChart = forwardRef(({ data, subData, width, height, color }, 
     <svg
       ref={chartRef}
       style={{
-        // height: 400,
         width: "100%",
-        // marginRight: "0px",
-        // marginLeft: "0px",
       }}
     >
     </svg>

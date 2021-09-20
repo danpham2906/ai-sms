@@ -14,18 +14,11 @@ function LineChart({ dataCSV, range, width, height, color }) {
       for (var i in d) {
         d[i].human_readable = parser(d[i].human_readable);
         d[i].bpm = Math.round(d[i].bpm);
-        // if (d[i].bpm > 100) console.log(d[i].bpm);
       }
       setData(d);
     });
     return () => undefined;
   }, []);
-  // console.log(JSON.stringify(data));
-
-  // const svg = d3.create("svg")
-  //     .attr("viewBox", [0, 0, width, height]);
-
-  // const height = 500;
 
   var x = d3.scaleUtc()
     .domain(d3.extent(data, d => d.human_readable))
@@ -92,16 +85,10 @@ function LineChart({ dataCSV, range, width, height, color }) {
   );
 
   useEffect(() => {
-    // console.log("LineChart.js | range = " + JSON.stringify(range));
-
     const lineChart = d3.line()
       .defined(d => !isNaN(d.bpm))
       .x(d => x(d.human_readable))
       .y(d => y(d.bpm));
-
-    // x.domain(d3.extent(data, d => d.human_readable));
-
-    // y.domain([0, d3.max(data, d => d.bpm)]).nice();
 
     let dataUsed;
     if (!range) {
@@ -112,27 +99,10 @@ function LineChart({ dataCSV, range, width, height, color }) {
       const [x1, x2] = range;
       let xMin = x.range()[0];
       let xMax = x.range()[1];
-      // console.log(xMin, xMax);
       let xLength = xMax - xMin;
       var dataFilter = data.filter((d) => x1 <= ((x(d.human_readable) - xMin) / xLength * 100) && ((x(d.human_readable) - xMin) / xLength * 100) < x2);
-      // var dataFilter = [];
 
-      // data.map((d) => {
-      //   console.log(JSON.stringify(x(d.human_readable)));
-      //   // if (x1 <= ((x(d.human_readable) - xMin) / xLength * 100) && ((x(d.human_readable) - xMin) / xLength * 100) < x2) {
-      //   // var dateStr = d.human_readable.getUTCFullYear() + "-";
-      //   // dateStr = dateStr + (d.human_readable.getUTCMonth() + 1) + "-";
-      //   // dateStr = dateStr + d.human_readable.getUTCDate();
-      //   // dateStr = parser(dateStr);
-      //   // dataFilter.push({
-      //   //   human_readable: d.human_readable,
-      //   //   bpm: d.bpm
-      //   // });
-
-      //   // }
-      // });
       dataUsed = dataFilter;
-      // console.log(JSON.stringify(dataUsed));
 
       x.domain(d3.extent(dataUsed, d => d.human_readable));
 
@@ -148,7 +118,6 @@ function LineChart({ dataCSV, range, width, height, color }) {
 
     let svg = d3.select("#" + lineChartID);
     svg.selectAll("g").remove();
-    // svg.selectAll("path").remove();
 
     d3.select("#" + lineChartID + "Xaxis")
       .transition()
@@ -158,7 +127,6 @@ function LineChart({ dataCSV, range, width, height, color }) {
     d3.select("#" + lineChartID + "Yaxis")
       .transition()
       .duration(1000)
-      // .call(d3.axisLeft().scale(y))
       .call(d3.axisLeft(y));
 
     d3.select("#" + lineChartID + "path")
@@ -178,15 +146,11 @@ function LineChart({ dataCSV, range, width, height, color }) {
     <svg
       ref={ref}
       style={{
-        // height: 150,
         width: "100%",
         marginRight: "0px",
         marginLeft: "0px",
       }}
     >
-      {/* <g className="plot-area" />
-      <g className="x-axis" />
-      <g className="y-axis" /> */}
     </svg>
   );
 }
