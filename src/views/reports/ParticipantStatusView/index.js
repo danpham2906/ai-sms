@@ -53,6 +53,7 @@ const Overview = () => {
           >
             <Profile />
           </Grid>
+
           <Grid
             item
             lg={12}
@@ -112,87 +113,51 @@ const Overview = () => {
 
           <Grid
             item
-            lg={8}
-            sm={12}
-            xl={8}
-            xs={22}
+            lg={6}
+            sm={9}
+            xl={6}
+            xs={17}
           >
-            <Financial />
+            <CourtOrders />
           </Grid>
           <Grid
             item
-            lg={4}
-            sm={6}
-            xl={4}
-            xs={12}
+            lg={6}
+            sm={9}
+            xl={6}
+            xs={17}
           >
-            <CourtOrders />
+            <TimelineLog />
           </Grid>
 
           <Grid
             item
-            lg={4}
-            sm={6}
-            xl={4}
-            xs={12}
+            lg={8}
+            sm={11}
+            xl={8}
+            xs={23}
           >
             <Messaging />
           </Grid>
           <Grid
             item
-            lg={3}
-            sm={6}
-            xl={3}
-            xs={12}
+            lg={4}
+            sm={7}
+            xl={4}
+            xs={13}
           >
             <Schedule />
           </Grid>
-          <Grid
-            item
-            lg={5}
-            sm={6}
-            xl={5}
-            xs={12}
-          >
-            <TimelineLog />
-          </Grid>
 
-          {/* <Grid
-            item
-            lg={8}
-            md={12}
-            xl={9}
-            xs={12}
-          >
-            <Sales />
-          </Grid>
           <Grid
             item
-            lg={4}
-            md={6}
-            xl={3}
-            xs={12}
+            lg={12}
+            sm={18}
+            xl={12}
+            xs={36}
           >
-            <TrafficByDevice />
-          </Grid> */}
-          {/* <Grid
-            item
-            lg={4}
-            md={6}
-            xl={3}
-            xs={12}
-          >
-            <LatestProducts />
+            <Financial />
           </Grid>
-          <Grid
-            item
-            lg={8}
-            md={12}
-            xl={9}
-            xs={12}
-          >
-            <LatestOrders />
-          </Grid> */}
         </Grid>
       </Container>
     </Page>

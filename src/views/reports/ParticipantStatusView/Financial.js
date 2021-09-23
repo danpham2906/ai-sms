@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import {
@@ -12,7 +12,11 @@ import {
   colors,
   makeStyles,
   List, ListItem, Divider,
+  Collapse,
+  Button,
 } from '@material-ui/core';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
 import { ParticipantContext } from '../../../context/ParticipantContext';
 // import data from '../../../data/data';
 import PieChart from '../../../charts/PieChart';
@@ -75,12 +79,13 @@ const useStyles = makeStyles((theme) => ({
   },
   textCenter: {
     textAlign: 'center!important',
-  }
+  },
 }));
 
 const Financial = ({ className, ...rest }) => {
   const classes = useStyles();
   const participant = useContext(ParticipantContext);
+  const [open, setOpen] = useState(false);
 
   const chargeSummaryLeft = [
     'Begin DT',
@@ -124,6 +129,10 @@ const Financial = ({ className, ...rest }) => {
     'Total Balance: $0 until supervision begins (09/01/2021). $25 per week for supervision. Every 8 weeks additional $20 for drug screening cost. Total Balance cannot exceed $225.00',
   ];
 
+  const handleClick = () => {
+    setOpen(!open);
+  };
+
   return (
     <Card
       className={clsx(classes.root, className)}
@@ -134,100 +143,157 @@ const Financial = ({ className, ...rest }) => {
         >
           <Grid
             item
+            justify="start"
             lg={24}
+            style={{ width: '100%' }}
           >
-            <Typography
-              color="textSecondary"
-              gutterBottom
-              variant="h6"
+            <Button
+              style={{ width: '100%' }}
+              onClick={handleClick}
             >
-              FINANCIAL
-            </Typography>
-          </Grid>
-        </Grid>
-        <Grid
-          container
-          className={classes.container}
-        >
-          <Grid item lg={12}>
-            <Typography
-              color="textSecondary"
-              variant="body1"
-            >
-              <List>
-                <ListItem className={classes.sectionTitle}><b>CASE #09202021</b></ListItem>
-                <Divider />
-                <div className={classes.columnLeft}>
-                  {chargeSummaryLeft.map((itemList, id) => (
-                    <div className={classes.row}>
-                      <div className={classes.column}>
-                        <ListItem><b>{itemList}</b></ListItem>
-                      </div>
-                      <div className={classes.column}>
-                        <ListItem>{chargeSummaryLeftInfo[id]}</ListItem>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+              <Typography
+                color="textSecondary"
+                variant="h6"
+                style={{ display: "flex", width: "6vw" }}
+              >
+                FINANCIAL
+              </Typography>
 
-                <div className={classes.columnRight}>
-                  {chargeSummaryRight.map((itemList, id) => (
-                    <div className={classes.row}>
-                      <div className={classes.columnLeft}>
-                        <ListItem><b>{itemList}</b></ListItem>
-                      </div>
-                      <div className={classes.columnRight}>
-                        <ListItem>{chargeSummaryRightInfo[id]}</ListItem>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </List>
-            </Typography>
+              <div style={{ justifyContent: "flex-end", width: "80vw", }}></div>
+
+              {open ? <ExpandMore className={classes.collapseButton} /> : <ExpandLess className={classes.collapseButton} />}
+            </Button>
           </Grid>
         </Grid>
 
-        <Grid
-          container
-          className={classes.container}
-        >
-          <Grid item lg={12}>
-            <Typography
-              color="textSecondary"
-              variant="body1"
-            >
-              <List>
-                <ListItem className={classes.sectionTitle}><b>CASE #08242021</b></ListItem>
-                <Divider />
-                <div className={classes.columnLeft}>
-                  {chargeSummaryLeft.map((itemList, id) => (
-                    <div className={classes.row}>
-                      <div className={classes.column}>
-                        <ListItem><b>{itemList}</b></ListItem>
-                      </div>
-                      <div className={classes.column}>
-                        <ListItem>{chargeSummaryLeftInfo[id]}</ListItem>
-                      </div>
-                    </div>
-                  ))}
-                </div>
 
-                <div className={classes.columnRight}>
-                  {chargeSummaryRight.map((itemList, id) => (
-                    <div className={classes.row}>
-                      <div className={classes.columnLeft}>
-                        <ListItem><b>{itemList}</b></ListItem>
+        <Collapse in={open} timeout="auto" unmountOnExit>
+          <Grid
+            container
+            className={classes.container}
+          >
+            <Grid item lg={12}>
+              <Typography
+                color="textSecondary"
+                variant="body1"
+              >
+                <List>
+                  <ListItem className={classes.sectionTitle}><b>CASE #09202021</b></ListItem>
+                  <Divider />
+                  <div className={classes.columnLeft}>
+                    {chargeSummaryLeft.map((itemList, id) => (
+                      <div className={classes.row}>
+                        <div className={classes.column}>
+                          <ListItem><b>{itemList}</b></ListItem>
+                        </div>
+                        <div className={classes.column}>
+                          <ListItem>{chargeSummaryLeftInfo[id]}</ListItem>
+                        </div>
                       </div>
-                      <div className={classes.columnRight}>
-                        <ListItem>{chargeSummaryRightInfo[id]}</ListItem>
+                    ))}
+                  </div>
+
+                  <div className={classes.columnRight}>
+                    {chargeSummaryRight.map((itemList, id) => (
+                      <div className={classes.row}>
+                        <div className={classes.columnLeft}>
+                          <ListItem><b>{itemList}</b></ListItem>
+                        </div>
+                        <div className={classes.columnRight}>
+                          <ListItem>{chargeSummaryRightInfo[id]}</ListItem>
+                        </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
-              </List>
-            </Typography>
+                    ))}
+                  </div>
+                </List>
+              </Typography>
+            </Grid>
           </Grid>
-        </Grid>
+
+          <Grid
+            container
+            className={classes.container}
+          >
+            <Grid item lg={12}>
+              <Typography
+                color="textSecondary"
+                variant="body1"
+              >
+                <List>
+                  <ListItem className={classes.sectionTitle}><b>CASE #08242021</b></ListItem>
+                  <Divider />
+                  <div className={classes.columnLeft}>
+                    {chargeSummaryLeft.map((itemList, id) => (
+                      <div className={classes.row}>
+                        <div className={classes.column}>
+                          <ListItem><b>{itemList}</b></ListItem>
+                        </div>
+                        <div className={classes.column}>
+                          <ListItem>{chargeSummaryLeftInfo[id]}</ListItem>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className={classes.columnRight}>
+                    {chargeSummaryRight.map((itemList, id) => (
+                      <div className={classes.row}>
+                        <div className={classes.columnLeft}>
+                          <ListItem><b>{itemList}</b></ListItem>
+                        </div>
+                        <div className={classes.columnRight}>
+                          <ListItem>{chargeSummaryRightInfo[id]}</ListItem>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </List>
+              </Typography>
+            </Grid>
+          </Grid>
+
+          <Grid
+            container
+            className={classes.container}
+          >
+            <Grid item lg={12}>
+              <Typography
+                color="textSecondary"
+                variant="body1"
+              >
+                <List>
+                  <ListItem className={classes.sectionTitle}><b>CASE #07072021</b></ListItem>
+                  <Divider />
+                  <div className={classes.columnLeft}>
+                    {chargeSummaryLeft.map((itemList, id) => (
+                      <div className={classes.row}>
+                        <div className={classes.column}>
+                          <ListItem><b>{itemList}</b></ListItem>
+                        </div>
+                        <div className={classes.column}>
+                          <ListItem>{chargeSummaryLeftInfo[id]}</ListItem>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className={classes.columnRight}>
+                    {chargeSummaryRight.map((itemList, id) => (
+                      <div className={classes.row}>
+                        <div className={classes.columnLeft}>
+                          <ListItem><b>{itemList}</b></ListItem>
+                        </div>
+                        <div className={classes.columnRight}>
+                          <ListItem>{chargeSummaryRightInfo[id]}</ListItem>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </List>
+              </Typography>
+            </Grid>
+          </Grid>
+        </Collapse>
       </CardContent>
     </Card >
   );
